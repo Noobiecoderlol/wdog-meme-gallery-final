@@ -1,0 +1,77 @@
+{
+  "categories": [
+    {
+      "id": "hats",
+      "name": "Hats",
+      "icon": "🎩"
+    },
+    {
+      "id": "glasses", 
+      "name": "Glasses",
+      "icon": "🕶️"
+    }
+  ],
+  "accessories": [
+    {
+      "id": "red-cap",
+      "name": "Red Cap",
+      "category": "hats",
+      "src": "/assets/accessories/red-cap.png",
+      "thumbnail": "/assets/accessories/red-cap.png",
+      "position": {
+        "x": 0,
+        "y": -80
+      },
+      "scale": 0.8
+    },
+    {
+      "id": "wizard-hat",
+      "name": "Wizard Hat", 
+      "category": "hats",
+      "src": "/assets/accessories/wizard-hat.png",
+      "thumbnail": "/assets/accessories/wizard-hat.png",
+      "position": {
+        "x": 0,
+        "y": -120
+      },
+      "scale": 0.9
+    },
+    {
+      "id": "sunglasses",
+      "name": "Cool Shades",
+      "category": "glasses",
+      "src": "/assets/accessories/sunglasses.png", 
+      "thumbnail": "/assets/accessories/sunglasses.png",
+      "position": {
+        "x": 0,
+        "y": -20
+      },
+      "scale": 0.6
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "vaporwave",
+      "name": "Vaporwave Grid",
+      "src": "/assets/backgrounds/vaporwave-grid.png",
+      "thumbnail": "/assets/backgrounds/vaporwave-grid.png"
+    },
+    {
+      "id": "sunset", 
+      "name": "Sunset Dreams",
+      "src": "/assets/backgrounds/sunset-gradient.png",
+      "thumbnail": "/assets/backgrounds/sunset-gradient.png"
+    },
+    {
+      "id": "cosmic",
+      "name": "Cosmic Space", 
+      "src": "/assets/backgrounds/cosmic-space.png",
+      "thumbnail": "/assets/backgrounds/cosmic-space.png"
+    }
+  ],
+  "baseDog": {
+    "src": "/assets/base-dog.png",
+    "width": 512,
+    "height": 512
+  }
+}
