@@ -2,15 +2,22 @@
 import baseDog from '@/assets/body/base-dog.webp';
 import wrapper from '@/assets/body/wrapper.webp';
 
-// Signs
-import sign1 from '@/assets/signs/1.webp';  // TO THE MOON
-import sign2 from '@/assets/signs/2.webp';  // HODL
+// Signs (Bildbaserade)
+import sign0 from '@/assets/signs/0.webp';  // TO THE MOON
+import sign1 from '@/assets/signs/1.webp';  // HODL
+import sign2 from '@/assets/signs/2.webp';  // WAGMI
 import sign3 from '@/assets/signs/3.webp';  // WOOF WOOF
 import sign4 from '@/assets/signs/4.webp';  // GM FREN
-import sign5 from '@/assets/signs/5.webp';  // WAGMI
-import sign6 from '@/assets/signs/6.webp';  // DEGEN
-import sign7 from '@/assets/signs/7.webp';  // APE IN
-import sign8 from '@/assets/signs/8.webp';  // NGMI
+import sign5 from '@/assets/signs/5.webp';  // DEGEN
+import sign6 from '@/assets/signs/6.webp';  // APE IN
+import sign7 from '@/assets/signs/7.webp';  // NGMI
+import sign8 from '@/assets/signs/8.webp';  // ALPHA
+import sign9 from '@/assets/signs/9.webp';  // SER
+import sign10 from '@/assets/signs/10.webp'; // LFG
+import sign11 from '@/assets/signs/11.webp'; // FREN
+import sign12 from '@/assets/signs/12.webp'; // BASED
+import sign13 from '@/assets/signs/13.webp'; // GG
+import sign14 from '@/assets/signs/14.webp'; // SOON™
 
 // Backgrounds
 import back0 from '@/assets/back/0.webp';
@@ -394,23 +401,135 @@ export const BACKGROUNDS: Asset[] = [
   }
 ];
 
-import { SIGNS, renderSign, createThumbnail } from './signs';
+
 
 export const CATEGORIES: Category[] = [
   {
-    id: 'signs',
-    name: 'Signs',
-    icon: '🪧',
-    items: SIGNS.map(sign => ({
-      id: sign.id,
-      name: sign.name,
-      src: '', // Will be rendered dynamically
-      thumbnail: createThumbnail(sign),
-      renderFunction: (ctx: CanvasRenderingContext2D, x: number, y: number, scale: number) => 
-        renderSign(ctx, sign, x + 256, y + 256, scale * 0.75),
-      position: { x: 0, y: -150 },
-      scale: 1.0
-    }))
+    id: 'signs2',
+    name: 'Meme',
+    icon: '📝',
+    items: [
+      {
+        id: 'sign2-0',
+        name: 'TO THE MOON',
+        src: sign0,
+        thumbnail: sign0,
+        position: { x: -167, y: 65 },
+        scale: 0.4
+      },
+      {
+        id: 'sign2-1',
+        name: 'HODL',
+        src: sign1,
+        thumbnail: sign1,
+        position: { x: -167, y: 65 },
+        scale: 0.4
+      },
+      {
+        id: 'sign2-2',
+        name: 'WAGMI',
+        src: sign2,
+        thumbnail: sign2,
+        position: { x: -167, y:50 },
+        scale: 0.4
+      },
+      {
+        id: 'sign2-3',
+        name: 'GM FRENS',
+        src: sign3,
+        thumbnail: sign3,
+        position: { x: -167, y: 50 },
+        scale: 0.4
+      },
+      {
+        id: 'sign2-4',
+        name: 'WOOF WOOF',
+        src: sign4,
+        thumbnail: sign4,
+        position: { x: -167, y: 80 },
+        scale: 0.4
+      },
+      {
+        id: 'sign2-5',
+        name: 'DEGEN',
+        src: sign5,
+        thumbnail: sign5,
+        position: { x: -167, y: 55 },
+        scale: 0.4
+      },
+      {
+        id: 'sign2-6',
+        name: 'APE IN',
+        src: sign6,
+        thumbnail: sign6,
+        position: { x: -167, y: 55 },
+        scale: 0.4
+      },
+      {
+        id: 'sign2-7',
+        name: 'NGMI',
+        src: sign7,
+        thumbnail: sign7,
+        position: { x: -167, y: 55 },
+        scale: 0.4
+      },
+      {
+        id: 'sign2-8',
+        name: 'ALPHA',
+        src: sign8,
+        thumbnail: sign8,
+        position: { x: -167, y: 55 },
+        scale: 0.4
+      },
+      {
+        id: 'sign2-9',
+        name: 'SER',
+        src: sign9,
+        thumbnail: sign9,
+        position: { x: -167, y: 60 },
+        scale: 0.4
+      },
+      {
+        id: 'sign2-10',
+        name: 'LFG',
+        src: sign10,
+        thumbnail: sign10,
+        position: { x: 167, y: 80 }, // Flyttad mer åt hög
+        scale: 0.4
+      },
+      {
+        id: 'sign2-11',
+        name: 'FREN',
+        src: sign11,
+        thumbnail: sign11,
+        position: { x: -167, y: 55 },
+        scale: 0.4
+      },
+      {
+        id: 'sign2-12',
+        name: 'BASED',
+        src: sign12,
+        thumbnail: sign12,
+        position: { x: 167, y: 70 }, // Flyttad mer åt höger
+        scale: 0.4
+      },
+      {
+        id: 'sign2-13',
+        name: 'GG',
+        src: sign13,
+        thumbnail: sign13,
+        position: { x: -167, y: 80 },
+        scale: 0.4
+      },
+      {
+        id: 'sign2-14',
+        name: 'SOON™',
+        src: sign14,
+        thumbnail: sign14,
+        position: { x: 160, y: 67}, // Justerad för vänsterhand - höger och ner
+        scale: 0.4
+      }
+    ]
   },
   {
     id: 'eyes',
@@ -1171,7 +1290,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 1',
         src: item0,
         thumbnail: item0,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       },
       {
@@ -1179,7 +1298,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 2',
         src: item1,
         thumbnail: item1,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       },
       {
@@ -1187,7 +1306,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 3',
         src: item3,
         thumbnail: item3,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       },
       {
@@ -1195,7 +1314,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 4',
         src: item4,
         thumbnail: item4,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       },
       {
@@ -1203,7 +1322,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 5',
         src: item5,
         thumbnail: item5,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       },
       {
@@ -1211,7 +1330,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 6',
         src: item6,
         thumbnail: item6,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       },
       {
@@ -1219,7 +1338,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 7',
         src: item7,
         thumbnail: item7,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       },
       {
@@ -1227,7 +1346,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 8',
         src: item8,
         thumbnail: item8,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       },
       {
@@ -1235,7 +1354,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 9',
         src: item9,
         thumbnail: item9,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       },
       {
@@ -1243,7 +1362,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 10',
         src: item10,
         thumbnail: item10,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       },
       {
@@ -1251,7 +1370,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 11',
         src: item11,
         thumbnail: item11,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       },
       {
@@ -1259,7 +1378,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 12',
         src: item12,
         thumbnail: item12,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       },
       {
@@ -1267,7 +1386,7 @@ export const CATEGORIES: Category[] = [
         name: 'Item 13',
         src: item13,
         thumbnail: item13,
-        position: { x: 0, y: 199 },
+        position: { x: 0, y: 400 },
         scale: 0.30
       }
     ]

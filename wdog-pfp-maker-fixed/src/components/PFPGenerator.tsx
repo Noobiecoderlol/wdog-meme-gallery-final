@@ -495,7 +495,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       }
 
       // Define rendering order
-      const layerOrder = ['clothes', 'items', 'eyes', 'hats', 'signs'];
+      const layerOrder = ['clothes', 'items', 'eyes', 'hats', 'signs', 'signs2'];
       
       for (const category of layerOrder) {
         const asset = selectedAssets[category];
@@ -507,6 +507,34 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
           const y = asset.position?.y || 0;
           const scale = asset.scale || 1;
           asset.renderFunction(ctx, x, y, scale);
+          continue;
+        }
+
+        // Hantera Signs 2 (bildbaserade skyltar)
+        if (category === 'signs2') {
+          const assetImg = await loadImage(asset.src);
+          const scale = asset.scale || 0.4; // Minska storleken ytterligare
+          const assetSize = dogSize * scale;
+          
+          let assetX = dogX + (dogSize / 2);
+          let assetY = dogY + (dogSize / 2);
+
+          // Apply asset-specific position adjustments
+          if (asset.position) {
+            assetX += asset.position.x * (dogSize / 512);
+            assetY += asset.position.y * (dogSize / 512);
+          }
+
+          // Center asset horizontally
+          assetX -= assetSize / 2;
+
+          // Sätt composite operation för att hantera transparens korrekt
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.globalAlpha = 1.0;
+          
+          // Rita skylten med transparens och hantera vit bakgrund
+          ctx.drawImage(assetImg, assetX, assetY, assetSize, assetSize);
+          console.log(`Signs2 rendered at:`, { x: assetX, y: assetY, size: assetSize });
           continue;
         }
 
@@ -532,11 +560,11 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
           case 'items': // Accessories
             // Position accessories
             assetX = dogX + (dogSize * 0.5);
-            assetY = dogY + (dogSize * 0.20);
+            assetY = dogY + (dogSize * 0.10);
             ctx.globalCompositeOperation = 'source-over';
             
             // Scale accessories
-            const accessoryScale = 0.8;
+            const accessoryScale = 1.0;
             const accessorySize = dogSize * accessoryScale;
             
             // Center the accessory
@@ -856,7 +884,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                       setIsTestMode(!isTestMode);
                       renderCanvas();
                     }}
-                    className={isTestMode ? "bg-gradient-accent" : ""}
+                    className={`${isTestMode ? "bg-gradient-accent" : ""} hidden`} // Dold för användare men tillgänglig för debug
                   >
                     <Crosshair className="w-4 h-4 mr-2" />
                     {isTestMode ? "Exit Test" : "Test"}

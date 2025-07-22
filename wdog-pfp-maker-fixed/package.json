@@ -1,8 +1,9 @@
 {
   "name": "wdog-pfp-maker",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
+  "buildTimestamp": "2024-07-22T06:45:00Z",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
