@@ -7,10 +7,5 @@
   "framework": "vite",
   "github": {
     "silent": true
-  },
-  "functions": {
-    "app/api/rebuild.js": {
-      "maxDuration": 30
-    }
   }
 } 
