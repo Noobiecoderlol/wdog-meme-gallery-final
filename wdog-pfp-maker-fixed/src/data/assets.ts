@@ -2,6 +2,16 @@
 import baseDog from '@/assets/body/base-dog.webp';
 import wrapper from '@/assets/body/wrapper.webp';
 
+// Signs
+import sign1 from '@/assets/signs/1.webp';  // TO THE MOON
+import sign2 from '@/assets/signs/2.webp';  // HODL
+import sign3 from '@/assets/signs/3.webp';  // WOOF WOOF
+import sign4 from '@/assets/signs/4.webp';  // GM FREN
+import sign5 from '@/assets/signs/5.webp';  // WAGMI
+import sign6 from '@/assets/signs/6.webp';  // DEGEN
+import sign7 from '@/assets/signs/7.webp';  // APE IN
+import sign8 from '@/assets/signs/8.webp';  // NGMI
+
 // Backgrounds
 import back0 from '@/assets/back/0.webp';
 import back1 from '@/assets/back/1.webp';
@@ -160,6 +170,7 @@ export interface Asset {
     y: number;
   };
   scale?: number;
+  renderFunction?: (ctx: CanvasRenderingContext2D, x: number, y: number, scale: number) => void;
 }
 
 export interface Category {
@@ -383,7 +394,24 @@ export const BACKGROUNDS: Asset[] = [
   }
 ];
 
+import { SIGNS, renderSign, createThumbnail } from './signs';
+
 export const CATEGORIES: Category[] = [
+  {
+    id: 'signs',
+    name: 'Signs',
+    icon: '🪧',
+    items: SIGNS.map(sign => ({
+      id: sign.id,
+      name: sign.name,
+      src: '', // Will be rendered dynamically
+      thumbnail: createThumbnail(sign),
+      renderFunction: (ctx: CanvasRenderingContext2D, x: number, y: number, scale: number) => 
+        renderSign(ctx, sign, x + 256, y + 256, scale * 0.75),
+      position: { x: 0, y: -150 },
+      scale: 1.0
+    }))
+  },
   {
     id: 'eyes',
     name: 'Eyes',

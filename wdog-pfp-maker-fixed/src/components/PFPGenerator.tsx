@@ -130,6 +130,10 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
   const [startAngle, setStartAngle] = useState(0);
   const [startScale, setStartScale] = useState(1);
 
+  // Lägg till ny state för skylt-kontroller
+  const [signPosition, setSignPosition] = useState({ x: 0, y: -150 });
+  const [signScale, setSignScale] = useState(1.0);
+
   // Load and cache images
   const imageCache = useRef<Map<string, HTMLImageElement>>(new Map());
 
@@ -393,7 +397,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     };
   }, [activeTextId, isRotating, isScaling]);
 
-  // Update canvas scale on resize
+  // Uppdatera canvas scale on resize
   useEffect(() => {
     const updateCanvasScale = () => {
       if (canvasRef.current) {
@@ -407,6 +411,47 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     window.addEventListener('resize', updateCanvasScale);
     return () => window.removeEventListener('resize', updateCanvasScale);
   }, []);
+
+  // Uppdatera selectedAssets när position eller skala ändras
+  useEffect(() => {
+    if (selectedAssets.signs) {
+      setSelectedAssets(prev => ({
+        ...prev,
+        signs: {
+          ...prev.signs,
+          position: signPosition,
+          scale: signScale
+        }
+      }));
+    }
+  }, [signPosition, signScale]);
+
+  // Lägg till handleSignPosition funktion
+  const handleSignPosition = (position: string) => {
+    switch (position) {
+      case 'top-center':
+        setSignPosition({ x: 0, y: -200 });
+        break;
+      case 'bottom-center':
+        setSignPosition({ x: 0, y: 200 });
+        break;
+      case 'center':
+        setSignPosition({ x: 0, y: 0 });
+        break;
+      case 'top-left':
+        setSignPosition({ x: -150, y: -150 });
+        break;
+      case 'top-right':
+        setSignPosition({ x: 150, y: -150 });
+        break;
+      case 'bottom-left':
+        setSignPosition({ x: -150, y: 150 });
+        break;
+      case 'bottom-right':
+        setSignPosition({ x: 150, y: 150 });
+        break;
+    }
+  };
 
   const renderCanvas = async () => {
     const canvas = canvasRef.current;
@@ -450,11 +495,20 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       }
 
       // Define rendering order
-      const layerOrder = ['clothes', 'items', 'eyes', 'hats'];
+      const layerOrder = ['clothes', 'items', 'eyes', 'hats', 'signs'];
       
       for (const category of layerOrder) {
         const asset = selectedAssets[category];
         if (!asset) continue;
+
+        // Om det är en skylt, använd renderFunction med position och skala
+        if (category === 'signs' && asset.renderFunction) {
+          const x = asset.position?.x || 0;
+          const y = asset.position?.y || 0;
+          const scale = asset.scale || 1;
+          asset.renderFunction(ctx, x, y, scale);
+          continue;
+        }
 
         console.log(`Rendering ${category}:`, asset);
 
@@ -715,47 +769,47 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
   const activeItems = CATEGORIES.find(c => c.id === activeCategory)?.items || [];
 
   return (
-    <div className="min-h-screen bg-gradient-background p-4">
+    <div className="min-h-screen bg-gradient-background p-2 sm:p-4">
       <div className="max-w-6xl mx-auto relative">
         {/* Social Icons */}
-        <div className="absolute top-0 right-0 flex gap-4 p-4">
+        <div className="absolute top-0 right-0 flex gap-2 sm:gap-4 p-2 sm:p-4">
           <Button
             variant="ghost"
             size="icon"
-            className="bg-[#FF5722] hover:bg-[#FF5722]/90 text-white rounded-full w-10 h-10"
+            className="bg-[#FF5722] hover:bg-[#FF5722]/90 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
             onClick={() => window.open('https://t.me', '_blank')}
           >
-            <Send className="h-5 w-5" />
+            <Send className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="bg-[#1DA1F2] hover:bg-[#1DA1F2]/90 text-white rounded-full w-10 h-10"
-            onClick={() => window.open('https://twitter.com', '_blank')}
+            className="bg-[#1DA1F2] hover:bg-[#1DA1F2]/90 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
+            onClick={() => window.open('https://x.com/i/communities/1848841389729059126', '_blank')}
           >
-            <Twitter className="h-5 w-5" />
+            <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="bg-[#6E6E6E] hover:bg-[#6E6E6E]/90 text-white rounded-full w-10 h-10"
+            className="bg-[#6E6E6E] hover:bg-[#6E6E6E]/90 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
             onClick={() => window.open('https://solscan.io', '_blank')}
           >
-            <FileText className="h-5 w-5" />
+            <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="bg-[#FF8C00] hover:bg-[#FF8C00]/90 text-white rounded-full w-10 h-10"
-            onClick={() => window.open('https://www.dextools.io', '_blank')}
+            className="bg-[#FF8C00] hover:bg-[#FF8C00]/90 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
+            onClick={() => window.open('https://dexscreener.com/solana/25txtutlkjtcux3kqoervc7aubym7fckbwovqnqnydgq', '_blank')}
           >
-            <LineChart className="h-5 w-5" />
+            <LineChart className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
         </div>
 
         {/* Header */}
-        <div className="text-center mb-8 pt-16">
-          <div className="flex items-center justify-center gap-4 mb-4">
+        <div className="text-center mb-4 sm:mb-8 pt-8 sm:pt-16">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-2 sm:mb-4">
             {onBack && (
               <Button
                 variant="outline"
@@ -766,28 +820,29 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                 Back
               </Button>
             )}
-            <h1 className="text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent">
               WDOG PFP Generator
             </h1>
           </div>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-base sm:text-lg px-4">
             Create the perfect profile picture with our legendary net-wearing dog! 🐕‍🦺
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-4 sm:gap-8">
           {/* Left Column: Canvas Preview and Text Editor */}
-          <div className="lg:col-span-2 space-y-6">
-          {/* Canvas Preview */}
-            <Card className="p-6 bg-gradient-card border-border/50 shadow-card">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold flex items-center gap-2">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
+            {/* Canvas Preview */}
+            <Card className="p-3 sm:p-6 bg-gradient-card border-border/50 shadow-card">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2 sm:gap-0">
+                <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-primary" />
                   Preview
                 </h2>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2 w-full sm:w-auto justify-end">
                   <Button
                     variant="outline"
+                    size="sm"
                     onClick={resetCustomization}
                     className="hover:border-destructive/50"
                   >
@@ -796,6 +851,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                   </Button>
                   <Button
                     variant={isTestMode ? "default" : "outline"}
+                    size="sm"
                     onClick={() => {
                       setIsTestMode(!isTestMode);
                       renderCanvas();
@@ -803,34 +859,36 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                     className={isTestMode ? "bg-gradient-accent" : ""}
                   >
                     <Crosshair className="w-4 h-4 mr-2" />
-                    {isTestMode ? "Exit Test Mode" : "Test Mode"}
+                    {isTestMode ? "Exit Test" : "Test"}
                   </Button>
                   <Button 
-                    variant="outline" 
+                    variant="outline"
+                    size="sm"
                     onClick={randomize}
                     className="bg-gradient-accent hover:shadow-glow-accent transition-all duration-300"
                   >
                     <Wand2 className="w-4 h-4 mr-2" />
-                    Randomize
+                    Random
                   </Button>
                   <Button 
+                    size="sm"
                     onClick={downloadImage}
                     disabled={isGenerating}
                     className="bg-gradient-primary hover:shadow-glow-primary transition-all duration-300"
                   >
                     <Download className="w-4 h-4 mr-2" />
-                    {isGenerating ? 'Generating...' : 'Download PNG'}
+                    {isGenerating ? 'Wait...' : 'Download'}
                   </Button>
                 </div>
               </div>
               
               <div className="flex justify-center">
-                <div className="relative">
+                <div className="relative w-full max-w-[512px]">
                   <canvas
                     ref={canvasRef}
                     width={512}
                     height={512}
-                    className="max-w-full h-auto rounded-xl shadow-neon border border-primary/20"
+                    className="w-full h-auto rounded-xl shadow-neon border border-primary/20"
                     onMouseMove={handleMouseMove}
                     onMouseDown={handleCanvasMouseDown}
                     onMouseUp={handleCanvasMouseUp}
@@ -846,11 +904,11 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
               </div>
             </Card>
 
-            {/* Text Editor - Now directly under the canvas */}
-            <Card className="p-6 bg-gradient-card border-border/50 shadow-card">
+            {/* Text Editor */}
+            <Card className="p-3 sm:p-6 bg-gradient-card border-border/50 shadow-card">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                  <Type className="w-5 h-5" />
+                <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
+                  <Type className="w-4 h-4 sm:w-5 sm:h-5" />
                   Text Editor
                 </h3>
                 <Button
@@ -863,7 +921,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                 </Button>
               </div>
 
-              <div className="grid grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
                 {PRESET_POSITIONS.map((preset) => (
                   <Button
                     key={preset.name}
@@ -883,11 +941,96 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                 ))}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Sign Controls - Only show when a sign is selected */}
+              {selectedAssets.signs && (
+                <div className="mt-6 border-t border-border/50 pt-4">
+                  <h4 className="text-sm font-semibold mb-3">Sign Position & Size</h4>
+                  
+                  {/* Position Buttons */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleSignPosition('top-center')}
+                      className="text-xs"
+                    >
+                      Top Center
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleSignPosition('bottom-center')}
+                      className="text-xs"
+                    >
+                      Bottom Center
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleSignPosition('center')}
+                      className="text-xs"
+                    >
+                      Center
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleSignPosition('top-left')}
+                      className="text-xs"
+                    >
+                      Top Left
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleSignPosition('top-right')}
+                      className="text-xs"
+                    >
+                      Top Right
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleSignPosition('bottom-left')}
+                      className="text-xs"
+                    >
+                      Bottom Left
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleSignPosition('bottom-right')}
+                      className="text-xs"
+                    >
+                      Bottom Right
+                    </Button>
+                  </div>
+
+                  {/* Size Slider */}
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-xs sm:text-sm">
+                      <span>Sign Size</span>
+                      <span className="text-muted-foreground">
+                        {Math.round(signScale * 100)}%
+                      </span>
+                    </div>
+                    <Slider
+                      value={[signScale * 100]}
+                      min={50}
+                      max={150}
+                      step={5}
+                      onValueChange={([value]) => setSignScale(value / 100)}
+                      className="py-0.5"
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {textElements.map((text) => (
                   <Card
                     key={text.id}
-                    className={`p-4 ${
+                    className={`p-3 sm:p-4 ${
                       activeTextId === text.id ? 'border-primary' : 'border-border/50'
                     }`}
                     onClick={() => setActiveTextId(text.id)}
@@ -898,7 +1041,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                         <Input
                           value={text.text}
                           onChange={(e) => updateText(text.id, { text: e.target.value })}
-                          className="flex-1"
+                          className="flex-1 text-sm"
                         />
                         <Button
                           variant="ghost"
@@ -913,12 +1056,12 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                         </Button>
                       </div>
 
-                      <div className="flex gap-2">
+                      <div className="flex flex-col sm:flex-row gap-2">
                         <Select
                           value={text.fontFamily}
                           onValueChange={(value) => updateText(text.id, { fontFamily: value })}
                         >
-                          <SelectTrigger className="flex-1">
+                          <SelectTrigger className="flex-1 text-sm">
                             <SelectValue placeholder="Font" />
                           </SelectTrigger>
                           <SelectContent>
@@ -935,14 +1078,14 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                         </Select>
 
                         {/* Color Selection */}
-                        <div className="space-y-2">
-                          <span className="text-sm">Color</span>
-                          <div className="flex flex-wrap gap-2 mb-2">
+                        <div className="space-y-1 sm:space-y-2">
+                          <span className="text-xs sm:text-sm">Color</span>
+                          <div className="flex flex-wrap gap-1 sm:gap-2 mb-1 sm:mb-2">
                             {PRESET_COLORS.map((color) => (
                               <button
                                 key={color.value}
                                 onClick={() => updateText(text.id, { color: color.value })}
-                                className={`w-6 h-6 rounded-full border-2 ${
+                                className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 ${
                                   text.color === color.value ? 'border-primary' : 'border-transparent'
                                 }`}
                                 style={{ backgroundColor: color.value }}
@@ -951,19 +1094,19 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                             ))}
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="text-sm">Custom</span>
+                            <span className="text-xs sm:text-sm">Custom</span>
                             <input
                               type="color"
                               value={text.color}
                               onChange={(e) => updateText(text.id, { color: e.target.value })}
-                              className="w-8 h-8 rounded cursor-pointer"
+                              className="w-6 h-6 sm:w-8 sm:h-8 rounded cursor-pointer"
                             />
                           </div>
                         </div>
                       </div>
 
                       <div className="space-y-1">
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-xs sm:text-sm">
                           <span>Font Size</span>
                           <span className="text-muted-foreground">
                             {text.fontSize}px
@@ -986,50 +1129,50 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
           </div>
 
           {/* Right Column: Asset Controls */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Backgrounds */}
-            <Card className="p-6 bg-gradient-card border-border/50 shadow-card">
-              <h3 className="text-lg font-semibold mb-4 text-foreground">Backgrounds</h3>
-              <ScrollArea className="h-[400px] pr-4">
-              <div className="grid grid-cols-1 gap-3">
-                {BACKGROUNDS.map((bg) => (
-                  <button
-                    key={bg.id}
-                    onClick={() => setSelectedBackground(bg)}
-                    className={`relative overflow-hidden rounded-lg border-2 transition-all duration-300 ${
-                      selectedBackground.id === bg.id 
-                        ? 'border-primary shadow-glow-primary' 
-                        : 'border-border hover:border-primary/50'
-                    }`}
-                  >
-                    <img
-                      src={bg.thumbnail}
-                      alt={bg.name}
-                        className="w-full h-20 object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                    <div className="absolute bottom-1 left-2 text-xs font-medium text-white">
-                      {bg.name}
-                    </div>
-                  </button>
-                ))}
-              </div>
+            <Card className="p-3 sm:p-6 bg-gradient-card border-border/50 shadow-card">
+              <h3 className="text-base sm:text-lg font-semibold mb-4 text-foreground">Backgrounds</h3>
+              <ScrollArea className="h-[200px] sm:h-[400px] pr-4">
+                <div className="grid grid-cols-2 sm:grid-cols-1 gap-3">
+                  {BACKGROUNDS.map((bg) => (
+                    <button
+                      key={bg.id}
+                      onClick={() => setSelectedBackground(bg)}
+                      className={`relative overflow-hidden rounded-lg border-2 transition-all duration-300 ${
+                        selectedBackground.id === bg.id 
+                          ? 'border-primary shadow-glow-primary' 
+                          : 'border-border hover:border-primary/50'
+                      }`}
+                    >
+                      <img
+                        src={bg.thumbnail}
+                        alt={bg.name}
+                        className="w-full h-16 sm:h-20 object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                      <div className="absolute bottom-1 left-2 text-xs font-medium text-white">
+                        {bg.name}
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </ScrollArea>
             </Card>
 
             {/* Categories */}
-            <Card className="p-6 bg-gradient-card border-border/50 shadow-card">
-              <h3 className="text-lg font-semibold mb-4 text-foreground">Customize</h3>
+            <Card className="p-3 sm:p-6 bg-gradient-card border-border/50 shadow-card">
+              <h3 className="text-base sm:text-lg font-semibold mb-4 text-foreground">Customize</h3>
               
               {/* Category tabs */}
-              <div className="flex gap-2 mb-4 flex-wrap">
+              <div className="flex gap-1 sm:gap-2 mb-4 flex-wrap">
                 {CATEGORIES.map((category) => (
                   <Button
                     key={category.id}
                     variant={activeCategory === category.id ? "default" : "outline"}
                     size="sm"
                     onClick={() => setActiveCategory(category.id)}
-                    className={activeCategory === category.id ? "bg-gradient-secondary" : ""}
+                    className={`text-xs sm:text-sm ${activeCategory === category.id ? "bg-gradient-secondary" : ""}`}
                   >
                     <span className="mr-1">{category.icon}</span>
                     {category.name}
@@ -1038,37 +1181,37 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
               </div>
 
               {/* Asset grid with ScrollArea */}
-              <ScrollArea className="h-[600px] pr-4">
-                <div className="grid grid-cols-2 gap-4">
-                {activeItems.map((asset) => {
-                  const isSelected = selectedAssets[activeCategory]?.id === asset.id;
-                  return (
-                    <button
-                      key={asset.id}
-                      onClick={() => toggleAsset(activeCategory, asset)}
-                        className={`relative overflow-hidden rounded-lg border-2 p-4 transition-all duration-300 hover:scale-105 ${
-                        isSelected 
-                          ? 'border-primary shadow-glow-primary bg-primary/10' 
-                          : 'border-border hover:border-primary/50 bg-muted/50'
-                      }`}
-                    >
-                      <img
-                        src={asset.thumbnail}
-                        alt={asset.name}
-                          className="w-full h-16 object-contain"
-                      />
-                      <div className="text-xs font-medium mt-2 text-center">
-                        {asset.name}
-                      </div>
-                      {isSelected && (
-                        <Badge className="absolute top-1 right-1 bg-primary text-primary-foreground text-xs px-1">
-                          ✓
-                        </Badge>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
+              <ScrollArea className="h-[300px] sm:h-[600px] pr-4">
+                <div className="grid grid-cols-2 gap-2 sm:gap-4">
+                  {activeItems.map((asset) => {
+                    const isSelected = selectedAssets[activeCategory]?.id === asset.id;
+                    return (
+                      <button
+                        key={asset.id}
+                        onClick={() => toggleAsset(activeCategory, asset)}
+                        className={`relative overflow-hidden rounded-lg border-2 p-2 sm:p-4 transition-all duration-300 hover:scale-105 ${
+                          isSelected 
+                            ? 'border-primary shadow-glow-primary bg-primary/10' 
+                            : 'border-border hover:border-primary/50 bg-muted/50'
+                        }`}
+                      >
+                        <img
+                          src={asset.thumbnail}
+                          alt={asset.name}
+                          className="w-full h-12 sm:h-16 object-contain"
+                        />
+                        <div className="text-xs font-medium mt-2 text-center">
+                          {asset.name}
+                        </div>
+                        {isSelected && (
+                          <Badge className="absolute top-1 right-1 bg-primary text-primary-foreground text-xs px-1">
+                            ✓
+                          </Badge>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
               </ScrollArea>
             </Card>
           </div>
