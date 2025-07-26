@@ -141,11 +141,11 @@ export const renderSign = (
 ) => {
   ctx.save();
   
-  // Applicera position och skala
+      // Apply position and scale
   ctx.translate(x, y);
   ctx.scale(scale, scale);
 
-  // Rita neon border med transparent bakgrund
+      // Draw neon border with transparent background
   ctx.strokeStyle = sign.color;
   ctx.lineWidth = 2;
   ctx.shadowColor = sign.color;
@@ -154,7 +154,7 @@ export const renderSign = (
   ctx.roundRect(-200, -100, 400, 200, 12);
   ctx.stroke();
 
-  // Rita text
+      // Draw text
   ctx.shadowBlur = sign.shadowBlur ? sign.shadowBlur / 2 : 15;
   ctx.fillStyle = '#fff';
   ctx.font = `bold ${sign.fontSize}px Orbitron, sans-serif`;
@@ -162,14 +162,14 @@ export const renderSign = (
   ctx.textBaseline = 'middle';
   ctx.fillText(sign.text, 0, 0);
 
-  // Rita emoji
+      // Draw emoji
   ctx.font = '72px sans-serif';
   ctx.fillText(sign.emoji, 0, 60);
 
   ctx.restore();
 };
 
-// Funktion för att skapa thumbnail
+  // Function to create thumbnail
 export const createThumbnail = (sign: SignConfig): string => {
   const canvas = document.createElement('canvas');
   canvas.width = 100;
@@ -177,7 +177,7 @@ export const createThumbnail = (sign: SignConfig): string => {
   const ctx = canvas.getContext('2d');
   if (!ctx) return '';
 
-  // Rendera skylten i mindre storlek för thumbnail
+  // Render sign in smaller size for thumbnail
   renderSign(ctx, sign, 50, 50, 0.25);
   
   return canvas.toDataURL('image/webp');

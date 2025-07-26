@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { ArrowLeft, Download, Send, Twitter, FileText, LineChart, Shuffle } from 'lucide-react';
+import { ArrowLeft, Download, Twitter, LineChart, Shuffle } from 'lucide-react';
+import { XIcon } from '@/components/ui/x-icon';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -58,32 +59,16 @@ const HallOfDogs: React.FC = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="bg-[#FF5722] hover:bg-[#FF5722]/90 text-white rounded-full w-10 h-10"
-            onClick={() => window.open('https://t.me/dogwifcoin', '_blank')}
+            className="bg-black hover:bg-gray-800 text-white rounded-full w-10 h-10"
+            onClick={() => window.open('https://t.co/GurmgVXpiR', '_blank')}
           >
-            <Send className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="bg-[#1DA1F2] hover:bg-[#1DA1F2]/90 text-white rounded-full w-10 h-10"
-            onClick={() => window.open('https://x.com/dogwifcoin', '_blank')}
-          >
-            <Twitter className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="bg-[#6E6E6E] hover:bg-[#6E6E6E]/90 text-white rounded-full w-10 h-10"
-            onClick={() => window.open('https://solscan.io/token/EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm', '_blank')}
-          >
-            <FileText className="h-5 w-5" />
+            <XIcon className="h-5 w-5 text-white" />
           </Button>
           <Button
             variant="ghost"
             size="icon"
             className="bg-[#FF8C00] hover:bg-[#FF8C00]/90 text-white rounded-full w-10 h-10"
-            onClick={() => window.open('https://www.dextools.io/app/en/solana/pair-explorer/EP2ib6dYdEeqD8MfE2ezHCxX3kP3K2eLKkirfPm5eyMx?t=1753098916233', '_blank')}
+            onClick={() => window.open('https://dexscreener.com/solana/25txtutlkjtcux3kqoervc7aubym7fckbwovqnqnydgq', '_blank')}
           >
             <LineChart className="h-5 w-5" />
           </Button>

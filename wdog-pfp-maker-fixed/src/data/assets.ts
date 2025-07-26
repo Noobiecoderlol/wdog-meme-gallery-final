@@ -1,8 +1,8 @@
-// Asset imports
+
 import baseDog from '@/assets/body/base-dog.webp';
 import wrapper from '@/assets/body/wrapper.webp';
 
-// Signs (Bildbaserade)
+// Signs (Image-based)
 import sign0 from '@/assets/signs/0.webp';  // TO THE MOON
 import sign1 from '@/assets/signs/1.webp';  // HODL
 import sign2 from '@/assets/signs/2.webp';  // WAGMI
@@ -19,7 +19,7 @@ import sign12 from '@/assets/signs/12.webp'; // BASED
 import sign13 from '@/assets/signs/13.webp'; // GG
 import sign14 from '@/assets/signs/14.webp'; // SOON™
 
-// Backgrounds
+
 import back0 from '@/assets/back/0.webp';
 import back1 from '@/assets/back/1.webp';
 import back2 from '@/assets/back/2.webp';
@@ -54,7 +54,7 @@ import back32 from '@/assets/back/32.webp';
 import back33 from '@/assets/back/33.webp';
 import back35 from '@/assets/back/35.webp';
 
-// Eyes
+
 import eyes0 from '@/assets/eyes/0.webp';
 import eyes1 from '@/assets/eyes/1.webp';
 import eyes2 from '@/assets/eyes/2.webp';
@@ -77,7 +77,7 @@ import eyes18 from '@/assets/eyes/18.webp';
 import eyes19 from '@/assets/eyes/19.webp';
 import eyes20 from '@/assets/eyes/20.webp';
 
-// Hats
+
 import hat1 from '@/assets/hats/1.webp';
 import hat2 from '@/assets/hats/2.webp';
 import hat3 from '@/assets/hats/3.webp';
@@ -114,7 +114,7 @@ import hat35 from '@/assets/hats/35.webp';
 import hat36 from '@/assets/hats/36.webp';
 import hat37 from '@/assets/hats/37.webp';
 
-// Clothes
+
 import clothes0 from '@/assets/clothes/0.webp';
 import clothes1 from '@/assets/clothes/1.webp';
 import clothes2 from '@/assets/clothes/2.webp';
@@ -151,7 +151,7 @@ import clothes33 from '@/assets/clothes/33.webp';
 import clothes34 from '@/assets/clothes/34.webp';
 import clothes35 from '@/assets/clothes/35.webp';
 
-// Items
+
 import item0 from '@/assets/items/0.webp';
 import item1 from '@/assets/items/1.webp';
 import item3 from '@/assets/items/3.webp';
@@ -165,6 +165,14 @@ import item10 from '@/assets/items/10.webp';
 import item11 from '@/assets/items/11.webp';
 import item12 from '@/assets/items/12.webp';
 import item13 from '@/assets/items/13.webp';
+
+
+import sunglasses0 from '@/assets/sunglases/0.webp';
+import sunglasses1 from '@/assets/sunglases/1.webp';
+import sunglasses2 from '@/assets/sunglases/2.webp';
+import sunglasses3 from '@/assets/sunglases/3.webp';
+import sunglasses4 from '@/assets/sunglases/4.webp';
+import sunglasses5 from '@/assets/sunglases/5.webp';
 
 // Asset interfaces
 export interface Asset {
@@ -187,7 +195,7 @@ export interface Category {
   items: Asset[];
 }
 
-// Base assets
+
 export const BASE_DOG = {
   src: baseDog,
   width: 512,
@@ -494,7 +502,7 @@ export const CATEGORIES: Category[] = [
         name: 'LFG',
         src: sign10,
         thumbnail: sign10,
-        position: { x: 167, y: 80 }, // Flyttad mer åt hög
+        position: { x: 167, y: 80 }, // Moved more to the right
         scale: 0.4
       },
       {
@@ -510,7 +518,7 @@ export const CATEGORIES: Category[] = [
         name: 'BASED',
         src: sign12,
         thumbnail: sign12,
-        position: { x: 167, y: 70 }, // Flyttad mer åt höger
+        position: { x: 167, y: 70 }, // Moved more to the right
         scale: 0.4
       },
       {
@@ -526,7 +534,7 @@ export const CATEGORIES: Category[] = [
         name: 'SOON™',
         src: sign14,
         thumbnail: sign14,
-        position: { x: 160, y: 67}, // Justerad för vänsterhand - höger och ner
+        position: { x: 160, y: 67}, // Adjusted for left hand - right and down
         scale: 0.4
       }
     ]
@@ -545,14 +553,6 @@ export const CATEGORIES: Category[] = [
         scale: 1.10
       },
       {
-        id: 'eyes-1',
-        name: 'Eyes 2',
-        src: eyes1,
-        thumbnail: eyes1,
-        position: { x: 0, y: -260 },
-        scale: 1.10
-      },
-      {
         id: 'eyes-2',
         name: 'Eyes 3',
         src: eyes2,
@@ -565,7 +565,7 @@ export const CATEGORIES: Category[] = [
         name: 'Eyes 4',
         src: eyes3,
         thumbnail: eyes3,
-        position: { x: 0, y: -260 },
+        position: { x: -6, y: -260 },
         scale: 1.10
       },
       {
@@ -573,7 +573,7 @@ export const CATEGORIES: Category[] = [
         name: 'Eyes 5',
         src: eyes4,
         thumbnail: eyes4,
-        position: { x: 0, y: -260 },
+        position: { x: -6, y: -260 },
         scale: 1.10
       },
       {
@@ -581,39 +581,39 @@ export const CATEGORIES: Category[] = [
         name: 'Eyes 6',
         src: eyes5,
         thumbnail: eyes5,
-        position: { x: 0, y: -260 },
-        scale: 1.10
+        position: { x: -4, y: -250 },
+        scale: 1.05
       },
       {
         id: 'eyes-6',
         name: 'Eyes 7',
         src: eyes6,
         thumbnail: eyes6,
-        position: { x: 0, y: -260 },
-        scale: 1.10
+        position: { x: 3, y: -240 },
+        scale: 1.04
       },
       {
         id: 'eyes-7',
         name: 'Eyes 8',
         src: eyes7,
         thumbnail: eyes7,
-        position: { x: 0, y: -260 },
-        scale: 1.10
+        position: { x: -5, y: -215 },
+        scale: 1.00
       },
       {
         id: 'eyes-8',
         name: 'Eyes 9',
         src: eyes8,
         thumbnail: eyes8,
-        position: { x: 0, y: -260 },
-        scale: 1.10
+        position: { x: -1, y: -230 },
+        scale: 1.0
       },
       {
         id: 'eyes-9',
         name: 'Eyes 10',
         src: eyes9,
         thumbnail: eyes9,
-        position: { x: 0, y: -260 },
+        position: { x: -5, y: -240 },
         scale: 1.10
       },
       {
@@ -621,32 +621,16 @@ export const CATEGORIES: Category[] = [
         name: 'Eyes 11',
         src: eyes10,
         thumbnail: eyes10,
-        position: { x: 0, y: -260 },
-        scale: 1.10
-      },
-      {
-        id: 'eyes-11',
-        name: 'Eyes 12',
-        src: eyes11,
-        thumbnail: eyes11,
-        position: { x: 0, y: -260 },
-        scale: 1.10
-      },
-      {
-        id: 'eyes-12',
-        name: 'Eyes 13',
-        src: eyes12,
-        thumbnail: eyes12,
-        position: { x: 0, y: -260 },
-        scale: 1.10
+        position: { x: 0, y: -230 },
+        scale: 1.00
       },
       {
         id: 'eyes-13',
         name: 'Eyes 14',
         src: eyes13,
         thumbnail: eyes13,
-        position: { x: 0, y: -260 },
-        scale: 1.10
+        position: { x: 0, y: -240 },
+        scale: 1.03
       },
       {
         id: 'eyes-14',
@@ -654,55 +638,31 @@ export const CATEGORIES: Category[] = [
         src: eyes14,
         thumbnail: eyes14,
         position: { x: 0, y: -260 },
-        scale: 1.10
-      },
-      {
-        id: 'eyes-15',
-        name: 'Eyes 16',
-        src: eyes15,
-        thumbnail: eyes15,
-        position: { x: 0, y: -260 },
-        scale: 1.10
+        scale: 1.0
       },
       {
         id: 'eyes-16',
         name: 'Eyes 17',
         src: eyes16,
         thumbnail: eyes16,
-        position: { x: 0, y: -260 },
-        scale: 1.10
-      },
-      {
-        id: 'eyes-17',
-        name: 'Eyes 18',
-        src: eyes17,
-        thumbnail: eyes17,
-        position: { x: 0, y: -260 },
-        scale: 1.10
+        position: { x: -3, y: -250 },
+        scale: 1.0
       },
       {
         id: 'eyes-18',
         name: 'Eyes 19',
         src: eyes18,
         thumbnail: eyes18,
-        position: { x: 0, y: -260 },
-        scale: 1.10
+        position: { x: -3, y: -230 },
+        scale: 1.0
       },
       {
         id: 'eyes-19',
         name: 'Eyes 20',
         src: eyes19,
         thumbnail: eyes19,
-        position: { x: 0, y: -260 },
-        scale: 1.10
-      },
-      {
-        id: 'eyes-20',
-        name: 'Eyes 20',
-        src: eyes20,
-        thumbnail: eyes20,
-        position: { x: 0, y: -260 },
-        scale: 1.10
+        position: { x: 0, y: -240 },
+        scale: 1.05
       }
     ]
   },
@@ -716,7 +676,7 @@ export const CATEGORIES: Category[] = [
         name: 'Hat 1',
         src: hat1,
         thumbnail: hat1,
-        position: { x: 0, y: -120 },
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
@@ -724,23 +684,23 @@ export const CATEGORIES: Category[] = [
         name: 'Hat 2',
         src: hat2,
         thumbnail: hat2,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        position: { x: -2, y: -120 },
+        scale: 0.95
       },
       {
         id: 'hat-3',
         name: 'Hat 3',
         src: hat3,
         thumbnail: hat3,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        position: { x: 0, y: -130 },
+        scale: 1.08
       },
       {
         id: 'hat-4',
         name: 'Hat 4',
         src: hat4,
         thumbnail: hat4,
-        position: { x: 0, y: -120 },
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
@@ -748,111 +708,111 @@ export const CATEGORIES: Category[] = [
         name: 'Hat 5',
         src: hat5,
         thumbnail: hat5,
-        position: { x: 0, y: -120 },
+        position: { x: 0, y: -140 },
+        scale: 1.0
+      },
+      {
+        id: 'hat-6',
+        name: 'Hat 6',
+        src: hat7,
+        thumbnail: hat7,
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
         id: 'hat-7',
         name: 'Hat 7',
-        src: hat7,
-        thumbnail: hat7,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        src: hat8,
+        thumbnail: hat8,
+        position: { x: 0, y: -95 },
+        scale: 0.95
       },
       {
         id: 'hat-8',
         name: 'Hat 8',
-        src: hat8,
-        thumbnail: hat8,
-        position: { x: 0, y: -120 },
+        src: hat9,
+        thumbnail: hat9,
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
         id: 'hat-9',
         name: 'Hat 9',
-        src: hat9,
-        thumbnail: hat9,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        src: hat10,
+        thumbnail: hat10,
+        position: { x: -5, y: -120 },
+        scale: 0.95
       },
       {
         id: 'hat-10',
         name: 'Hat 10',
-        src: hat10,
-        thumbnail: hat10,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        src: hat11,
+        thumbnail: hat11,
+        position: { x: 0, y: -100 },
+        scale: 1
       },
       {
         id: 'hat-11',
         name: 'Hat 11',
-        src: hat11,
-        thumbnail: hat11,
-        position: { x: 0, y: -120 },
+        src: hat12,
+        thumbnail: hat12,
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
         id: 'hat-12',
         name: 'Hat 12',
-        src: hat12,
-        thumbnail: hat12,
-        position: { x: 0, y: -120 },
+        src: hat13,
+        thumbnail: hat13,
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
         id: 'hat-13',
         name: 'Hat 13',
-        src: hat13,
-        thumbnail: hat13,
-        position: { x: 0, y: -120 },
+        src: hat14,
+        thumbnail: hat14,
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
         id: 'hat-14',
         name: 'Hat 14',
-        src: hat14,
-        thumbnail: hat14,
-        position: { x: 0, y: -120 },
+        src: hat15,
+        thumbnail: hat15,
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
         id: 'hat-15',
         name: 'Hat 15',
-        src: hat15,
-        thumbnail: hat15,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        src: hat16,
+        thumbnail: hat16,
+        position: { x: 0, y: -100 },
+        scale: 1
       },
       {
         id: 'hat-16',
         name: 'Hat 16',
-        src: hat16,
-        thumbnail: hat16,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        src: hat17,
+        thumbnail: hat17,
+        position: { x: 0, y: -100 },
+        scale: 1
       },
       {
         id: 'hat-17',
         name: 'Hat 17',
-        src: hat17,
-        thumbnail: hat17,
-        position: { x: 0, y: -120 },
+        src: hat18,
+        thumbnail: hat18,
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
         id: 'hat-18',
         name: 'Hat 18',
-        src: hat18,
-        thumbnail: hat18,
-        position: { x: 0, y: -120 },
-        scale: 1.0
-      },
-      {
-        id: 'hat-19',
-        name: 'Hat 19',
         src: hat19,
         thumbnail: hat19,
-        position: { x: 0, y: -120 },
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
@@ -860,136 +820,136 @@ export const CATEGORIES: Category[] = [
         name: 'Hat 20',
         src: hat20,
         thumbnail: hat20,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        position: { x: 0, y: -100 },
+        scale: 1.00
       },
       {
         id: 'hat-21',
         name: 'Hat 21',
         src: hat21,
         thumbnail: hat21,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        position: { x: 0, y: -100 },
+        scale: 1
       },
       {
         id: 'hat-22',
         name: 'Hat 22',
         src: hat22,
         thumbnail: hat22,
-        position: { x: 0, y: -120 },
+        position: { x: -2, y: -100 },
+        scale: 1.0
+      },
+      {
+        id: 'hat-23',
+        name: 'Hat 23',
+        src: hat24,
+        thumbnail: hat24,
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
         id: 'hat-24',
         name: 'Hat 24',
-        src: hat24,
-        thumbnail: hat24,
-        position: { x: 0, y: -120 },
+        src: hat25,
+        thumbnail: hat25,
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
         id: 'hat-25',
         name: 'Hat 25',
-        src: hat25,
-        thumbnail: hat25,
-        position: { x: 0, y: -120 },
+        src: hat26,
+        thumbnail: hat26,
+        position: { x: 0, y: -100 },
         scale: 1.0
       },
       {
         id: 'hat-26',
         name: 'Hat 26',
-        src: hat26,
-        thumbnail: hat26,
+        src: hat27,
+        thumbnail: hat27,
         position: { x: 0, y: -120 },
-        scale: 1.0
+        scale: 0.95
       },
       {
         id: 'hat-27',
         name: 'Hat 27',
-        src: hat27,
-        thumbnail: hat27,
+        src: hat28,
+        thumbnail: hat28,
         position: { x: 0, y: -120 },
-        scale: 1.0
+        scale: 0.95
       },
       {
         id: 'hat-28',
         name: 'Hat 28',
-        src: hat28,
-        thumbnail: hat28,
+        src: hat29,
+        thumbnail: hat29,
         position: { x: 0, y: -120 },
-        scale: 1.0
+        scale: 0.95
       },
       {
         id: 'hat-29',
         name: 'Hat 29',
-        src: hat29,
-        thumbnail: hat29,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        src: hat30,
+        thumbnail: hat30,
+        position: { x: -5, y: -105 },
+        scale: 0.95
       },
       {
         id: 'hat-30',
         name: 'Hat 30',
-        src: hat30,
-        thumbnail: hat30,
-        position: { x: 0, y: -120 },
-        scale: 1.0
-      },
-      {
-        id: 'hat-31',
-        name: 'Hat 31',
         src: hat31,
         thumbnail: hat31,
         position: { x: 0, y: -120 },
         scale: 1.0
       },
       {
-        id: 'hat-32',
-        name: 'Hat 32',
+        id: 'hat-31',
+        name: 'Hat 31',
         src: hat32,
         thumbnail: hat32,
-        position: { x: 0, y: -120 },
+        position: { x: 0, y: -105 },
         scale: 1.0
+      },
+      {
+        id: 'hat-32',
+        name: 'Hat 32',
+        src: hat33,
+        thumbnail: hat33,
+        position: { x: 0, y: -100 },
+        scale: 1.00
       },
       {
         id: 'hat-33',
         name: 'Hat 33',
-        src: hat33,
-        thumbnail: hat33,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        src: hat34,
+        thumbnail: hat34,
+        position: { x: 0, y: -100 },
+        scale: 1.00
       },
       {
         id: 'hat-34',
         name: 'Hat 34',
-        src: hat34,
-        thumbnail: hat34,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        src: hat35,
+        thumbnail: hat35,
+        position: { x: 0, y: -105 },
+        scale: 0.95
       },
       {
         id: 'hat-35',
         name: 'Hat 35',
-        src: hat35,
-        thumbnail: hat35,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        src: hat36,
+        thumbnail: hat36,
+        position: { x: 0, y: -100 },
+        scale: 0.98
       },
       {
         id: 'hat-36',
         name: 'Hat 36',
-        src: hat36,
-        thumbnail: hat36,
-        position: { x: 0, y: -120 },
-        scale: 1.0
-      },
-      {
-        id: 'hat-37',
-        name: 'Hat 37',
         src: hat37,
         thumbnail: hat37,
-        position: { x: 0, y: -120 },
-        scale: 1.0
+        position: { x: 0, y: -130 },
+        scale: 1.1
       }
     ]
   },
@@ -998,285 +958,278 @@ export const CATEGORIES: Category[] = [
     name: 'Clothes',
     icon: '👕',
     items: [
-      {
-        id: 'clothes-0',
-        name: 'Outfit 1',
-        src: clothes0,
-        thumbnail: clothes0,
-        position: { x: 0, y: 170 },
-        scale: 0.32
-      },
+
       {
         id: 'clothes-1',
-        name: 'Outfit 2',
+        name: 'Outfit 1',
         src: clothes1,
         thumbnail: clothes1,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: -15, y: 10 },
+        scale: 1.10
       },
       {
         id: 'clothes-2',
-        name: 'Outfit 3',
+        name: 'Outfit 2',
         src: clothes2,
         thumbnail: clothes2,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: -7, y: 0 },
+        scale: 1
       },
       {
         id: 'clothes-3',
-        name: 'Outfit 4',
+        name: 'Outfit 3',
         src: clothes3,
         thumbnail: clothes3,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-4',
-        name: 'Outfit 5',
+        name: 'Outfit 4',
         src: clothes4,
         thumbnail: clothes4,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-5',
-        name: 'Outfit 6',
+        name: 'Outfit 5',
         src: clothes5,
         thumbnail: clothes5,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: -5, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-6',
-        name: 'Outfit 7',
+        name: 'Outfit 6',
         src: clothes6,
         thumbnail: clothes6,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-7',
-        name: 'Outfit 8',
+        name: 'Outfit 7',
         src: clothes7,
         thumbnail: clothes7,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-8',
-        name: 'Outfit 9',
+        name: 'Outfit 8',
         src: clothes8,
         thumbnail: clothes8,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-9',
-        name: 'Outfit 10',
+        name: 'Outfit 9',
         src: clothes9,
         thumbnail: clothes9,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-10',
-        name: 'Outfit 11',
+        name: 'Outfit 10',
         src: clothes10,
         thumbnail: clothes10,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-11',
-        name: 'Outfit 12',
+        name: 'Outfit 11',
         src: clothes11,
         thumbnail: clothes11,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-12',
-        name: 'Outfit 13',
+        name: 'Outfit 12',
         src: clothes12,
         thumbnail: clothes12,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-13',
-        name: 'Outfit 14',
+        name: 'Outfit 13',
         src: clothes13,
         thumbnail: clothes13,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-14',
-        name: 'Outfit 15',
+        name: 'Outfit 14',
         src: clothes14,
         thumbnail: clothes14,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-15',
-        name: 'Outfit 16',
+        name: 'Outfit 15',
         src: clothes15,
         thumbnail: clothes15,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-16',
-        name: 'Outfit 17',
+        name: 'Outfit 16',
         src: clothes16,
         thumbnail: clothes16,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-17',
-        name: 'Outfit 18',
+        name: 'Outfit 17',
         src: clothes17,
         thumbnail: clothes17,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-18',
-        name: 'Outfit 19',
+        name: 'Outfit 18',
         src: clothes18,
         thumbnail: clothes18,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-19',
-        name: 'Outfit 20',
+        name: 'Outfit 19',
         src: clothes19,
         thumbnail: clothes19,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-20',
-        name: 'Outfit 21',
+        name: 'Outfit 20',
         src: clothes20,
         thumbnail: clothes20,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-21',
-        name: 'Outfit 22',
+        name: 'Outfit 21',
         src: clothes21,
         thumbnail: clothes21,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-22',
-        name: 'Outfit 23',
+        name: 'Outfit 22',
         src: clothes22,
         thumbnail: clothes22,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-24',
         name: 'Outfit 24',
         src: clothes24,
         thumbnail: clothes24,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-25',
         name: 'Outfit 25',
         src: clothes25,
         thumbnail: clothes25,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-26',
         name: 'Outfit 26',
         src: clothes26,
         thumbnail: clothes26,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-27',
         name: 'Outfit 27',
         src: clothes27,
         thumbnail: clothes27,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-28',
         name: 'Outfit 28',
         src: clothes28,
         thumbnail: clothes28,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-29',
         name: 'Outfit 29',
         src: clothes29,
         thumbnail: clothes29,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-30',
         name: 'Outfit 30',
         src: clothes30,
         thumbnail: clothes30,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-31',
         name: 'Outfit 31',
         src: clothes31,
         thumbnail: clothes31,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-32',
         name: 'Outfit 32',
         src: clothes32,
         thumbnail: clothes32,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-33',
         name: 'Outfit 33',
         src: clothes33,
         thumbnail: clothes33,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-34',
         name: 'Outfit 34',
         src: clothes34,
         thumbnail: clothes34,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       },
       {
         id: 'clothes-35',
         name: 'Outfit 35',
         src: clothes35,
         thumbnail: clothes35,
-        position: { x: 0, y: 170 },
-        scale: 0.32
+        position: { x: 0, y: 0 },
+        scale: 1.0
       }
     ]
   },
@@ -1388,6 +1341,109 @@ export const CATEGORIES: Category[] = [
         thumbnail: item13,
         position: { x: 0, y: 400 },
         scale: 0.30
+      }
+    ]
+  },
+  {
+    id: 'sunglasses',
+    name: 'Glasses',
+    icon: '🕶️',
+    items: [
+      {
+        id: 'sunglasses-0',
+        name: 'Glasses 1',
+        src: sunglasses0,
+        thumbnail: sunglasses0,
+        position: { x: 0, y: -200 },
+        scale: 0.9
+      },
+      {
+        id: 'sunglasses-1',
+        name: 'Glasses 2',
+        src: sunglasses1,
+        thumbnail: sunglasses1,
+        position: { x: 0, y: -200 },
+        scale: 0.9
+      },
+      {
+        id: 'sunglasses-2',
+        name: 'Glasses 3',
+        src: sunglasses2,
+        thumbnail: sunglasses2,
+        position: { x: -5, y: -170 },
+        scale: 0.8
+      },
+      {
+        id: 'sunglasses-3',
+        name: 'Glasses 4',
+        src: sunglasses3,
+        thumbnail: sunglasses3,
+        position: { x: 0, y: -170 },
+        scale: 0.8
+      },
+      {
+        id: 'sunglasses-4',
+        name: 'Glasses 5',
+        src: sunglasses4,
+        thumbnail: sunglasses4, 
+        position: { x: 0, y: -170 },
+        scale: 0.8
+      },
+      {
+        id: 'sunglasses-5',
+        name: 'Glasses 6',
+        src: sunglasses5,
+        thumbnail: sunglasses5,
+        position: { x: 0, y: -200 },
+        scale: 0.9
+      },
+      {
+        id: 'eyes-1',
+        name: 'Glasses 7',
+        src: eyes1,
+        thumbnail: eyes1,
+        position: { x: 0, y: -260 },
+        scale: 1.10
+      },
+      {
+        id: 'eyes-11',
+        name: 'Glasses 8',
+        src: eyes11,
+        thumbnail: eyes11,
+        position: { x: -5, y: -250 },
+        scale: 1.10
+      },
+      {
+        id: 'eyes-12',
+        name: 'Glasses 9',
+        src: eyes12,
+        thumbnail: eyes12,
+        position: { x: -3, y: -220 },
+        scale: 1
+      },
+      {
+        id: 'eyes-15',
+        name: 'Glasses 10',
+        src: eyes15,
+        thumbnail: eyes15,
+        position: { x: -3, y: -245 },
+        scale: 1.10
+      },
+      {
+        id: 'eyes-17',
+        name: 'Glasses 11',
+        src: eyes17,
+        thumbnail: eyes17,
+        position: { x: -3, y: -230 },
+        scale: 1.0
+      },
+      {
+        id: 'eyes-20',
+        name: 'Glasses 12',
+        src: eyes20,
+        thumbnail: eyes20,
+        position: { x: 0, y: -260 },
+        scale: 1.10
       }
     ]
   }

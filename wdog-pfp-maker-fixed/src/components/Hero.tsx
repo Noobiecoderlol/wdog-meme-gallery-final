@@ -1,7 +1,10 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Download, Palette, Zap, Send, Twitter, FileText, LineChart, Wand2 } from 'lucide-react';
+import { Sparkles, Download, Palette, Zap, Twitter, LineChart, Wand2 } from 'lucide-react';
+import { XIcon } from '@/components/ui/x-icon';
 import { useNavigate } from 'react-router-dom';
+import baseDog from '@/assets/body/base-dog.webp';
+import wrapper from '@/assets/body/wrapper.webp';
 
 interface HeroProps {
   onGetStarted: () => void;
@@ -18,26 +21,10 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted }) => {
           <Button
             variant="ghost"
             size="icon"
-            className="bg-[#FF5722] hover:bg-[#FF5722]/90 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
-            onClick={() => window.open('https://t.me', '_blank')}
+            className="bg-black hover:bg-gray-800 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
+            onClick={() => window.open('https://t.co/GurmgVXpiR', '_blank')}
           >
-            <Send className="h-4 w-4 sm:h-5 sm:w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="bg-[#1DA1F2] hover:bg-[#1DA1F2]/90 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
-            onClick={() => window.open('https://x.com/i/communities/1848841389729059126', '_blank')}
-          >
-            <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="bg-[#6E6E6E] hover:bg-[#6E6E6E]/90 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
-            onClick={() => window.open('https://solscan.io', '_blank')}
-          >
-            <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
+            <XIcon className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
           </Button>
           <Button
             variant="ghost"
@@ -53,7 +40,18 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted }) => {
           {/* Animated logo/icon */}
           <div className="mb-4 sm:mb-6 flex justify-center">
             <div className="relative">
-              <div className="text-6xl sm:text-8xl animate-float">🐕‍🦺</div>
+              {/* Base dog image */}
+              <img 
+                src={baseDog} 
+                alt="WDOG Base Dog" 
+                className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 animate-float object-contain"
+              />
+              {/* Wrapper overlay */}
+              <img 
+                src={wrapper} 
+                alt="WDOG Wrapper" 
+                className="absolute inset-0 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 animate-float object-contain"
+              />
               <div className="absolute -top-1 sm:-top-2 -right-1 sm:-right-2 text-xl sm:text-2xl animate-pulse">✨</div>
               <div className="absolute -bottom-1 -left-1 sm:-left-2 text-lg sm:text-xl animate-pulse">🌟</div>
             </div>

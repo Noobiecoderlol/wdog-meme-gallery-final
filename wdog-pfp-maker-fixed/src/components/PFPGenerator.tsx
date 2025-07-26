@@ -11,19 +11,18 @@ import {
   Sparkles, 
   Wand2, 
   ArrowLeft, 
-  Send, 
   Twitter, 
-  FileText, 
   LineChart, 
   Crosshair, 
   RotateCcw,
   Type,
   Move
 } from 'lucide-react';
+import { XIcon } from '@/components/ui/x-icon';
 import { toast } from 'sonner';
 import { BACKGROUNDS, CATEGORIES, BASE_DOG, WRAPPER, type Asset } from '@/data/assets';
 
-// Lägg till nya konstanter för standardfärger
+// Standard color presets
 const PRESET_COLORS = [
   { name: 'White', value: '#FFFFFF' },
   { name: 'Black', value: '#000000' },
@@ -35,7 +34,7 @@ const PRESET_COLORS = [
   { name: 'Pink', value: '#FF69B4' },
 ];
 
-// Lägg till nya interfaces för text-funktionaliteten
+// Text functionality interfaces
 interface TextElement {
   id: string;
   text: string;
@@ -45,8 +44,8 @@ interface TextElement {
   fontFamily: string;
   color: string;
   isDragging: boolean;
-  rotation: number; // Lägg till rotation
-  scale: number; // Lägg till scale
+  rotation: number; // Rotation in degrees
+  scale: number; // Scale factor
 }
 
 interface PresetPosition {
@@ -56,7 +55,7 @@ interface PresetPosition {
   fontSize: number;
 }
 
-// Förinställda typsnitt
+// Preset fonts
 const FONTS = [
   { name: 'Arial', value: 'Arial' },
   { name: 'Comic Sans MS', value: 'Comic Sans MS' },
@@ -65,7 +64,7 @@ const FONTS = [
   { name: 'Times New Roman', value: 'Times New Roman' }
 ];
 
-// Förinställda positioner
+// Preset positions
 const PRESET_POSITIONS: PresetPosition[] = [
   { name: 'Top Center', x: 256, y: 50, fontSize: 36 },
   { name: 'Bottom Center', x: 256, y: 462, fontSize: 36 },
@@ -117,7 +116,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
   const [mousePos, setMousePos] = useState<Coordinates>({ x: 0, y: 0 });
   const [canvasScale, setCanvasScale] = useState(1);
 
-  // Lägg till state för text-funktionaliteten
+  // Text functionality state
   const [textElements, setTextElements] = useState<TextElement[]>([]);
   const [activeTextId, setActiveTextId] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -130,11 +129,11 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
   const [startAngle, setStartAngle] = useState(0);
   const [startScale, setStartScale] = useState(1);
 
-  // Lägg till ny state för skylt-kontroller
+  // Sign controls state
   const [signPosition, setSignPosition] = useState({ x: 0, y: -150 });
   const [signScale, setSignScale] = useState(1.0);
 
-  // Load and cache images
+
   const imageCache = useRef<Map<string, HTMLImageElement>>(new Map());
 
   const loadImage = (src: string): Promise<HTMLImageElement> => {
@@ -155,29 +154,29 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     });
   };
 
-  // Add mouse position tracking
+
   const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isTestMode || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     
-    // Calculate the scale factor between the canvas's display size and its internal size
+
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
     
-    // Get mouse position relative to canvas
+
     const x = Math.round((event.clientX - rect.left) * scaleX);
     const y = Math.round((event.clientY - rect.top) * scaleY);
     
-    // Calculate position relative to center
+
     const centerX = Math.round(x - canvas.width / 2);
     const centerY = Math.round(y - canvas.height / 2);
     
     setMousePos({ x: centerX, y: centerY });
   };
 
-  // Funktion för att beräkna vinkel mellan två punkter
+  // Calculate angle between two points
   const getAngle = (cx: number, cy: number, ex: number, ey: number) => {
     const dy = ey - cy;
     const dx = ex - cx;
@@ -185,12 +184,12 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     return theta * 180 / Math.PI;
   };
 
-  // Funktion för att beräkna avstånd mellan två punkter
+  // Calculate distance between two points
   const getDistance = (x1: number, y1: number, x2: number, y2: number) => {
     return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
   };
 
-  // Uppdatera handleCanvasMouseDown för att ta bort rektangeln
+  // Update handleCanvasMouseDown to remove rectangle
   const handleCanvasMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
@@ -205,20 +204,20 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     const activeText = textElements.find(t => t.id === activeTextId);
     if (!activeText) return;
 
-    // Beräkna textens bounds utan att rita dem
+    // Calculate text bounds without drawing them
     ctx.save();
     ctx.font = `${activeText.fontSize * (activeText.scale || 1)}px ${activeText.fontFamily}`;
     const metrics = ctx.measureText(activeText.text);
     const height = activeText.fontSize * (activeText.scale || 1);
     
-    // Transformera musposition till textens koordinatsystem
+    // Transform mouse position to text coordinate system
     const dx = mouseX - activeText.x;
     const dy = mouseY - activeText.y;
     const angle = -(activeText.rotation || 0) * Math.PI / 180;
     const rotatedX = dx * Math.cos(angle) - dy * Math.sin(angle);
     const rotatedY = dx * Math.sin(angle) + dy * Math.cos(angle);
 
-    // Kolla om klicket är inom textens bounds
+    // Check if click is within text bounds
     const bounds = {
       left: -metrics.width/2,
       right: metrics.width/2,
@@ -241,7 +240,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     }
   };
 
-  // Uppdatera handleCanvasMouseMove
+  // Update handleCanvasMouseMove
   const handleCanvasMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
@@ -274,7 +273,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       setDragStart({ x: mouseX, y: mouseY });
     }
 
-    // Uppdatera muspekaren baserat på vad vi hovrar över
+    // Update cursor based on what we're hovering over
     const controlPoints: ControlPoint[] = [
       { 
         x: activeText.x, 
@@ -301,7 +300,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     canvas.style.cursor = cursor;
   };
 
-  // Uppdatera handleCanvasMouseUp
+  // Update handleCanvasMouseUp
   const handleCanvasMouseUp = () => {
     setIsDragging(false);
     setActiveControl(null);
@@ -309,7 +308,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     setStartScale(1);
   };
 
-  // Hantera musklick på canvas för att hitta och aktivera text
+  // Handle mouse click on canvas to find and activate text
   const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
@@ -321,13 +320,13 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     const x = (e.clientX - rect.left) * scaleX;
     const y = (e.clientY - rect.top) * scaleY;
 
-    // Kolla om klicket träffar någon text
+    // Check if click hits any text
     textElements.forEach(text => {
       ctx.font = `${text.fontSize * text.scale}px ${text.fontFamily}`;
       const metrics = ctx.measureText(text.text);
       const height = text.fontSize * text.scale;
 
-      // Beräkna textens bounds med rotation
+      // Calculate text bounds with rotation
       const bounds = {
         left: text.x - (metrics.width / 2),
         right: text.x + (metrics.width / 2),
@@ -335,7 +334,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
         bottom: text.y + (height / 2)
       };
 
-      // Kolla om klicket är inom textens bounds
+      // Check if click is within text bounds
       if (x >= bounds.left && x <= bounds.right && 
           y >= bounds.top && y <= bounds.bottom) {
         setActiveTextId(text.id);
@@ -343,7 +342,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     });
   };
 
-  // Hantera rotation och skalning med tangentbord när text är aktiv
+  // Handle rotation and scaling with keyboard when text is active
   const handleKeyDown = (e: KeyboardEvent) => {
     if (!activeTextId) return;
 
@@ -352,14 +351,14 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
 
     switch (e.key) {
       case 'r':
-        // Rotera med R + piltangenter
+        // Rotate with R + arrow keys
         if (e.shiftKey) {
           setIsRotating(true);
           setRotationStart(text.rotation);
         }
         break;
       case 's':
-        // Skala med S + piltangenter
+        // Scale with S + arrow keys
         if (e.shiftKey) {
           setIsScaling(true);
           setScaleStart(text.scale);
@@ -387,7 +386,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     if (e.key === 's') setIsScaling(false);
   };
 
-  // Lägg till keyboard event listeners
+  // Add keyboard event listeners
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
@@ -397,7 +396,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     };
   }, [activeTextId, isRotating, isScaling]);
 
-  // Uppdatera canvas scale on resize
+  // Update canvas scale on resize
   useEffect(() => {
     const updateCanvasScale = () => {
       if (canvasRef.current) {
@@ -412,7 +411,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     return () => window.removeEventListener('resize', updateCanvasScale);
   }, []);
 
-  // Uppdatera selectedAssets när position eller skala ändras
+  // Update selectedAssets when position or scale changes
   useEffect(() => {
     if (selectedAssets.signs) {
       setSelectedAssets(prev => ({
@@ -426,7 +425,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     }
   }, [signPosition, signScale]);
 
-  // Lägg till handleSignPosition funktion
+  // Add handleSignPosition function
   const handleSignPosition = (position: string) => {
     switch (position) {
       case 'top-center':
@@ -461,10 +460,10 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     if (!ctx) return;
 
     try {
-      // Clear canvas
+    
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Calculate base dimensions
+  
       const canvasCenter = canvas.width / 2;
       const dogBaseSize = Math.min(canvas.width, canvas.height);
       const dogScale = 1.0;
@@ -472,36 +471,39 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       const dogX = canvasCenter - (dogSize / 2);
       const dogY = 0;
 
-      // Draw background
+  
       const bgImg = await loadImage(selectedBackground.src);
       ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
 
-      // Enable high quality rendering
+  
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
 
-      // Draw the base dog
+  
       const dogImg = await loadImage(BASE_DOG.src);
       ctx.drawImage(dogImg, dogX, dogY, dogSize, dogSize);
 
-      // Check if a hat is selected
-      const hasHat = selectedAssets['hats'] !== undefined;
+      // Check if selected hat should hide the wrapper
+      // These specific hats are designed to work without the wrapper overlay
+      const selectedHat = selectedAssets['hats'];
+      const hatsThatHideWrapper = ['hat-2', 'hat-3', 'hat-5', 'hat-16', 'hat-21', 'hat-22', 'hat-25', 'hat-26', 'hat-29', 'hat-31', 'hat-27', 'hat-30', 'hat-32', 'hat-36'];
+      const shouldHideWrapper = selectedHat && hatsThatHideWrapper.includes(selectedHat.id);
 
-      // Draw wrapper if no hat is selected
-      if (!hasHat) {
+      // Only draw wrapper if it shouldn't be hidden
+      if (!shouldHideWrapper) {
         const wrapperImg = await loadImage(WRAPPER.src);
         ctx.globalCompositeOperation = 'source-over';
         ctx.drawImage(wrapperImg, dogX, dogY, dogSize, dogSize);
       }
 
-      // Define rendering order
-      const layerOrder = ['clothes', 'items', 'eyes', 'hats', 'signs', 'signs2'];
+  
+      const layerOrder = ['clothes', 'items', 'eyes', 'sunglasses', 'hats', 'signs', 'signs2'];
       
       for (const category of layerOrder) {
         const asset = selectedAssets[category];
         if (!asset) continue;
 
-        // Om det är en skylt, använd renderFunction med position och skala
+        // If it's a sign, use renderFunction with position and scale
         if (category === 'signs' && asset.renderFunction) {
           const x = asset.position?.x || 0;
           const y = asset.position?.y || 0;
@@ -510,29 +512,29 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
           continue;
         }
 
-        // Hantera Signs 2 (bildbaserade skyltar)
+        // Handle Signs 2 (image-based signs)
         if (category === 'signs2') {
           const assetImg = await loadImage(asset.src);
-          const scale = asset.scale || 0.4; // Minska storleken ytterligare
+          const scale = asset.scale || 0.4; // Reduce size further
           const assetSize = dogSize * scale;
           
           let assetX = dogX + (dogSize / 2);
           let assetY = dogY + (dogSize / 2);
 
-          // Apply asset-specific position adjustments
+
           if (asset.position) {
             assetX += asset.position.x * (dogSize / 512);
             assetY += asset.position.y * (dogSize / 512);
           }
 
-          // Center asset horizontally
+
           assetX -= assetSize / 2;
 
-          // Sätt composite operation för att hantera transparens korrekt
+          // Set composite operation to handle transparency correctly
           ctx.globalCompositeOperation = 'source-over';
           ctx.globalAlpha = 1.0;
           
-          // Rita skylten med transparens och hantera vit bakgrund
+          // Draw sign with transparency and handle white background
           ctx.drawImage(assetImg, assetX, assetY, assetSize, assetSize);
           console.log(`Signs2 rendered at:`, { x: assetX, y: assetY, size: assetSize });
           continue;
@@ -550,12 +552,11 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
         // Adjust position for each category
         switch (category) {
           case 'clothes':
-            assetX = dogX - (dogSize * 0.02);
+            // Clothes should cover the entire dog, so we don't center them
+            assetX = dogX;
             assetY = dogY;
             ctx.globalCompositeOperation = 'source-over';
-            ctx.drawImage(assetImg, assetX, assetY, dogSize, dogSize);
-            console.log('Clothes rendered at:', { x: assetX, y: assetY, size: dogSize });
-            continue;
+            break;
             
           case 'items': // Accessories
             // Position accessories
@@ -583,23 +584,37 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
             assetY = dogY + (dogSize * 0.2);
             ctx.globalCompositeOperation = 'source-over';
             break;
+            
+          case 'sunglasses':
+            assetY = dogY + (dogSize * 0.45);
+            ctx.globalCompositeOperation = 'source-over';
+            break;
         }
 
-        // Apply asset-specific position adjustments
+
         if (asset.position) {
           assetX += asset.position.x * (dogSize / 512);
           assetY += asset.position.y * (dogSize / 512);
         }
 
-        // Center asset horizontally
-        assetX -= assetSize / 2;
+
+        if (category !== 'clothes') {
+          assetX -= assetSize / 2;
+        }
 
         ctx.globalAlpha = 1.0;
-        ctx.drawImage(assetImg, assetX, assetY, assetSize, assetSize);
-        console.log(`${category} rendered at:`, { x: assetX, y: assetY, size: assetSize });
+        
+
+        if (category === 'clothes') {
+          ctx.drawImage(assetImg, assetX, assetY, assetSize, assetSize);
+          console.log(`${category} rendered at:`, { x: assetX, y: assetY, size: assetSize });
+        } else {
+          ctx.drawImage(assetImg, assetX, assetY, assetSize, assetSize);
+          console.log(`${category} rendered at:`, { x: assetX, y: assetY, size: assetSize });
+        }
       }
 
-      // Rita text och kontrollpunkter
+
       textElements.forEach(text => {
         if (!ctx || !text.text.trim()) return;
         
@@ -608,7 +623,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
         ctx.rotate((text.rotation || 0) * Math.PI / 180);
         ctx.scale(text.scale || 1, text.scale || 1);
         
-        // Rita text
+
         ctx.font = `${text.fontSize}px ${text.fontFamily}`;
         ctx.fillStyle = text.color;
         ctx.textAlign = 'center';
@@ -618,43 +633,43 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
         ctx.restore();
       });
 
-      // Rita bara texten utan några visuella markörer
+      // Draw only text without visual markers
       textElements.forEach(text => {
-        if (!ctx || !text.text.trim()) return; // Skippa tomma texter
+        if (!ctx || !text.text.trim()) return; // Skip empty texts
         
         ctx.font = `${text.fontSize}px ${text.fontFamily}`;
         ctx.fillStyle = text.color;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         
-        // Rita text
+        // Draw text
         ctx.fillText(text.text, text.x, text.y);
         
       });
 
-      // Draw test mode overlays
+
       if (isTestMode) {
-        // Draw center crosshair
+
         ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
         ctx.lineWidth = 1;
         
-        // Draw vertical line
+
         ctx.beginPath();
         ctx.moveTo(canvas.width / 2, 0);
         ctx.lineTo(canvas.width / 2, canvas.height);
         ctx.stroke();
         
-        // Draw horizontal line
+
         ctx.beginPath();
         ctx.moveTo(0, canvas.height / 2);
         ctx.lineTo(canvas.width, canvas.height / 2);
         ctx.stroke();
 
-        // Draw coordinate grid
+
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
         ctx.lineWidth = 0.5;
         
-        // Draw vertical grid lines
+
         for (let x = 0; x <= canvas.width; x += 50) {
           ctx.beginPath();
           ctx.moveTo(x, 0);
@@ -662,7 +677,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
           ctx.stroke();
         }
         
-        // Draw horizontal grid lines
+
         for (let y = 0; y <= canvas.height; y += 50) {
           ctx.beginPath();
           ctx.moveTo(0, y);
@@ -724,12 +739,12 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     toast.success('✨ Randomized your WDOG!');
   };
 
-  // Funktion för att lägga till ny text
+  // Function to add new text
   const addNewText = (preset?: PresetPosition) => {
     const newId = `text-${Date.now()}`;
     const newText: TextElement = {
       id: newId,
-      text: '', // Tom text som default istället för 'Double click to edit'
+      text: '', // Empty text as default instead of 'Double click to edit'
       x: preset?.x ?? 256,
       y: preset?.y ?? 256,
       fontSize: preset?.fontSize ?? 36,
@@ -743,7 +758,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     setActiveTextId(newId);
   };
 
-  // Funktion för att uppdatera text
+  // Function to update text
   const updateText = (id: string, updates: Partial<TextElement>) => {
     setTextElements(prev => 
       prev.map(text => 
@@ -752,20 +767,20 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     );
   };
 
-  // Uppdatera resetCustomization funktionen för att inkludera text
+  // Update resetCustomization function to include text
   const resetCustomization = () => {
     setSelectedBackground(BACKGROUNDS[0]);
     setSelectedAssets({});
     setActiveCategory(CATEGORIES[0].id);
-    setTextElements([]); // Återställ alla texter
+    setTextElements([]); // Reset all texts
     setActiveTextId(null);
     toast.success('🔄 Reset to default settings');
   };
 
-  // Uppdatera position för aktiv text eller skapa ny om ingen är aktiv
+  // Update position for active text or create new if none is active
   const applyPresetPosition = (preset: PresetPosition) => {
     if (activeTextId) {
-      // Uppdatera positionen för aktiv text
+      // Update position of active text
       updateText(activeTextId, {
         x: preset.x,
         y: preset.y,
@@ -773,7 +788,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       });
       toast.success('✨ Text position updated');
     } else if (textElements.length > 0) {
-      // Om det finns text men ingen är aktiv, aktivera den första och uppdatera den
+      // If there's text but none is active, activate the first one and update it
       const firstText = textElements[0];
       setActiveTextId(firstText.id);
       updateText(firstText.id, {
@@ -783,16 +798,16 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       });
       toast.success('✨ Text position updated');
     } else {
-      // Om ingen text finns, skapa ny
+      // If no text exists, create new
       addNewText(preset);
       toast.success('✨ New text added');
     }
   };
 
-  // Render canvas whenever selections change
+
   useEffect(() => {
     renderCanvas();
-  }, [selectedBackground, selectedAssets, isTestMode, textElements]); // Added isTestMode and textElements to re-render
+  }, [selectedBackground, selectedAssets, isTestMode, textElements]);
 
   const activeItems = CATEGORIES.find(c => c.id === activeCategory)?.items || [];
 
@@ -804,26 +819,10 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
           <Button
             variant="ghost"
             size="icon"
-            className="bg-[#FF5722] hover:bg-[#FF5722]/90 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
-            onClick={() => window.open('https://t.me', '_blank')}
+            className="bg-black hover:bg-gray-800 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
+            onClick={() => window.open('https://t.co/GurmgVXpiR', '_blank')}
           >
-            <Send className="h-4 w-4 sm:h-5 sm:w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="bg-[#1DA1F2] hover:bg-[#1DA1F2]/90 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
-            onClick={() => window.open('https://x.com/i/communities/1848841389729059126', '_blank')}
-          >
-            <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="bg-[#6E6E6E] hover:bg-[#6E6E6E]/90 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
-            onClick={() => window.open('https://solscan.io', '_blank')}
-          >
-            <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
+            <XIcon className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
           </Button>
           <Button
             variant="ghost"
@@ -884,7 +883,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                       setIsTestMode(!isTestMode);
                       renderCanvas();
                     }}
-                    className={`${isTestMode ? "bg-gradient-accent" : ""} hidden`} // Dold för användare men tillgänglig för debug
+                    className={`${isTestMode ? "bg-gradient-accent" : ""} hidden`} // Hidden from user but available for debug
                   >
                     <Crosshair className="w-4 h-4 mr-2" />
                     {isTestMode ? "Exit Test" : "Test"}
