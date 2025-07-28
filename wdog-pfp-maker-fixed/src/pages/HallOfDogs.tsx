@@ -89,7 +89,7 @@ const HallOfDogs: React.FC = () => {
             Hall of DOG's
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Explore a random selection of legendary WDOG profile pictures. Click any image to download!
+            Explore a random selection of legendary wDOG profile pictures. Click any image to download!
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
@@ -149,7 +149,7 @@ const HallOfDogs: React.FC = () => {
         {/* Page Footer */}
         <div className="text-center mt-16 mb-8">
           <p className="text-muted-foreground mb-4">
-            WDOG is a fully decentralized meme that gained traction organically on pump.fun, without influencer promotion.
+            wDOG is a fully decentralized meme that gained traction organically on pump.fun, without influencer promotion.
           </p>
           <p className="text-sm text-muted-foreground">
             Like early Bitcoin, its rise is driven by community engagement, highlighting the power of true decentralization.

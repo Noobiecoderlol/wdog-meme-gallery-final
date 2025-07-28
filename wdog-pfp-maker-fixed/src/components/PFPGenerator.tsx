@@ -16,7 +16,9 @@ import {
   Crosshair, 
   RotateCcw,
   Type,
-  Move
+  Move,
+  Upload,
+  Image
 } from 'lucide-react';
 import { XIcon } from '@/components/ui/x-icon';
 import { toast } from 'sonner';
@@ -133,8 +135,12 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
   const [signPosition, setSignPosition] = useState({ x: 0, y: -150 });
   const [signScale, setSignScale] = useState(1.0);
 
+  // Custom background upload state
+  const [customBackgrounds, setCustomBackgrounds] = useState<Asset[]>([]);
+  const [uploadedBackgrounds, setUploadedBackgrounds] = useState<Asset[]>([]);
 
-  const imageCache = useRef<Map<string, HTMLImageElement>>(new Map());
+
+  const imageCache = useRef<Map<string, HTMLImageElement>>(new Map<string, HTMLImageElement>());
 
   const loadImage = (src: string): Promise<HTMLImageElement> => {
     return new Promise((resolve, reject) => {
@@ -143,7 +149,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
         return;
       }
 
-      const img = new Image();
+      const img = document.createElement('img');
       img.crossOrigin = 'anonymous';
       img.onload = () => {
         imageCache.current.set(src, img);
@@ -718,7 +724,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
         a.download = 'wdog-pfp.png';
         a.click();
         URL.revokeObjectURL(url);
-        toast.success('🎉 Your WDOG PFP is ready!');
+        toast.success('🎉 Your wDOG PFP is ready!');
       }
       setIsGenerating(false);
     }, 'image/png');
@@ -736,7 +742,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       }
     });
     setSelectedAssets(newAssets);
-    toast.success('✨ Randomized your WDOG!');
+    toast.success('✨ Randomized your wDOG!');
   };
 
   // Function to add new text
@@ -774,7 +780,59 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     setActiveCategory(CATEGORIES[0].id);
     setTextElements([]); // Reset all texts
     setActiveTextId(null);
+    setUploadedBackgrounds([]); // Clear custom backgrounds
+    setCustomBackgrounds([]); // Clear custom backgrounds
     toast.success('🔄 Reset to default settings');
+  };
+
+  // Handle background upload functionality
+  const handleBackgroundUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    const newBackgrounds: Asset[] = [];
+    
+    Array.from(files).forEach((file, index) => {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        toast.error(`❌ ${file.name} is not a valid image file`);
+        return;
+      }
+
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error(`❌ ${file.name} is too large. Maximum size is 5MB`);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        if (result) {
+          const newBackground: Asset = {
+            id: `custom-bg-${Date.now()}-${index}`,
+            name: `Custom Background ${uploadedBackgrounds.length + newBackgrounds.length + 1}`,
+            src: result,
+            thumbnail: result
+          };
+          
+          newBackgrounds.push(newBackground);
+          
+          // Update state when all files are processed
+          if (newBackgrounds.length === Array.from(files).filter(f => 
+            f.type.startsWith('image/') && f.size <= 5 * 1024 * 1024
+          ).length) {
+            setUploadedBackgrounds(prev => [...prev, ...newBackgrounds]);
+            setCustomBackgrounds(prev => [...prev, ...newBackgrounds]);
+            toast.success(`✅ Successfully uploaded ${newBackgrounds.length} background(s)`);
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Reset the input
+    event.target.value = '';
   };
 
   // Update position for active text or create new if none is active
@@ -848,7 +906,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
               </Button>
             )}
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              WDOG PFP Generator
+              wDOG PFP Generator
             </h1>
           </div>
           <p className="text-muted-foreground text-base sm:text-lg px-4">
@@ -1159,9 +1217,33 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
           <div className="space-y-4 sm:space-y-6">
             {/* Backgrounds */}
             <Card className="p-3 sm:p-6 bg-gradient-card border-border/50 shadow-card">
-              <h3 className="text-base sm:text-lg font-semibold mb-4 text-foreground">Backgrounds</h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-base sm:text-lg font-semibold text-foreground">Backgrounds</h3>
+                
+                {/* Upload Button */}
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleBackgroundUpload}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    id="background-upload"
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="bg-gradient-secondary hover:bg-gradient-secondary/80 text-primary-foreground border-primary/20"
+                    onClick={() => document.getElementById('background-upload')?.click()}
+                  >
+                    <Upload className="w-4 h-4 mr-2" />
+                    Upload
+                  </Button>
+                </div>
+              </div>
               <ScrollArea className="h-[200px] sm:h-[400px] pr-4">
                 <div className="grid grid-cols-2 sm:grid-cols-1 gap-3">
+                  {/* Default Backgrounds */}
                   {BACKGROUNDS.map((bg) => (
                     <button
                       key={bg.id}
@@ -1183,6 +1265,44 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                       </div>
                     </button>
                   ))}
+                  
+                  {/* Custom Uploaded Backgrounds */}
+                  {uploadedBackgrounds.length > 0 && (
+                    <>
+                      <div className="col-span-2 sm:col-span-1 mt-4 mb-2">
+                        <div className="flex items-center gap-2">
+                          <Image className="w-4 h-4 text-primary" />
+                          <span className="text-sm font-medium text-primary">Custom Backgrounds</span>
+                        </div>
+                      </div>
+                      {uploadedBackgrounds.map((bg) => (
+                        <button
+                          key={bg.id}
+                          onClick={() => setSelectedBackground(bg)}
+                          className={`relative overflow-hidden rounded-lg border-2 transition-all duration-300 ${
+                            selectedBackground.id === bg.id 
+                              ? 'border-primary shadow-glow-primary' 
+                              : 'border-border hover:border-primary/50'
+                          }`}
+                        >
+                          <img
+                            src={bg.thumbnail}
+                            alt={bg.name}
+                            className="w-full h-16 sm:h-20 object-cover"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                          <div className="absolute bottom-1 left-2 text-xs font-medium text-white">
+                            {bg.name}
+                          </div>
+                          <div className="absolute top-1 right-1">
+                            <Badge className="bg-primary text-primary-foreground text-xs px-1">
+                              Custom
+                            </Badge>
+                          </div>
+                        </button>
+                      ))}
+                    </>
+                  )}
                 </div>
               </ScrollArea>
             </Card>

@@ -1354,56 +1354,56 @@ export const CATEGORIES: Category[] = [
         name: 'Glasses 1',
         src: sunglasses0,
         thumbnail: sunglasses0,
-        position: { x: 0, y: -200 },
-        scale: 0.9
+        position: { x: 0, y: -150 },
+        scale: 0.72
       },
       {
         id: 'sunglasses-1',
         name: 'Glasses 2',
         src: sunglasses1,
         thumbnail: sunglasses1,
-        position: { x: 0, y: -200 },
-        scale: 0.9
+        position: { x: 0, y: -150 },
+        scale: 0.72
       },
       {
         id: 'sunglasses-2',
         name: 'Glasses 3',
         src: sunglasses2,
         thumbnail: sunglasses2,
-        position: { x: -5, y: -170 },
-        scale: 0.8
+        position: { x: 0, y: -130 },
+        scale: 0.64
       },
       {
         id: 'sunglasses-3',
         name: 'Glasses 4',
         src: sunglasses3,
         thumbnail: sunglasses3,
-        position: { x: 0, y: -170 },
-        scale: 0.8
+        position: { x: 0, y: -130 },
+        scale: 0.64
       },
       {
         id: 'sunglasses-4',
         name: 'Glasses 5',
         src: sunglasses4,
         thumbnail: sunglasses4, 
-        position: { x: 0, y: -170 },
-        scale: 0.8
+        position: { x: 0, y: -130 },
+        scale: 0.64
       },
       {
         id: 'sunglasses-5',
         name: 'Glasses 6',
         src: sunglasses5,
         thumbnail: sunglasses5,
-        position: { x: 0, y: -200 },
-        scale: 0.9
+        position: { x: 0, y: -150 },
+        scale: 0.72
       },
       {
         id: 'eyes-1',
         name: 'Glasses 7',
         src: eyes1,
         thumbnail: eyes1,
-        position: { x: 0, y: -260 },
-        scale: 1.10
+        position: { x: 0, y: -230 },
+        scale: 1.00
       },
       {
         id: 'eyes-11',

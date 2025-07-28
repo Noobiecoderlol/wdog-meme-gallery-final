@@ -43,13 +43,13 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted }) => {
               {/* Base dog image */}
               <img 
                 src={baseDog} 
-                alt="WDOG Base Dog" 
+                alt="wDOG Base Dog" 
                 className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 animate-float object-contain"
               />
               {/* Wrapper overlay */}
               <img 
                 src={wrapper} 
-                alt="WDOG Wrapper" 
+                alt="wDOG Wrapper" 
                 className="absolute inset-0 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 animate-float object-contain"
               />
               <div className="absolute -top-1 sm:-top-2 -right-1 sm:-right-2 text-xl sm:text-2xl animate-pulse">✨</div>
@@ -59,12 +59,12 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted }) => {
 
           {/* Main heading */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-            WDOG PFP Generator
+            wDOG PFP Generator
           </h1>
 
           {/* Subtitle */}
           <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-            Create your own legendary WDOG profile picture with our epic generator. Choose from stunning backgrounds and accessories!
+            Create your own legendary wDOG profile picture with our epic generator. Choose from stunning backgrounds and accessories!
           </p>
 
           {/* Features */}
@@ -78,7 +78,7 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted }) => {
             <div className="flex flex-col items-center p-4 sm:p-6 rounded-xl bg-gradient-card border border-border/50 shadow-card">
               <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-secondary mb-2 sm:mb-3" />
               <h3 className="font-semibold mb-1 sm:mb-2 text-sm sm:text-base">Cool Accessories</h3>
-              <p className="text-xs sm:text-sm text-muted-foreground">Hats, glasses, and more to style your WDOG</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">Hats, glasses, and more to style your wDOG</p>
             </div>
             
             <div className="flex flex-col items-center p-4 sm:p-6 rounded-xl bg-gradient-card border border-border/50 shadow-card">

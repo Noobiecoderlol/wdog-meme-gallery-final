@@ -1,6 +1,6 @@
-# WDOG PFP Generator
+# wDOG PFP Generator
 
-A customizable profile picture generator for the WDOG community. Create unique WDOG profile pictures by adding backgrounds, accessories, custom text, and more!
+A customizable profile picture generator for the wDOG community. Create unique wDOG profile pictures by adding backgrounds, accessories, custom text, and more!
 
 ## ✨ Features
 
@@ -203,12 +203,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🙏 Acknowledgments
 
-- Original WDOG concept and community
+- Original wDOG concept and community
 - All contributors and community members
 - shadcn/ui for the beautiful components
 - Lucide for the icons
-- The entire WDOG community for support and feedback
+- The entire wDOG community for support and feedback
 
 ---
 
-**Made with ❤️ for the WDOG community**
+**Made with ❤️ for the wDOG community**
