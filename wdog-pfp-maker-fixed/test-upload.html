@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .upload-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .upload-button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .upload-button:hover {
+            background: #0056b3;
+        }
+        .file-info {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .preview {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <h2>Upload Test</h2>
+        <p>Test the file upload functionality:</p>
+        
+        <input 
+            type="file" 
+            accept="image/*" 
+            multiple 
+            id="test-upload"
+            style="display: none;"
+        >
+        
+        <button class="upload-button" onclick="document.getElementById('test-upload').click()">
+            Upload Image
+        </button>
+        
+        <div id="file-info"></div>
+        <div id="preview"></div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('test-upload');
+        const fileInfo = document.getElementById('file-info');
+        const preview = document.getElementById('preview');
+
+        fileInput.addEventListener('change', function(event) {
+            console.log('🔍 File input change event triggered');
+            const files = event.target.files;
+            console.log('📁 Files selected:', files);
+            
+            if (!files || files.length === 0) {
+                console.log('❌ No files selected');
+                return;
+            }
+
+            fileInfo.innerHTML = '';
+            preview.innerHTML = '';
+
+            Array.from(files).forEach((file, index) => {
+                console.log(`📄 Processing file ${index + 1}:`, file.name, file.type, file.size);
+                
+                // Validate file type
+                if (!file.type.startsWith('image/')) {
+                    console.log(`❌ Invalid file type: ${file.type}`);
+                    fileInfo.innerHTML += `<div style="color: red;">❌ ${file.name} is not a valid image file</div>`;
+                    return;
+                }
+
+                // Validate file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    console.log(`❌ File too large: ${file.size} bytes`);
+                    fileInfo.innerHTML += `<div style="color: red;">❌ ${file.name} is too large. Maximum size is 5MB</div>`;
+                    return;
+                }
+
+                console.log(`✅ File validation passed for: ${file.name}`);
+                fileInfo.innerHTML += `<div class="file-info">
+                    <strong>✅ ${file.name}</strong><br>
+                    Type: ${file.type}<br>
+                    Size: ${(file.size / 1024).toFixed(2)} KB
+                </div>`;
+
+                // Create preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    console.log(`📖 FileReader completed for: ${file.name}`);
+                    const result = e.target.result;
+                    if (result) {
+                        console.log(`✅ Creating preview for: ${file.name}`);
+                        preview.innerHTML += `<img src="${result}" class="preview" alt="${file.name}">`;
+                    } else {
+                        console.log(`❌ FileReader result is null for: ${file.name}`);
+                    }
+                };
+                
+                reader.onerror = function(error) {
+                    console.log(`❌ FileReader error for ${file.name}:`, error);
+                };
+                
+                console.log(`📖 Starting FileReader for: ${file.name}`);
+                reader.readAsDataURL(file);
+            });
+
+            // Reset the input
+            event.target.value = '';
+            console.log('🔄 Input value reset');
+        });
+    </script>
+</body>
+</html> 

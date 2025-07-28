@@ -23,6 +23,16 @@ import {
 import { XIcon } from '@/components/ui/x-icon';
 import { toast } from 'sonner';
 import { BACKGROUNDS, CATEGORIES, BASE_DOG, WRAPPER, type Asset } from '@/data/assets';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 // Standard color presets
 const PRESET_COLORS = [
@@ -138,6 +148,11 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
   // Custom background upload state
   const [customBackgrounds, setCustomBackgrounds] = useState<Asset[]>([]);
   const [uploadedBackgrounds, setUploadedBackgrounds] = useState<Asset[]>([]);
+  
+  // Background selection confirmation state
+  const [showBackgroundConfirmDialog, setShowBackgroundConfirmDialog] = useState(false);
+  const [pendingBackgroundSelection, setPendingBackgroundSelection] = useState<Asset | null>(null);
+  const [hasUploadedBackgroundSelected, setHasUploadedBackgroundSelected] = useState(false);
 
 
   const imageCache = useRef<Map<string, HTMLImageElement>>(new Map<string, HTMLImageElement>());
@@ -782,33 +797,61 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     setActiveTextId(null);
     setUploadedBackgrounds([]); // Clear custom backgrounds
     setCustomBackgrounds([]); // Clear custom backgrounds
+    setHasUploadedBackgroundSelected(false); // Reset uploaded background state
     toast.success('🔄 Reset to default settings');
   };
 
   // Handle background upload functionality
   const handleBackgroundUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('🔍 handleBackgroundUpload triggered');
     const files = event.target.files;
-    if (!files || files.length === 0) return;
-
-    const newBackgrounds: Asset[] = [];
+    console.log('📁 Files selected:', files);
     
-    Array.from(files).forEach((file, index) => {
-      // Validate file type
-      if (!file.type.startsWith('image/')) {
-        toast.error(`❌ ${file.name} is not a valid image file`);
-        return;
-      }
+    if (!files || files.length === 0) {
+      console.log('❌ No files selected');
+      return;
+    }
 
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error(`❌ ${file.name} is too large. Maximum size is 5MB`);
-        return;
+    // First, filter valid files
+    const validFiles = Array.from(files).filter(file => {
+      const isValidType = file.type.startsWith('image/');
+      const isValidSize = file.size <= 5 * 1024 * 1024;
+      
+      if (!isValidType) {
+        console.log(`❌ Invalid file type: ${file.type}`);
+        toast.error(`❌ ${file.name} is not a valid image file`);
+        return false;
       }
+      
+      if (!isValidSize) {
+        console.log(`❌ File too large: ${file.size} bytes`);
+        toast.error(`❌ ${file.name} is too large. Maximum size is 5MB`);
+        return false;
+      }
+      
+      console.log(`✅ File validation passed for: ${file.name}`);
+      return true;
+    });
+
+    console.log(`📊 Valid files to process: ${validFiles.length}`);
+
+    if (validFiles.length === 0) {
+      console.log(`❌ No valid files to process`);
+      return;
+    }
+
+    let processedCount = 0;
+    const newBackgrounds: Asset[] = [];
+
+    validFiles.forEach((file, index) => {
+      console.log(`📄 Processing file ${index + 1}:`, file.name, file.type, file.size);
 
       const reader = new FileReader();
       reader.onload = (e) => {
+        console.log(`📖 FileReader completed for: ${file.name}`);
         const result = e.target?.result as string;
         if (result) {
+          console.log(`✅ Creating new background asset for: ${file.name}`);
           const newBackground: Asset = {
             id: `custom-bg-${Date.now()}-${index}`,
             name: `Custom Background ${uploadedBackgrounds.length + newBackgrounds.length + 1}`,
@@ -817,22 +860,82 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
           };
           
           newBackgrounds.push(newBackground);
+          processedCount++;
+          console.log(`📦 Added to newBackgrounds array. Total: ${newBackgrounds.length}, Processed: ${processedCount}/${validFiles.length}`);
           
           // Update state when all files are processed
-          if (newBackgrounds.length === Array.from(files).filter(f => 
-            f.type.startsWith('image/') && f.size <= 5 * 1024 * 1024
-          ).length) {
-            setUploadedBackgrounds(prev => [...prev, ...newBackgrounds]);
-            setCustomBackgrounds(prev => [...prev, ...newBackgrounds]);
-            toast.success(`✅ Successfully uploaded ${newBackgrounds.length} background(s)`);
+          if (processedCount === validFiles.length) {
+            console.log(`🎉 All files processed! Updating state...`);
+            setUploadedBackgrounds(prev => {
+              console.log(`📤 Setting uploadedBackgrounds. Previous: ${prev.length}, Adding: ${newBackgrounds.length}`);
+              return [...prev, ...newBackgrounds];
+            });
+            setCustomBackgrounds(prev => {
+              console.log(`📤 Setting customBackgrounds. Previous: ${prev.length}, Adding: ${newBackgrounds.length}`);
+              return [...prev, ...newBackgrounds];
+            });
+            
+            // Automatically select the first uploaded background
+            if (newBackgrounds.length > 0) {
+              console.log(`🎯 Auto-selecting first uploaded background: ${newBackgrounds[0].name}`);
+              setSelectedBackground(newBackgrounds[0]);
+              setHasUploadedBackgroundSelected(true);
+              toast.success(`✅ Successfully uploaded and selected background: ${newBackgrounds[0].name}`);
+            } else {
+              console.log(`📝 No valid backgrounds to select`);
+              toast.success(`✅ Successfully uploaded ${newBackgrounds.length} background(s)`);
+            }
           }
+        } else {
+          console.log(`❌ FileReader result is null for: ${file.name}`);
         }
       };
+      
+      reader.onerror = (error) => {
+        console.log(`❌ FileReader error for ${file.name}:`, error);
+      };
+      
+      console.log(`📖 Starting FileReader for: ${file.name}`);
       reader.readAsDataURL(file);
     });
 
     // Reset the input
     event.target.value = '';
+    console.log('🔄 Input value reset');
+  };
+
+  // Handle background selection with confirmation for uploaded backgrounds
+  const handleBackgroundSelection = (background: Asset) => {
+    // Check if current background is uploaded and new background is different
+    const isCurrentUploaded = uploadedBackgrounds.some(bg => bg.id === selectedBackground.id);
+    const isNewUploaded = uploadedBackgrounds.some(bg => bg.id === background.id);
+    
+    // If switching from uploaded background to a different background, show confirmation
+    if (isCurrentUploaded && !isNewUploaded && selectedBackground.id !== background.id) {
+      setPendingBackgroundSelection(background);
+      setShowBackgroundConfirmDialog(true);
+    } else {
+      // Direct selection without confirmation
+      setSelectedBackground(background);
+      setHasUploadedBackgroundSelected(isNewUploaded);
+    }
+  };
+
+  // Confirm background selection and clear uploaded background
+  const confirmBackgroundSelection = () => {
+    if (pendingBackgroundSelection) {
+      setSelectedBackground(pendingBackgroundSelection);
+      setHasUploadedBackgroundSelected(false);
+      setPendingBackgroundSelection(null);
+      setShowBackgroundConfirmDialog(false);
+      toast.success('✅ Background changed successfully');
+    }
+  };
+
+  // Cancel background selection
+  const cancelBackgroundSelection = () => {
+    setPendingBackgroundSelection(null);
+    setShowBackgroundConfirmDialog(false);
   };
 
   // Update position for active text or create new if none is active
@@ -865,7 +968,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
 
   useEffect(() => {
     renderCanvas();
-  }, [selectedBackground, selectedAssets, isTestMode, textElements]);
+  }, [selectedBackground, selectedAssets, isTestMode, textElements, hasUploadedBackgroundSelected]);
 
   const activeItems = CATEGORIES.find(c => c.id === activeCategory)?.items || [];
 
@@ -1234,7 +1337,12 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                     variant="outline"
                     size="sm"
                     className="bg-gradient-secondary hover:bg-gradient-secondary/80 text-primary-foreground border-primary/20"
-                    onClick={() => document.getElementById('background-upload')?.click()}
+                    onClick={() => {
+                      console.log('🔘 Upload button clicked');
+                      const inputElement = document.getElementById('background-upload');
+                      console.log('📁 Input element found:', inputElement);
+                      inputElement?.click();
+                    }}
                   >
                     <Upload className="w-4 h-4 mr-2" />
                     Upload
@@ -1247,7 +1355,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                   {BACKGROUNDS.map((bg) => (
                     <button
                       key={bg.id}
-                      onClick={() => setSelectedBackground(bg)}
+                      onClick={() => handleBackgroundSelection(bg)}
                       className={`relative overflow-hidden rounded-lg border-2 transition-all duration-300 ${
                         selectedBackground.id === bg.id 
                           ? 'border-primary shadow-glow-primary' 
@@ -1278,7 +1386,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                       {uploadedBackgrounds.map((bg) => (
                         <button
                           key={bg.id}
-                          onClick={() => setSelectedBackground(bg)}
+                          onClick={() => handleBackgroundSelection(bg)}
                           className={`relative overflow-hidden rounded-lg border-2 transition-all duration-300 ${
                             selectedBackground.id === bg.id 
                               ? 'border-primary shadow-glow-primary' 
@@ -1364,6 +1472,26 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
           </div>
         </div>
       </div>
+
+      {/* Background Selection Confirmation Dialog */}
+      <AlertDialog open={showBackgroundConfirmDialog} onOpenChange={setShowBackgroundConfirmDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Replace Uploaded Background?</AlertDialogTitle>
+            <AlertDialogDescription>
+              You have an uploaded background selected. If you choose a different background, your uploaded background will be removed. Are you sure you want to continue?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={cancelBackgroundSelection}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={confirmBackgroundSelection}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
