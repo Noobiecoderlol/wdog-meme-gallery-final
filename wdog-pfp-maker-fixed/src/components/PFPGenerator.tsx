@@ -58,6 +58,18 @@ interface TextElement {
   isDragging: boolean;
   rotation: number; // Rotation in degrees
   scale: number; // Scale factor
+  assetId?: string; // Associated asset ID for hat/eye text
+}
+
+// Asset-specific text configuration
+interface AssetTextConfig {
+  assetId: string;
+  name: string;
+  defaultText: string;
+  defaultPosition: { x: number; y: number };
+  defaultFontSize: number;
+  maxLength: number;
+  category: 'hats' | 'eyes';
 }
 
 interface PresetPosition {
@@ -74,6 +86,33 @@ const FONTS = [
   { name: 'Impact', value: 'Impact' },
   { name: 'Verdana', value: 'Verdana' },
   { name: 'Times New Roman', value: 'Times New Roman' }
+];
+
+// Asset-specific text configurations
+const ASSET_TEXT_CONFIGS: AssetTextConfig[] = [
+  // Hat configurations - Adjust these positions as needed
+  { assetId: 'hat-2', name: 'Hat 2', defaultText: 'TEXT', defaultPosition: { x: 256, y: 160 }, defaultFontSize: 24, maxLength: 20, category: 'hats' },
+  { assetId: 'hat-9', name: 'Hat 9', defaultText: 'TEXT', defaultPosition: { x: 256, y: 170 }, defaultFontSize: 20, maxLength: 15, category: 'hats' },
+  { assetId: 'hat-16', name: 'Hat 16', defaultText: 'TEXT', defaultPosition: { x: 256, y: 180 }, defaultFontSize: 22, maxLength: 18, category: 'hats' },
+  { assetId: 'hat-18', name: 'Hat 18', defaultText: 'TEXT', defaultPosition: { x: 256, y: 165 }, defaultFontSize: 26, maxLength: 12, category: 'hats' },
+  { assetId: 'hat-21', name: 'Hat 21', defaultText: 'TEXT', defaultPosition: { x: 256, y: 175 }, defaultFontSize: 24, maxLength: 16, category: 'hats' },
+  { assetId: 'hat-22', name: 'Hat 22', defaultText: 'TEXT', defaultPosition: { x: 256, y: 170 }, defaultFontSize: 28, maxLength: 10, category: 'hats' },
+  { assetId: 'hat-25', name: 'Hat 25', defaultText: 'TEXT', defaultPosition: { x: 256, y: 165 }, defaultFontSize: 26, maxLength: 14, category: 'hats' },
+  { assetId: 'hat-26', name: 'Hat 26', defaultText: 'TEXT', defaultPosition: { x: 256, y: 180 }, defaultFontSize: 22, maxLength: 18, category: 'hats' },
+  { assetId: 'hat-27', name: 'Hat 27', defaultText: 'TEXT', defaultPosition: { x: 256, y: 175 }, defaultFontSize: 24, maxLength: 16, category: 'hats' },
+  { assetId: 'hat-28', name: 'Hat 28', defaultText: 'TEXT', defaultPosition: { x: 256, y: 170 }, defaultFontSize: 26, maxLength: 14, category: 'hats' },
+  { assetId: 'hat-29', name: 'Hat 29', defaultText: 'TEXT', defaultPosition: { x: 256, y: 165 }, defaultFontSize: 28, maxLength: 12, category: 'hats' },
+  { assetId: 'hat-30', name: 'Hat 30', defaultText: 'TEXT', defaultPosition: { x: 256, y: 180 }, defaultFontSize: 22, maxLength: 18, category: 'hats' },
+  { assetId: 'hat-31', name: 'Hat 31', defaultText: 'TEXT', defaultPosition: { x: 256, y: 175 }, defaultFontSize: 24, maxLength: 16, category: 'hats' },
+  { assetId: 'hat-32', name: 'Hat 32', defaultText: 'TEXT', defaultPosition: { x: 256, y: 170 }, defaultFontSize: 26, maxLength: 14, category: 'hats' },
+  { assetId: 'hat-34', name: 'Hat 34', defaultText: 'TEXT', defaultPosition: { x: 256, y: 165 }, defaultFontSize: 28, maxLength: 12, category: 'hats' },
+  { assetId: 'hat-36', name: 'Hat 36', defaultText: 'TEXT', defaultPosition: { x: 256, y: 180 }, defaultFontSize: 22, maxLength: 18, category: 'hats' },
+  
+  // Eye configurations - Only Eyes 4, 12, and 14 should have text support
+  // Note: UI shows "Eyes 4" but asset ID is 'eyes-5', UI shows "Eyes 12" but asset ID is 'eyes-16', etc.
+  { assetId: 'eyes-5', name: 'Eyes 4', defaultText: 'TEXT', defaultPosition: { x: 256, y: 240 }, defaultFontSize: 18, maxLength: 25, category: 'eyes' },
+  { assetId: 'eyes-16', name: 'Eyes 12', defaultText: 'TEXT', defaultPosition: { x: 256, y: 245 }, defaultFontSize: 16, maxLength: 30, category: 'eyes' },
+  { assetId: 'eyes-19', name: 'Eyes 14', defaultText: 'TEXT', defaultPosition: { x: 256, y: 235 }, defaultFontSize: 20, maxLength: 22, category: 'eyes' },
 ];
 
 // Preset positions
@@ -140,6 +179,10 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
   const [activeControl, setActiveControl] = useState<'rotate' | 'scale' | null>(null);
   const [startAngle, setStartAngle] = useState(0);
   const [startScale, setStartScale] = useState(1);
+
+  // Asset-specific text state
+  const [assetTextElements, setAssetTextElements] = useState<TextElement[]>([]);
+  const [activeAssetTextId, setActiveAssetTextId] = useState<string | null>(null);
 
   // Sign controls state
   const [signPosition, setSignPosition] = useState({ x: 0, y: -150 });
@@ -641,6 +684,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       }
 
 
+      // Draw regular text elements
       textElements.forEach(text => {
         if (!ctx || !text.text.trim()) return;
         
@@ -649,7 +693,6 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
         ctx.rotate((text.rotation || 0) * Math.PI / 180);
         ctx.scale(text.scale || 1, text.scale || 1);
         
-
         ctx.font = `${text.fontSize}px ${text.fontFamily}`;
         ctx.fillStyle = text.color;
         ctx.textAlign = 'center';
@@ -659,18 +702,22 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
         ctx.restore();
       });
 
-      // Draw only text without visual markers
-      textElements.forEach(text => {
-        if (!ctx || !text.text.trim()) return; // Skip empty texts
+      // Draw asset-specific text elements
+      assetTextElements.forEach(text => {
+        if (!ctx || !text.text.trim()) return;
+        
+        ctx.save();
+        ctx.translate(text.x, text.y);
+        ctx.rotate((text.rotation || 0) * Math.PI / 180);
+        ctx.scale(text.scale || 1, text.scale || 1);
         
         ctx.font = `${text.fontSize}px ${text.fontFamily}`;
         ctx.fillStyle = text.color;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
+        ctx.fillText(text.text, 0, 0);
         
-        // Draw text
-        ctx.fillText(text.text, text.x, text.y);
-        
+        ctx.restore();
       });
 
 
@@ -723,6 +770,10 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       const newAssets = { ...prev };
       if (prev[category]?.id === asset.id) {
         delete newAssets[category];
+        // Remove asset text when asset is deselected
+        if (category === 'hats' || category === 'eyes') {
+          removeAssetText(prev[category]!.id);
+        }
       } else {
         newAssets[category] = asset;
       }
@@ -793,6 +844,74 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     );
   };
 
+  // Function to add asset-specific text
+  const addAssetText = (assetId: string) => {
+    const config = ASSET_TEXT_CONFIGS.find(c => c.assetId === assetId);
+    if (!config) return;
+
+    const newId = `asset-text-${Date.now()}`;
+    const newText: TextElement = {
+      id: newId,
+      text: config.defaultText,
+      x: config.defaultPosition.x,
+      y: config.defaultPosition.y,
+      fontSize: config.defaultFontSize,
+      fontFamily: 'Arial',
+      color: '#ffffff',
+      isDragging: false,
+      rotation: 0,
+      scale: 1,
+      assetId: assetId
+    };
+    setAssetTextElements(prev => [...prev, newText]);
+    setActiveAssetTextId(newId);
+  };
+
+  // Function to update asset text
+  const updateAssetText = (id: string, updates: Partial<TextElement>) => {
+    setAssetTextElements(prev => 
+      prev.map(text => 
+        text.id === id ? { ...text, ...updates } : text
+      )
+    );
+  };
+
+  // Function to remove asset text
+  const removeAssetText = (assetId: string) => {
+    setAssetTextElements(prev => prev.filter(text => text.assetId !== assetId));
+    if (activeAssetTextId && assetTextElements.find(t => t.id === activeAssetTextId)?.assetId === assetId) {
+      setActiveAssetTextId(null);
+    }
+  };
+
+  // Check if selected asset supports text
+  const getSelectedAssetTextConfig = () => {
+    const selectedHat = selectedAssets['hats'];
+    const selectedEyes = selectedAssets['eyes'];
+    
+    if (selectedHat) {
+      return ASSET_TEXT_CONFIGS.find(c => c.assetId === selectedHat.id && c.category === 'hats');
+    }
+    if (selectedEyes) {
+      return ASSET_TEXT_CONFIGS.find(c => c.assetId === selectedEyes.id && c.category === 'eyes');
+    }
+    return null;
+  };
+
+  // Get current asset text element
+  const getCurrentAssetText = () => {
+    const selectedHat = selectedAssets['hats'];
+    const selectedEyes = selectedAssets['eyes'];
+    
+    if (selectedHat) {
+      return assetTextElements.find(t => t.assetId === selectedHat.id);
+    }
+    if (selectedEyes) {
+      return assetTextElements.find(t => t.assetId === selectedEyes.id);
+    }
+    return null;
+  };
+
   // Update resetCustomization function to include text
   const resetCustomization = () => {
     setSelectedBackground(BACKGROUNDS[0]);
@@ -800,6 +919,8 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     setActiveCategory(CATEGORIES[0].id);
     setTextElements([]); // Reset all texts
     setActiveTextId(null);
+    setAssetTextElements([]); // Reset asset texts
+    setActiveAssetTextId(null);
     setUploadedBackgrounds([]); // Clear custom backgrounds
     setCustomBackgrounds([]); // Clear custom backgrounds
     setHasUploadedBackgroundSelected(false); // Reset uploaded background state
@@ -973,7 +1094,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
 
   useEffect(() => {
     renderCanvas();
-  }, [selectedBackground, selectedAssets, isTestMode, textElements, hasUploadedBackgroundSelected]);
+  }, [selectedBackground, selectedAssets, isTestMode, textElements, assetTextElements, hasUploadedBackgroundSelected]);
 
   const activeItems = CATEGORIES.find(c => c.id === activeCategory)?.items || [];
 
@@ -1318,6 +1439,226 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                 ))}
               </div>
             </Card>
+
+            {/* Asset-Specific Text Editor */}
+            {getSelectedAssetTextConfig() && (
+              <Card className="p-3 sm:p-6 bg-gradient-card border-border/50 shadow-card">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
+                    <Type className="w-4 h-4 sm:w-5 sm:h-5" />
+                    {getSelectedAssetTextConfig()?.name} Text Editor
+                  </h3>
+                  <div className="flex gap-2">
+                    {!getCurrentAssetText() && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => addAssetText(getSelectedAssetTextConfig()!.assetId)}
+                        className="hover:border-primary/50"
+                      >
+                        Add Text
+                      </Button>
+                    )}
+                    {getCurrentAssetText() && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => removeAssetText(getSelectedAssetTextConfig()!.assetId)}
+                        className="hover:border-destructive/50 text-destructive"
+                      >
+                        Remove Text
+                      </Button>
+                    )}
+                  </div>
+                </div>
+
+                {getCurrentAssetText() && (
+                  <div className="space-y-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Move className="w-4 h-4 cursor-move" />
+                        <Input
+                          value={getCurrentAssetText()!.text}
+                          onChange={(e) => {
+                            const config = getSelectedAssetTextConfig()!;
+                            const newText = e.target.value.slice(0, config.maxLength);
+                            updateAssetText(getCurrentAssetText()!.id, { text: newText });
+                          }}
+                          className="flex-1 text-sm"
+                          placeholder={`Max ${getSelectedAssetTextConfig()!.maxLength} characters`}
+                        />
+                        <div className="text-xs text-muted-foreground">
+                          {getCurrentAssetText()!.text.length}/{getSelectedAssetTextConfig()!.maxLength}
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <Select
+                          value={getCurrentAssetText()!.fontFamily}
+                          onValueChange={(value) => updateAssetText(getCurrentAssetText()!.id, { fontFamily: value })}
+                        >
+                          <SelectTrigger className="flex-1 text-sm">
+                            <SelectValue placeholder="Font" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {FONTS.map((font) => (
+                              <SelectItem
+                                key={font.value}
+                                value={font.value}
+                                style={{ fontFamily: font.value }}
+                              >
+                                {font.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+
+                        {/* Color Selection */}
+                        <div className="space-y-1 sm:space-y-2">
+                          <span className="text-xs sm:text-sm">Color</span>
+                          <div className="flex flex-wrap gap-1 sm:gap-2 mb-1 sm:mb-2">
+                            {PRESET_COLORS.map((color) => (
+                              <button
+                                key={color.value}
+                                onClick={() => updateAssetText(getCurrentAssetText()!.id, { color: color.value })}
+                                className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 ${
+                                  getCurrentAssetText()!.color === color.value ? 'border-primary' : 'border-transparent'
+                                }`}
+                                style={{ backgroundColor: color.value }}
+                                title={color.name}
+                              />
+                            ))}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs sm:text-sm">Custom</span>
+                            <input
+                              type="color"
+                              value={getCurrentAssetText()!.color}
+                              onChange={(e) => updateAssetText(getCurrentAssetText()!.id, { color: e.target.value })}
+                              className="w-6 h-6 sm:w-8 sm:h-8 rounded cursor-pointer"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between text-xs sm:text-sm">
+                          <span>Font Size</span>
+                          <span className="text-muted-foreground">
+                            {getCurrentAssetText()!.fontSize}px
+                          </span>
+                        </div>
+                        <Slider
+                          value={[getCurrentAssetText()!.fontSize]}
+                          min={12}
+                          max={48}
+                          step={1}
+                          onValueChange={([value]) => updateAssetText(getCurrentAssetText()!.id, { fontSize: value })}
+                          className="py-0.5"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between text-xs sm:text-sm">
+                          <span>Scale</span>
+                          <span className="text-muted-foreground">
+                            {Math.round(getCurrentAssetText()!.scale * 100)}%
+                          </span>
+                        </div>
+                        <Slider
+                          value={[getCurrentAssetText()!.scale * 100]}
+                          min={50}
+                          max={200}
+                          step={5}
+                          onValueChange={([value]) => updateAssetText(getCurrentAssetText()!.id, { scale: value / 100 })}
+                          className="py-0.5"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between text-xs sm:text-sm">
+                          <span>Rotation</span>
+                          <span className="text-muted-foreground">
+                            {getCurrentAssetText()!.rotation}°
+                          </span>
+                        </div>
+                        <Slider
+                          value={[getCurrentAssetText()!.rotation]}
+                          min={-180}
+                          max={180}
+                          step={5}
+                          onValueChange={([value]) => updateAssetText(getCurrentAssetText()!.id, { rotation: value })}
+                          className="py-0.5"
+                        />
+                      </div>
+
+                      {/* Position Adjusters */}
+                      <div className="space-y-3 pt-2 border-t border-border/50">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium">Position</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              const config = getSelectedAssetTextConfig()!;
+                              updateAssetText(getCurrentAssetText()!.id, {
+                                x: config.defaultPosition.x,
+                                y: config.defaultPosition.y
+                              });
+                            }}
+                            className="text-xs"
+                          >
+                            Reset Position
+                          </Button>
+                        </div>
+                                                <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-1">
+                            <div className="flex items-center justify-between text-xs sm:text-sm">
+                              <span>X Position</span>
+                              <span className="text-muted-foreground">
+                                {getCurrentAssetText()!.x}
+                              </span>
+                            </div>
+                            <Slider
+                              value={[getCurrentAssetText()!.x]}
+                              min={100}
+                              max={412}
+                              step={1}
+                              onValueChange={([value]) => updateAssetText(getCurrentAssetText()!.id, { x: value })}
+                              className="py-0.5"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <div className="flex items-center justify-between text-xs sm:text-sm">
+                              <span>Y Position</span>
+                              <span className="text-muted-foreground">
+                                {getCurrentAssetText()!.y}
+                              </span>
+                            </div>
+                            <Slider
+                              value={[getCurrentAssetText()!.y]}
+                              min={100}
+                              max={412}
+                              step={1}
+                              onValueChange={([value]) => updateAssetText(getCurrentAssetText()!.id, { y: value })}
+                              className="py-0.5"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {!getCurrentAssetText() && (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <Type className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                    <p className="text-sm">Click "Add Text" to add custom text to this {getSelectedAssetTextConfig()?.category === 'hats' ? 'hat' : 'eye'}.</p>
+                    <p className="text-xs mt-1">Text will be positioned and sized specifically for this asset.</p>
+                  </div>
+                )}
+              </Card>
+            )}
           </div>
 
           {/* Right Column: Asset Controls */}
@@ -1465,6 +1806,11 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                         {isSelected && (
                           <Badge className="absolute top-1 right-1 bg-primary text-primary-foreground text-xs px-1">
                             ✓
+                          </Badge>
+                        )}
+                        {ASSET_TEXT_CONFIGS.some(config => config.assetId === asset.id) && (
+                          <Badge className="absolute bottom-1 right-1 bg-secondary text-secondary-foreground text-xs px-1">
+                            <Type className="w-3 h-3" />
                           </Badge>
                         )}
                       </button>
