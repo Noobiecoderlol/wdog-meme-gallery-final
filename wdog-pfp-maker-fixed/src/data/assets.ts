@@ -865,8 +865,8 @@ export const CATEGORIES: Category[] = [
         name: 'Hat 27',
         src: hat28,
         thumbnail: hat28,
-        position: { x: 0, y: -120 },
-        scale: 0.95
+        position: { x: 0, y: -110 },
+        scale: 0.94
       },
       {
         id: 'hat-28',
@@ -897,8 +897,8 @@ export const CATEGORIES: Category[] = [
         name: 'Hat 31',
         src: hat32,
         thumbnail: hat32,
-        position: { x: 0, y: -105 },
-        scale: 1.0
+        position: { x: 0, y: -100 },
+        scale: 1.1
       },
       {
         id: 'hat-32',

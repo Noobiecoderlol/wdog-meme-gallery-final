@@ -58,18 +58,8 @@ interface TextElement {
   isDragging: boolean;
   rotation: number; // Rotation in degrees
   scale: number; // Scale factor
-  assetId?: string; // Associated asset ID for hat/eye text
-}
-
-// Asset-specific text configuration
-interface AssetTextConfig {
-  assetId: string;
-  name: string;
-  defaultText: string;
-  defaultPosition: { x: number; y: number };
-  defaultFontSize: number;
-  maxLength: number;
-  category: 'hats' | 'eyes';
+  fontWeight: 'normal' | 'bold'; // Bold text style
+  fontStyle: 'normal' | 'italic'; // Italic text style
 }
 
 interface PresetPosition {
@@ -79,41 +69,83 @@ interface PresetPosition {
   fontSize: number;
 }
 
-// Preset fonts
+// Preset fonts - 30+ modern and stylish font options
 const FONTS = [
-  { name: 'Arial', value: 'Arial' },
-  { name: 'Comic Sans MS', value: 'Comic Sans MS' },
-  { name: 'Impact', value: 'Impact' },
-  { name: 'Verdana', value: 'Verdana' },
-  { name: 'Times New Roman', value: 'Times New Roman' }
+  // Classic & Professional
+  { name: 'Arial', value: 'Arial, sans-serif' },
+  { name: 'Helvetica', value: 'Helvetica, Arial, sans-serif' },
+  { name: 'Times New Roman', value: 'Times New Roman, serif' },
+  { name: 'Georgia', value: 'Georgia, serif' },
+  { name: 'Verdana', value: 'Verdana, Geneva, sans-serif' },
+  { name: 'Tahoma', value: 'Tahoma, Geneva, sans-serif' },
+  { name: 'Trebuchet MS', value: 'Trebuchet MS, sans-serif' },
+  
+  // Modern & Clean
+  { name: 'Segoe UI', value: 'Segoe UI, Tahoma, Geneva, sans-serif' },
+  { name: 'Roboto', value: 'Roboto, sans-serif' },
+  { name: 'Open Sans', value: 'Open Sans, sans-serif' },
+  { name: 'Lato', value: 'Lato, sans-serif' },
+  { name: 'Source Sans Pro', value: 'Source Sans Pro, sans-serif' },
+  { name: 'Nunito', value: 'Nunito, sans-serif' },
+  { name: 'Poppins', value: 'Poppins, sans-serif' },
+  { name: 'Inter', value: 'Inter, sans-serif' },
+  { name: 'Montserrat', value: 'Montserrat, sans-serif' },
+  { name: 'Raleway', value: 'Raleway, sans-serif' },
+  
+  // Display & Impact
+  { name: 'Impact', value: 'Impact, Charcoal, sans-serif' },
+  { name: 'Comic Sans MS', value: 'Comic Sans MS, cursive' },
+  { name: 'Arial Black', value: 'Arial Black, Gadget, sans-serif' },
+  { name: 'Bebas Neue', value: 'Bebas Neue, sans-serif' },
+  { name: 'Oswald', value: 'Oswald, sans-serif' },
+  { name: 'Anton', value: 'Anton, sans-serif' },
+  { name: 'Bangers', value: 'Bangers, cursive' },
+  { name: 'Fredoka One', value: 'Fredoka One, cursive' },
+  
+  // Creative & Fun
+  { name: 'Pacifico', value: 'Pacifico, cursive' },
+  { name: 'Dancing Script', value: 'Dancing Script, cursive' },
+  { name: 'Satisfy', value: 'Satisfy, cursive' },
+  { name: 'Kaushan Script', value: 'Kaushan Script, cursive' },
+  { name: 'Great Vibes', value: 'Great Vibes, cursive' },
+  { name: 'Lobster', value: 'Lobster, cursive' },
+  { name: 'Permanent Marker', value: 'Permanent Marker, cursive' },
+  { name: 'Caveat', value: 'Caveat, cursive' },
+  { name: 'Indie Flower', value: 'Indie Flower, cursive' },
+  { name: 'Shadows Into Light', value: 'Shadows Into Light, cursive' },
+  { name: 'Amatic SC', value: 'Amatic SC, cursive' },
+  { name: 'Patrick Hand', value: 'Patrick Hand, cursive' },
+  { name: 'Gloria Hallelujah', value: 'Gloria Hallelujah, cursive' },
+  { name: 'Rock Salt', value: 'Rock Salt, cursive' },
+  { name: 'Homemade Apple', value: 'Homemade Apple, cursive' },
+  { name: 'Kalam', value: 'Kalam, cursive' },
+  { name: 'Architects Daughter', value: 'Architects Daughter, cursive' },
+  { name: 'Just Another Hand', value: 'Just Another Hand, cursive' },
+  { name: 'Reenie Beanie', value: 'Reenie Beanie, cursive' },
+  { name: 'Schoolbell', value: 'Schoolbell, cursive' },
+  { name: 'Walter Turncoat', value: 'Walter Turncoat, cursive' },
+  { name: 'Chewy', value: 'Chewy, cursive' },
+  { name: 'Bubblegum Sans', value: 'Bubblegum Sans, cursive' },
+  { name: 'Boogaloo', value: 'Boogaloo, cursive' },
+  { name: 'Sniglet', value: 'Sniglet, cursive' },
+  { name: 'Freckle Face', value: 'Freckle Face, cursive' },
+  { name: 'Finger Paint', value: 'Finger Paint, cursive' },
+  { name: 'Love Ya Like A Sister', value: 'Love Ya Like A Sister, cursive' },
+  { name: 'Coming Soon', value: 'Coming Soon, cursive' },
+  { name: 'Crafty Girls', value: 'Crafty Girls, cursive' },
+  { name: 'Sunshiney', value: 'Sunshiney, cursive' },
+  { name: 'Over the Rainbow', value: 'Over the Rainbow, cursive' },
+  { name: 'Butterfly Kids', value: 'Butterfly Kids, cursive' },
+  { name: 'Rancho', value: 'Rancho, cursive' },
+  { name: 'Courgette', value: 'Courgette, cursive' },
+  { name: 'Itim', value: 'Itim, cursive' },
+  { name: 'Mali', value: 'Mali, cursive' },
+  { name: 'Sriracha', value: 'Sriracha, cursive' },
+  { name: 'Charm', value: 'Charm, cursive' },
+  { name: 'Chonburi', value: 'Chonburi, cursive' }
 ];
 
-// Asset-specific text configurations
-const ASSET_TEXT_CONFIGS: AssetTextConfig[] = [
-  // Hat configurations - Adjust these positions as needed
-  { assetId: 'hat-2', name: 'Hat 2', defaultText: 'TEXT', defaultPosition: { x: 256, y: 160 }, defaultFontSize: 24, maxLength: 20, category: 'hats' },
-  { assetId: 'hat-9', name: 'Hat 9', defaultText: 'TEXT', defaultPosition: { x: 256, y: 170 }, defaultFontSize: 20, maxLength: 15, category: 'hats' },
-  { assetId: 'hat-16', name: 'Hat 16', defaultText: 'TEXT', defaultPosition: { x: 256, y: 180 }, defaultFontSize: 22, maxLength: 18, category: 'hats' },
-  { assetId: 'hat-18', name: 'Hat 18', defaultText: 'TEXT', defaultPosition: { x: 256, y: 165 }, defaultFontSize: 26, maxLength: 12, category: 'hats' },
-  { assetId: 'hat-21', name: 'Hat 21', defaultText: 'TEXT', defaultPosition: { x: 256, y: 175 }, defaultFontSize: 24, maxLength: 16, category: 'hats' },
-  { assetId: 'hat-22', name: 'Hat 22', defaultText: 'TEXT', defaultPosition: { x: 256, y: 170 }, defaultFontSize: 28, maxLength: 10, category: 'hats' },
-  { assetId: 'hat-25', name: 'Hat 25', defaultText: 'TEXT', defaultPosition: { x: 256, y: 165 }, defaultFontSize: 26, maxLength: 14, category: 'hats' },
-  { assetId: 'hat-26', name: 'Hat 26', defaultText: 'TEXT', defaultPosition: { x: 256, y: 180 }, defaultFontSize: 22, maxLength: 18, category: 'hats' },
-  { assetId: 'hat-27', name: 'Hat 27', defaultText: 'TEXT', defaultPosition: { x: 256, y: 175 }, defaultFontSize: 24, maxLength: 16, category: 'hats' },
-  { assetId: 'hat-28', name: 'Hat 28', defaultText: 'TEXT', defaultPosition: { x: 256, y: 170 }, defaultFontSize: 26, maxLength: 14, category: 'hats' },
-  { assetId: 'hat-29', name: 'Hat 29', defaultText: 'TEXT', defaultPosition: { x: 256, y: 165 }, defaultFontSize: 28, maxLength: 12, category: 'hats' },
-  { assetId: 'hat-30', name: 'Hat 30', defaultText: 'TEXT', defaultPosition: { x: 256, y: 180 }, defaultFontSize: 22, maxLength: 18, category: 'hats' },
-  { assetId: 'hat-31', name: 'Hat 31', defaultText: 'TEXT', defaultPosition: { x: 256, y: 175 }, defaultFontSize: 24, maxLength: 16, category: 'hats' },
-  { assetId: 'hat-32', name: 'Hat 32', defaultText: 'TEXT', defaultPosition: { x: 256, y: 170 }, defaultFontSize: 26, maxLength: 14, category: 'hats' },
-  { assetId: 'hat-34', name: 'Hat 34', defaultText: 'TEXT', defaultPosition: { x: 256, y: 165 }, defaultFontSize: 28, maxLength: 12, category: 'hats' },
-  { assetId: 'hat-36', name: 'Hat 36', defaultText: 'TEXT', defaultPosition: { x: 256, y: 180 }, defaultFontSize: 22, maxLength: 18, category: 'hats' },
-  
-  // Eye configurations - Only Eyes 4, 12, and 14 should have text support
-  // Note: UI shows "Eyes 4" but asset ID is 'eyes-5', UI shows "Eyes 12" but asset ID is 'eyes-16', etc.
-  { assetId: 'eyes-5', name: 'Eyes 4', defaultText: 'TEXT', defaultPosition: { x: 256, y: 240 }, defaultFontSize: 18, maxLength: 25, category: 'eyes' },
-  { assetId: 'eyes-16', name: 'Eyes 12', defaultText: 'TEXT', defaultPosition: { x: 256, y: 245 }, defaultFontSize: 16, maxLength: 30, category: 'eyes' },
-  { assetId: 'eyes-19', name: 'Eyes 14', defaultText: 'TEXT', defaultPosition: { x: 256, y: 235 }, defaultFontSize: 20, maxLength: 22, category: 'eyes' },
-];
+
 
 // Preset positions
 const PRESET_POSITIONS: PresetPosition[] = [
@@ -180,9 +212,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
   const [startAngle, setStartAngle] = useState(0);
   const [startScale, setStartScale] = useState(1);
 
-  // Asset-specific text state
-  const [assetTextElements, setAssetTextElements] = useState<TextElement[]>([]);
-  const [activeAssetTextId, setActiveAssetTextId] = useState<string | null>(null);
+
 
   // Sign controls state
   const [signPosition, setSignPosition] = useState({ x: 0, y: -150 });
@@ -693,7 +723,10 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
         ctx.rotate((text.rotation || 0) * Math.PI / 180);
         ctx.scale(text.scale || 1, text.scale || 1);
         
-        ctx.font = `${text.fontSize}px ${text.fontFamily}`;
+        // Build font string with weight and style
+        const fontWeight = text.fontWeight || 'normal';
+        const fontStyle = text.fontStyle || 'normal';
+        ctx.font = `${fontStyle} ${fontWeight} ${text.fontSize}px ${text.fontFamily}`;
         ctx.fillStyle = text.color;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -702,23 +735,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
         ctx.restore();
       });
 
-      // Draw asset-specific text elements
-      assetTextElements.forEach(text => {
-        if (!ctx || !text.text.trim()) return;
-        
-        ctx.save();
-        ctx.translate(text.x, text.y);
-        ctx.rotate((text.rotation || 0) * Math.PI / 180);
-        ctx.scale(text.scale || 1, text.scale || 1);
-        
-        ctx.font = `${text.fontSize}px ${text.fontFamily}`;
-        ctx.fillStyle = text.color;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(text.text, 0, 0);
-        
-        ctx.restore();
-      });
+
 
 
       if (isTestMode) {
@@ -770,10 +787,6 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       const newAssets = { ...prev };
       if (prev[category]?.id === asset.id) {
         delete newAssets[category];
-        // Remove asset text when asset is deselected
-        if (category === 'hats' || category === 'eyes') {
-          removeAssetText(prev[category]!.id);
-        }
       } else {
         newAssets[category] = asset;
       }
@@ -825,11 +838,13 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       x: preset?.x ?? 256,
       y: preset?.y ?? 256,
       fontSize: preset?.fontSize ?? 36,
-      fontFamily: 'Arial',
+      fontFamily: 'Arial, sans-serif',
       color: '#ffffff',
       isDragging: false,
       rotation: 0,
-      scale: 1
+      scale: 1,
+      fontWeight: 'normal',
+      fontStyle: 'normal'
     };
     setTextElements(prev => [...prev, newText]);
     setActiveTextId(newId);
@@ -844,73 +859,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     );
   };
 
-  // Function to add asset-specific text
-  const addAssetText = (assetId: string) => {
-    const config = ASSET_TEXT_CONFIGS.find(c => c.assetId === assetId);
-    if (!config) return;
 
-    const newId = `asset-text-${Date.now()}`;
-    const newText: TextElement = {
-      id: newId,
-      text: config.defaultText,
-      x: config.defaultPosition.x,
-      y: config.defaultPosition.y,
-      fontSize: config.defaultFontSize,
-      fontFamily: 'Arial',
-      color: '#ffffff',
-      isDragging: false,
-      rotation: 0,
-      scale: 1,
-      assetId: assetId
-    };
-    setAssetTextElements(prev => [...prev, newText]);
-    setActiveAssetTextId(newId);
-  };
-
-  // Function to update asset text
-  const updateAssetText = (id: string, updates: Partial<TextElement>) => {
-    setAssetTextElements(prev => 
-      prev.map(text => 
-        text.id === id ? { ...text, ...updates } : text
-      )
-    );
-  };
-
-  // Function to remove asset text
-  const removeAssetText = (assetId: string) => {
-    setAssetTextElements(prev => prev.filter(text => text.assetId !== assetId));
-    if (activeAssetTextId && assetTextElements.find(t => t.id === activeAssetTextId)?.assetId === assetId) {
-      setActiveAssetTextId(null);
-    }
-  };
-
-  // Check if selected asset supports text
-  const getSelectedAssetTextConfig = () => {
-    const selectedHat = selectedAssets['hats'];
-    const selectedEyes = selectedAssets['eyes'];
-    
-    if (selectedHat) {
-      return ASSET_TEXT_CONFIGS.find(c => c.assetId === selectedHat.id && c.category === 'hats');
-    }
-    if (selectedEyes) {
-      return ASSET_TEXT_CONFIGS.find(c => c.assetId === selectedEyes.id && c.category === 'eyes');
-    }
-    return null;
-  };
-
-  // Get current asset text element
-  const getCurrentAssetText = () => {
-    const selectedHat = selectedAssets['hats'];
-    const selectedEyes = selectedAssets['eyes'];
-    
-    if (selectedHat) {
-      return assetTextElements.find(t => t.assetId === selectedHat.id);
-    }
-    if (selectedEyes) {
-      return assetTextElements.find(t => t.assetId === selectedEyes.id);
-    }
-    return null;
-  };
 
   // Update resetCustomization function to include text
   const resetCustomization = () => {
@@ -919,8 +868,6 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     setActiveCategory(CATEGORIES[0].id);
     setTextElements([]); // Reset all texts
     setActiveTextId(null);
-    setAssetTextElements([]); // Reset asset texts
-    setActiveAssetTextId(null);
     setUploadedBackgrounds([]); // Clear custom backgrounds
     setCustomBackgrounds([]); // Clear custom backgrounds
     setHasUploadedBackgroundSelected(false); // Reset uploaded background state
@@ -1094,7 +1041,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
 
   useEffect(() => {
     renderCanvas();
-  }, [selectedBackground, selectedAssets, isTestMode, textElements, assetTextElements, hasUploadedBackgroundSelected]);
+  }, [selectedBackground, selectedAssets, isTestMode, textElements, hasUploadedBackgroundSelected]);
 
   const activeItems = CATEGORIES.find(c => c.id === activeCategory)?.items || [];
 
@@ -1234,14 +1181,15 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                 </Button>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
+              {/* Preset Position Buttons - Smaller and more compact */}
+              <div className="grid grid-cols-4 sm:grid-cols-7 gap-1 mb-4">
                 {PRESET_POSITIONS.map((preset) => (
                   <Button
                     key={preset.name}
                     variant="outline"
                     size="sm"
                     onClick={() => applyPresetPosition(preset)}
-                    className={`text-xs ${
+                    className={`text-xs h-8 ${
                       textElements.some(text => 
                         text.id === activeTextId && 
                         text.x === preset.x && 
@@ -1256,11 +1204,11 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
 
               {/* Sign Controls - Only show when a sign is selected */}
               {selectedAssets.signs && (
-                <div className="mt-6 border-t border-border/50 pt-4">
+                <div className="mt-4 border-t border-border/50 pt-4 mb-4">
                   <h4 className="text-sm font-semibold mb-3">Sign Position & Size</h4>
                   
                   {/* Position Buttons */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
                     <Button
                       variant="outline"
                       size="sm"
@@ -1339,21 +1287,31 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                 </div>
               )}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Main Text Editor - Full width and prominent */}
+              {textElements.length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground">
+                  <Type className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                  <p className="text-lg font-medium mb-2">No text added yet</p>
+                  <p className="text-sm">Click "Add Text" to start creating your custom text</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
                 {textElements.map((text) => (
                   <Card
                     key={text.id}
-                    className={`p-3 sm:p-4 ${
-                      activeTextId === text.id ? 'border-primary' : 'border-border/50'
+                      className={`p-4 sm:p-6 ${
+                        activeTextId === text.id ? 'border-primary shadow-glow-primary' : 'border-border/50'
                     }`}
                     onClick={() => setActiveTextId(text.id)}
                   >
-                    <div className="space-y-3">
+                    <div className="space-y-4">
+                      {/* Text Input Row */}
                       <div className="flex items-center gap-2">
-                        <Move className="w-4 h-4 cursor-move" />
+                        <Move className="w-4 h-4 cursor-move text-muted-foreground" />
                         <Input
                           value={text.text}
                           onChange={(e) => updateText(text.id, { text: e.target.value })}
+                          placeholder="Type your text here..."
                           className="flex-1 text-sm"
                         />
                         <Button
@@ -1363,19 +1321,24 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                             setTextElements(prev => prev.filter(t => t.id !== text.id));
                             if (activeTextId === text.id) setActiveTextId(null);
                           }}
-                          className="text-destructive hover:text-destructive/90"
+                          className="text-destructive hover:text-destructive/90 h-9 w-9 p-0"
+                          title="Remove text"
                         >
                           ×
                         </Button>
                       </div>
 
-                      <div className="flex flex-col sm:flex-row gap-2">
+                      {/* Font and Style Controls Row */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        {/* Font Selection */}
+                        <div className="space-y-2">
+                          <label className="text-xs font-medium text-muted-foreground">Font</label>
                         <Select
                           value={text.fontFamily}
                           onValueChange={(value) => updateText(text.id, { fontFamily: value })}
                         >
-                          <SelectTrigger className="flex-1 text-sm">
-                            <SelectValue placeholder="Font" />
+                            <SelectTrigger className="h-9 text-sm">
+                              <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
                             {FONTS.map((font) => (
@@ -1389,39 +1352,79 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                             ))}
                           </SelectContent>
                         </Select>
+                        </div>
+
+                        {/* Bold and Italic Controls */}
+                        <div className="space-y-2">
+                          <label className="text-xs font-medium text-muted-foreground">Style</label>
+                          <div className="flex gap-1">
+                            <Button
+                              type="button"
+                              variant={text.fontWeight === 'bold' ? 'default' : 'outline'}
+                              size="sm"
+                              onClick={() => updateText(text.id, { 
+                                fontWeight: text.fontWeight === 'bold' ? 'normal' : 'bold' 
+                              })}
+                              className={`h-9 px-3 ${
+                                text.fontWeight === 'bold' 
+                                  ? 'bg-primary text-primary-foreground' 
+                                  : 'bg-background hover:bg-accent'
+                              }`}
+                            >
+                              <strong>B</strong>
+                            </Button>
+                            <Button
+                              type="button"
+                              variant={text.fontStyle === 'italic' ? 'default' : 'outline'}
+                              size="sm"
+                              onClick={() => updateText(text.id, { 
+                                fontStyle: text.fontStyle === 'italic' ? 'normal' : 'italic' 
+                              })}
+                              className={`h-9 px-3 ${
+                                text.fontStyle === 'italic' 
+                                  ? 'bg-primary text-primary-foreground' 
+                                  : 'bg-background hover:bg-accent'
+                              }`}
+                            >
+                              <em>I</em>
+                            </Button>
+                          </div>
+                        </div>
 
                         {/* Color Selection */}
-                        <div className="space-y-1 sm:space-y-2">
-                          <span className="text-xs sm:text-sm">Color</span>
-                          <div className="flex flex-wrap gap-1 sm:gap-2 mb-1 sm:mb-2">
+                        <div className="space-y-2">
+                          <label className="text-xs font-medium text-muted-foreground">Color</label>
+                          <div className="flex items-center gap-2">
+                            <div className="flex flex-wrap gap-1">
                             {PRESET_COLORS.map((color) => (
                               <button
                                 key={color.value}
                                 onClick={() => updateText(text.id, { color: color.value })}
-                                className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 ${
-                                  text.color === color.value ? 'border-primary' : 'border-transparent'
+                                  className={`w-5 h-5 rounded-full border-2 transition-all ${
+                                    text.color === color.value ? 'border-primary scale-110' : 'border-transparent hover:scale-105'
                                 }`}
                                 style={{ backgroundColor: color.value }}
                                 title={color.name}
                               />
                             ))}
                           </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs sm:text-sm">Custom</span>
                             <input
                               type="color"
                               value={text.color}
                               onChange={(e) => updateText(text.id, { color: e.target.value })}
-                              className="w-6 h-6 sm:w-8 sm:h-8 rounded cursor-pointer"
+                              className="w-6 h-6 rounded cursor-pointer border border-border"
                             />
                           </div>
                         </div>
                       </div>
 
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span>Font Size</span>
-                          <span className="text-muted-foreground">
+                      {/* Slider Controls */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        {/* Font Size */}
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <label className="text-xs font-medium text-muted-foreground">Font Size</label>
+                            <span className="text-xs text-muted-foreground">
                             {text.fontSize}px
                           </span>
                         </div>
@@ -1434,231 +1437,105 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                           className="py-0.5"
                         />
                       </div>
+
+                        {/* Scale */}
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <label className="text-xs font-medium text-muted-foreground">Scale</label>
+                            <span className="text-xs text-muted-foreground">
+                              {Math.round(text.scale * 100)}%
+                            </span>
+                          </div>
+                          <Slider
+                            value={[text.scale * 100]}
+                            min={50}
+                            max={200}
+                            step={5}
+                            onValueChange={([value]) => updateText(text.id, { scale: value / 100 })}
+                            className="py-0.5"
+                          />
+                        </div>
+
+                        {/* Rotation */}
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <label className="text-xs font-medium text-muted-foreground">Rotation</label>
+                            <span className="text-xs text-muted-foreground">
+                              {text.rotation}°
+                            </span>
+                          </div>
+                          <Slider
+                            value={[text.rotation]}
+                            min={-180}
+                            max={180}
+                            step={5}
+                            onValueChange={([value]) => updateText(text.id, { rotation: value })}
+                            className="py-0.5"
+                          />
+                        </div>
+                      </div>
+
+                        {/* Position Adjusters */}
+                        <div className="space-y-3 pt-2 border-t border-border/50">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium">Position</span>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                updateText(text.id, {
+                                  x: 256,
+                                  y: 256
+                                });
+                              }}
+                              className="text-xs"
+                            >
+                              Reset Position
+                            </Button>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-1">
+                              <div className="flex items-center justify-between text-xs sm:text-sm">
+                                <span>X Position</span>
+                                <span className="text-muted-foreground">
+                                  {text.x}
+                                </span>
+                              </div>
+                              <Slider
+                                value={[text.x]}
+                                min={20}
+                                max={480}
+                                step={1}
+                                onValueChange={([value]) => updateText(text.id, { x: value })}
+                                className="py-0.5"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <div className="flex items-center justify-between text-xs sm:text-sm">
+                                <span>Y Position</span>
+                                <span className="text-muted-foreground">
+                                  {text.y}
+                                </span>
+                              </div>
+                              <Slider
+                                value={[text.y]}
+                                min={15}
+                                max={500}
+                                step={1}
+                                onValueChange={([value]) => updateText(text.id, { y: value })}
+                                className="py-0.5"
+                              />
+                            </div>
+                          </div>
+                        </div>
                     </div>
                   </Card>
                 ))}
               </div>
+              )}
             </Card>
 
-            {/* Asset-Specific Text Editor */}
-            {getSelectedAssetTextConfig() && (
-              <Card className="p-3 sm:p-6 bg-gradient-card border-border/50 shadow-card">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
-                    <Type className="w-4 h-4 sm:w-5 sm:h-5" />
-                    {getSelectedAssetTextConfig()?.name} Text Editor
-                  </h3>
-                  <div className="flex gap-2">
-                    {!getCurrentAssetText() && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => addAssetText(getSelectedAssetTextConfig()!.assetId)}
-                        className="hover:border-primary/50"
-                      >
-                        Add Text
-                      </Button>
-                    )}
-                    {getCurrentAssetText() && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => removeAssetText(getSelectedAssetTextConfig()!.assetId)}
-                        className="hover:border-destructive/50 text-destructive"
-                      >
-                        Remove Text
-                      </Button>
-                    )}
-                  </div>
-                </div>
-
-                {getCurrentAssetText() && (
-                  <div className="space-y-4">
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <Move className="w-4 h-4 cursor-move" />
-                        <Input
-                          value={getCurrentAssetText()!.text}
-                          onChange={(e) => {
-                            const config = getSelectedAssetTextConfig()!;
-                            const newText = e.target.value.slice(0, config.maxLength);
-                            updateAssetText(getCurrentAssetText()!.id, { text: newText });
-                          }}
-                          className="flex-1 text-sm"
-                          placeholder={`Max ${getSelectedAssetTextConfig()!.maxLength} characters`}
-                        />
-                        <div className="text-xs text-muted-foreground">
-                          {getCurrentAssetText()!.text.length}/{getSelectedAssetTextConfig()!.maxLength}
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col sm:flex-row gap-2">
-                        <Select
-                          value={getCurrentAssetText()!.fontFamily}
-                          onValueChange={(value) => updateAssetText(getCurrentAssetText()!.id, { fontFamily: value })}
-                        >
-                          <SelectTrigger className="flex-1 text-sm">
-                            <SelectValue placeholder="Font" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {FONTS.map((font) => (
-                              <SelectItem
-                                key={font.value}
-                                value={font.value}
-                                style={{ fontFamily: font.value }}
-                              >
-                                {font.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-
-                        {/* Color Selection */}
-                        <div className="space-y-1 sm:space-y-2">
-                          <span className="text-xs sm:text-sm">Color</span>
-                          <div className="flex flex-wrap gap-1 sm:gap-2 mb-1 sm:mb-2">
-                            {PRESET_COLORS.map((color) => (
-                              <button
-                                key={color.value}
-                                onClick={() => updateAssetText(getCurrentAssetText()!.id, { color: color.value })}
-                                className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 ${
-                                  getCurrentAssetText()!.color === color.value ? 'border-primary' : 'border-transparent'
-                                }`}
-                                style={{ backgroundColor: color.value }}
-                                title={color.name}
-                              />
-                            ))}
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs sm:text-sm">Custom</span>
-                            <input
-                              type="color"
-                              value={getCurrentAssetText()!.color}
-                              onChange={(e) => updateAssetText(getCurrentAssetText()!.id, { color: e.target.value })}
-                              className="w-6 h-6 sm:w-8 sm:h-8 rounded cursor-pointer"
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span>Font Size</span>
-                          <span className="text-muted-foreground">
-                            {getCurrentAssetText()!.fontSize}px
-                          </span>
-                        </div>
-                        <Slider
-                          value={[getCurrentAssetText()!.fontSize]}
-                          min={12}
-                          max={48}
-                          step={1}
-                          onValueChange={([value]) => updateAssetText(getCurrentAssetText()!.id, { fontSize: value })}
-                          className="py-0.5"
-                        />
-                      </div>
-
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span>Scale</span>
-                          <span className="text-muted-foreground">
-                            {Math.round(getCurrentAssetText()!.scale * 100)}%
-                          </span>
-                        </div>
-                        <Slider
-                          value={[getCurrentAssetText()!.scale * 100]}
-                          min={50}
-                          max={200}
-                          step={5}
-                          onValueChange={([value]) => updateAssetText(getCurrentAssetText()!.id, { scale: value / 100 })}
-                          className="py-0.5"
-                        />
-                      </div>
-
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span>Rotation</span>
-                          <span className="text-muted-foreground">
-                            {getCurrentAssetText()!.rotation}°
-                          </span>
-                        </div>
-                        <Slider
-                          value={[getCurrentAssetText()!.rotation]}
-                          min={-180}
-                          max={180}
-                          step={5}
-                          onValueChange={([value]) => updateAssetText(getCurrentAssetText()!.id, { rotation: value })}
-                          className="py-0.5"
-                        />
-                      </div>
-
-                      {/* Position Adjusters */}
-                      <div className="space-y-3 pt-2 border-t border-border/50">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">Position</span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => {
-                              const config = getSelectedAssetTextConfig()!;
-                              updateAssetText(getCurrentAssetText()!.id, {
-                                x: config.defaultPosition.x,
-                                y: config.defaultPosition.y
-                              });
-                            }}
-                            className="text-xs"
-                          >
-                            Reset Position
-                          </Button>
-                        </div>
-                                                <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-1">
-                            <div className="flex items-center justify-between text-xs sm:text-sm">
-                              <span>X Position</span>
-                              <span className="text-muted-foreground">
-                                {getCurrentAssetText()!.x}
-                              </span>
-                            </div>
-                            <Slider
-                              value={[getCurrentAssetText()!.x]}
-                              min={100}
-                              max={412}
-                              step={1}
-                              onValueChange={([value]) => updateAssetText(getCurrentAssetText()!.id, { x: value })}
-                              className="py-0.5"
-                            />
-                          </div>
-                          <div className="space-y-1">
-                            <div className="flex items-center justify-between text-xs sm:text-sm">
-                              <span>Y Position</span>
-                              <span className="text-muted-foreground">
-                                {getCurrentAssetText()!.y}
-                              </span>
-                            </div>
-                            <Slider
-                              value={[getCurrentAssetText()!.y]}
-                              min={100}
-                              max={412}
-                              step={1}
-                              onValueChange={([value]) => updateAssetText(getCurrentAssetText()!.id, { y: value })}
-                              className="py-0.5"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {!getCurrentAssetText() && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <Type className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                    <p className="text-sm">Click "Add Text" to add custom text to this {getSelectedAssetTextConfig()?.category === 'hats' ? 'hat' : 'eye'}.</p>
-                    <p className="text-xs mt-1">Text will be positioned and sized specifically for this asset.</p>
-                  </div>
-                )}
-              </Card>
-            )}
+            
           </div>
 
           {/* Right Column: Asset Controls */}
@@ -1808,11 +1685,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                             ✓
                           </Badge>
                         )}
-                        {ASSET_TEXT_CONFIGS.some(config => config.assetId === asset.id) && (
-                          <Badge className="absolute bottom-1 right-1 bg-secondary text-secondary-foreground text-xs px-1">
-                            <Type className="w-3 h-3" />
-                          </Badge>
-                        )}
+
                       </button>
                     );
                   })}
