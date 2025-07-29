@@ -580,20 +580,25 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
             break;
             
           case 'items': // Accessories
-            // Position accessories
-            assetX = dogX + (dogSize * 0.5);
-            assetY = dogY + (dogSize * 0.10);
+            // Position accessories using asset.position or default
+            if (asset.position) {
+              assetX = dogX + (dogSize / 2) + (asset.position.x * (dogSize / 512));
+              assetY = dogY + (dogSize / 2) + (asset.position.y * (dogSize / 512));
+            } else {
+              // Default position if none specified
+              assetX = dogX + (dogSize * 0.5);
+              assetY = dogY + (dogSize * 0.10);
+            }
             ctx.globalCompositeOperation = 'source-over';
             
-            // Scale accessories
-            const accessoryScale = 1.0;
-            const accessorySize = dogSize * accessoryScale;
+            // Use asset.scale instead of hardcoded accessoryScale
+            const accessorySize = dogSize * scale; // Use the scale from asset data
             
             // Center the accessory
             const accessoryX = assetX - (accessorySize / 2);
             
             ctx.drawImage(assetImg, accessoryX, assetY, accessorySize, accessorySize);
-            console.log('Accessory rendered at:', { x: accessoryX, y: assetY, size: accessorySize });
+            console.log('Accessory rendered at:', { x: accessoryX, y: assetY, size: accessorySize, scale: scale });
             continue;
             
           case 'eyes':
@@ -1076,13 +1081,12 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                     ref={canvasRef}
                     width={512}
                     height={512}
-                    className="w-full h-auto rounded-xl shadow-neon border border-primary/20"
+                    className="w-full h-auto rounded-xl"
                     onMouseMove={handleMouseMove}
                     onMouseDown={handleCanvasMouseDown}
                     onMouseUp={handleCanvasMouseUp}
                     onClick={handleCanvasClick}
                   />
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/10 to-transparent pointer-events-none" />
                   {isTestMode && (
                     <div className="absolute top-2 left-2 bg-black/80 text-white p-2 rounded text-sm font-mono">
                       X: {mousePos.x}, Y: {mousePos.y}
@@ -1416,7 +1420,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
             </Card>
 
             {/* Categories */}
-            <Card className="p-3 sm:p-6 bg-gradient-card border-border/50 shadow-card">
+            <Card className="p-3 sm:p-6 bg-gradient-card border-border/50 shadow-card overflow-visible">
               <h3 className="text-base sm:text-lg font-semibold mb-4 text-foreground">Customize</h3>
               
               {/* Category tabs */}
@@ -1436,15 +1440,15 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
               </div>
 
               {/* Asset grid with ScrollArea */}
-              <ScrollArea className="h-[300px] sm:h-[600px] pr-4">
-                <div className="grid grid-cols-2 gap-2 sm:gap-4">
+              <ScrollArea className="h-[300px] sm:h-[600px] pr-4 overflow-visible">
+                <div className="grid grid-cols-2 gap-2 sm:gap-4 overflow-visible">
                   {activeItems.map((asset) => {
                     const isSelected = selectedAssets[activeCategory]?.id === asset.id;
                     return (
                       <button
                         key={asset.id}
                         onClick={() => toggleAsset(activeCategory, asset)}
-                        className={`relative overflow-hidden rounded-lg border-2 p-2 sm:p-4 transition-all duration-300 hover:scale-105 ${
+                        className={`relative overflow-hidden rounded-lg border-2 p-2 sm:p-4 transition-all duration-300 hover:scale-102 hover:z-10 ${
                           isSelected 
                             ? 'border-primary shadow-glow-primary bg-primary/10' 
                             : 'border-border hover:border-primary/50 bg-muted/50'

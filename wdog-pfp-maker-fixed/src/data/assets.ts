@@ -55,8 +55,6 @@ import back33 from '@/assets/back/33.webp';
 import back35 from '@/assets/back/35.webp';
 
 
-import eyes0 from '@/assets/eyes/0.webp';
-import eyes1 from '@/assets/eyes/1.webp';
 import eyes2 from '@/assets/eyes/2.webp';
 import eyes3 from '@/assets/eyes/3.webp';
 import eyes4 from '@/assets/eyes/4.webp';
@@ -152,10 +150,9 @@ import clothes34 from '@/assets/clothes/34.webp';
 import clothes35 from '@/assets/clothes/35.webp';
 
 
-import item0 from '@/assets/items/0.webp';
 import item1 from '@/assets/items/1.webp';
+import item2 from '@/assets/items/2.webp';
 import item3 from '@/assets/items/3.webp';
-import item4 from '@/assets/items/4.webp';
 import item5 from '@/assets/items/5.webp';
 import item6 from '@/assets/items/6.webp';
 import item7 from '@/assets/items/7.webp';
@@ -545,16 +542,8 @@ export const CATEGORIES: Category[] = [
     icon: '👀',
     items: [
       {
-        id: 'eyes-0',
-        name: 'Eyes 1',
-        src: eyes0,
-        thumbnail: eyes0,
-        position: { x: 0, y: -260 },
-        scale: 1.10
-      },
-      {
         id: 'eyes-2',
-        name: 'Eyes 3',
+        name: 'Eyes 1',
         src: eyes2,
         thumbnail: eyes2,
         position: { x: 0, y: -260 },
@@ -562,7 +551,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-3',
-        name: 'Eyes 4',
+        name: 'Eyes 2',
         src: eyes3,
         thumbnail: eyes3,
         position: { x: -6, y: -260 },
@@ -570,7 +559,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-4',
-        name: 'Eyes 5',
+        name: 'Eyes 3',
         src: eyes4,
         thumbnail: eyes4,
         position: { x: -6, y: -260 },
@@ -578,7 +567,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-5',
-        name: 'Eyes 6',
+        name: 'Eyes 4',
         src: eyes5,
         thumbnail: eyes5,
         position: { x: -4, y: -250 },
@@ -586,7 +575,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-6',
-        name: 'Eyes 7',
+        name: 'Eyes 5',
         src: eyes6,
         thumbnail: eyes6,
         position: { x: 3, y: -240 },
@@ -594,7 +583,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-7',
-        name: 'Eyes 8',
+        name: 'Eyes 6',
         src: eyes7,
         thumbnail: eyes7,
         position: { x: -5, y: -215 },
@@ -602,7 +591,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-8',
-        name: 'Eyes 9',
+        name: 'Eyes 7',
         src: eyes8,
         thumbnail: eyes8,
         position: { x: -1, y: -230 },
@@ -610,7 +599,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-9',
-        name: 'Eyes 10',
+        name: 'Eyes 8',
         src: eyes9,
         thumbnail: eyes9,
         position: { x: -5, y: -240 },
@@ -618,7 +607,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-10',
-        name: 'Eyes 11',
+        name: 'Eyes 9',
         src: eyes10,
         thumbnail: eyes10,
         position: { x: 0, y: -230 },
@@ -626,7 +615,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-13',
-        name: 'Eyes 14',
+        name: 'Eyes 10',
         src: eyes13,
         thumbnail: eyes13,
         position: { x: 0, y: -240 },
@@ -634,7 +623,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-14',
-        name: 'Eyes 15',
+        name: 'Eyes 11',
         src: eyes14,
         thumbnail: eyes14,
         position: { x: 0, y: -260 },
@@ -642,7 +631,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-16',
-        name: 'Eyes 17',
+        name: 'Eyes 12',
         src: eyes16,
         thumbnail: eyes16,
         position: { x: -3, y: -250 },
@@ -650,7 +639,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-18',
-        name: 'Eyes 19',
+        name: 'Eyes 13',
         src: eyes18,
         thumbnail: eyes18,
         position: { x: -3, y: -230 },
@@ -658,7 +647,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: 'eyes-19',
-        name: 'Eyes 20',
+        name: 'Eyes 14',
         src: eyes19,
         thumbnail: eyes19,
         position: { x: 0, y: -240 },
@@ -1239,108 +1228,100 @@ export const CATEGORIES: Category[] = [
     icon: '🎸',
     items: [
       {
-        id: 'item-0',
-        name: 'Item 1',
-        src: item0,
-        thumbnail: item0,
-        position: { x: 0, y: 400 },
-        scale: 0.30
-      },
-      {
         id: 'item-1',
-        name: 'Item 2',
+        name: 'Item 1',
         src: item1,
         thumbnail: item1,
-        position: { x: 0, y: 400 },
-        scale: 0.30
+        position: { x: 0, y: -250 },
+        scale: 1.0
+      },
+      {
+        id: 'item-2',
+        name: 'Item 2',
+        src: item2,
+        thumbnail: item2,
+        position: { x: 0, y: -250 },
+        scale: 1.0
       },
       {
         id: 'item-3',
         name: 'Item 3',
         src: item3,
         thumbnail: item3,
-        position: { x: 0, y: 400 },
-        scale: 0.30
-      },
-      {
-        id: 'item-4',
-        name: 'Item 4',
-        src: item4,
-        thumbnail: item4,
-        position: { x: 0, y: 400 },
-        scale: 0.30
+        position: { x: 0, y: -250 },
+        scale: 1.0
       },
       {
         id: 'item-5',
-        name: 'Item 5',
+        name: 'Item 4',
         src: item5,
         thumbnail: item5,
-        position: { x: 0, y: 400 },
-        scale: 0.30
+        position: { x: 0, y: -250 },
+        scale: 1.0
       },
       {
         id: 'item-6',
-        name: 'Item 6',
+        name: 'Item 5',
         src: item6,
         thumbnail: item6,
-        position: { x: 0, y: 400 },
-        scale: 0.30
+        position: { x: 0, y: -250 },
+        scale: 1.0
       },
       {
         id: 'item-7',
-        name: 'Item 7',
+        name: 'Item 6',
         src: item7,
         thumbnail: item7,
-        position: { x: 0, y: 400 },
-        scale: 0.30
+        position: { x: 0, y: -250 },
+        scale: 1.0
       },
       {
         id: 'item-8',
-        name: 'Item 8',
+        name: 'Item 7',
         src: item8,
         thumbnail: item8,
-        position: { x: 0, y: 400 },
-        scale: 0.30
+        position: { x: 0, y: -220 },
+        scale: 1.0
       },
       {
         id: 'item-9',
-        name: 'Item 9',
+        name: 'Item 8',
         src: item9,
         thumbnail: item9,
-        position: { x: 0, y: 400 },
-        scale: 0.30
+        position: { x: 0, y: -250 },
+        scale: 1.02
       },
       {
         id: 'item-10',
-        name: 'Item 10',
+        name: 'Item 9',
         src: item10,
         thumbnail: item10,
-        position: { x: 0, y: 400 },
-        scale: 0.30
+        position: { x: 0, y: -250 },
+        scale: 1.0
       },
       {
         id: 'item-11',
-        name: 'Item 11',
+        name: 'Item 10',
         src: item11,
         thumbnail: item11,
-        position: { x: 0, y: 400 },
-        scale: 0.30
+        position: { x: 0, y: -250 },
+        scale: 1.0
       },
       {
         id: 'item-12',
-        name: 'Item 12',
+        name: 'Item 11',
         src: item12,
         thumbnail: item12,
-        position: { x: 0, y: 400 },
-        scale: 0.30
+        position: { x: 0, y: -250 },
+        scale: 1.0
       },
       {
         id: 'item-13',
-        name: 'Item 13',
+        name: 'Item 12',
         src: item13,
         thumbnail: item13,
-        position: { x: 0, y: 400 },
-        scale: 0.30
+        position: { x: 0, y: -250 },
+        scale: 1.0
       }
     ]
   },
@@ -1397,14 +1378,7 @@ export const CATEGORIES: Category[] = [
         position: { x: 0, y: -150 },
         scale: 0.72
       },
-      {
-        id: 'eyes-1',
-        name: 'Glasses 7',
-        src: eyes1,
-        thumbnail: eyes1,
-        position: { x: 0, y: -230 },
-        scale: 1.00
-      },
+
       {
         id: 'eyes-11',
         name: 'Glasses 8',
