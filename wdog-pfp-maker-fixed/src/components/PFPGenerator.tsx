@@ -1103,24 +1103,24 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
         </div>
 
         {/* Header */}
-        <div className="text-center mb-4 sm:mb-8 pt-8 sm:pt-16">
+        <div className="text-center mb-4 sm:mb-8 pt-8 sm:pt-16 relative">
           {/* Back button positioned absolutely for mobile */}
           {onBack && (
-            <div className="absolute top-4 left-4 z-10">
+            <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-10">
               <Button
-                variant="outline"
+                variant="ghost"
                 onClick={onBack}
                 size="sm"
-                className="bg-background/80 backdrop-blur-sm border-border/50"
+                className="h-8 w-8 sm:h-9 sm:w-auto px-2 sm:px-3 bg-background/90 backdrop-blur-sm border border-border/30 hover:bg-background/95 hover:border-border/50 text-muted-foreground hover:text-foreground shadow-sm"
               >
-                <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
-                <span className="hidden sm:inline">Back</span>
+                <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline ml-1">Back</span>
               </Button>
             </div>
           )}
           
           {/* Main title with better mobile spacing */}
-          <div className="px-4 sm:px-0">
+          <div className="px-4 sm:px-0 pt-8 sm:pt-0">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight">
               wDOG PFP Generator
             </h1>
