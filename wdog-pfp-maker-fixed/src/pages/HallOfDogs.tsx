@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { ArrowLeft, Download, Twitter, LineChart, Shuffle } from 'lucide-react';
+import { ArrowLeft, Download, Twitter, LineChart, Shuffle, Image } from 'lucide-react';
 import { XIcon } from '@/components/ui/x-icon';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -110,6 +110,15 @@ const HallOfDogs: React.FC = () => {
             >
               <Shuffle className="w-5 h-5 mr-2 group-hover:animate-spin" />
               Shuffle Dogs
+            </Button>
+            <Button
+              onClick={() => navigate('/memes')}
+              variant="outline"
+              size="lg"
+              className="group hover:border-primary/50"
+            >
+              <Image className="w-5 h-5 mr-2" />
+              Meme Gallery
             </Button>
           </div>
         </div>

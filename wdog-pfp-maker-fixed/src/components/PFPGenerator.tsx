@@ -20,6 +20,7 @@ import {
   Upload,
   Image
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { XIcon } from '@/components/ui/x-icon';
 import { toast } from 'sonner';
 import { BACKGROUNDS, CATEGORIES, BASE_DOG, WRAPPER, type Asset } from '@/data/assets';
@@ -224,6 +225,7 @@ interface ControlPoint {
 }
 
 export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
+  const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [selectedBackground, setSelectedBackground] = useState<Asset>(BACKGROUNDS[0]);
   const [selectedAssets, setSelectedAssets] = useState<Record<string, Asset>>({});
@@ -1179,6 +1181,15 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                   >
                     <Download className="w-4 h-4 mr-2" />
                     {isGenerating ? 'Wait...' : 'Download'}
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    size="sm"
+                    onClick={() => navigate('/memes')}
+                    className="hover:border-primary/50"
+                  >
+                    <Image className="w-4 h-4 mr-2" />
+                    Memes
                   </Button>
                 </div>
               </div>

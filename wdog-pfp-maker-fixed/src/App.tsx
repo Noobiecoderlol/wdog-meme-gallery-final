@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import HallOfDogs from "./pages/HallOfDogs";
+import MemeGallery from "./pages/MemeGallery";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/examples" element={<HallOfDogs />} />
+          <Route path="/memes" element={<MemeGallery />} />
           {/* Place custom routes before the catch-all route */}
           <Route path="*" element={<NotFound />} />
         </Routes>

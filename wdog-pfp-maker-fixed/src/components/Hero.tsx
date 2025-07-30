@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Download, Palette, Zap, Twitter, LineChart, Wand2 } from 'lucide-react';
+import { Sparkles, Download, Palette, Zap, Twitter, LineChart, Wand2, Image } from 'lucide-react';
 import { XIcon } from '@/components/ui/x-icon';
 import { useNavigate } from 'react-router-dom';
 import baseDog from '@/assets/body/base-dog.webp';
@@ -107,6 +107,16 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted }) => {
             >
               <Wand2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
               See Examples
+            </Button>
+            
+            <Button 
+              size="lg" 
+              variant="outline"
+              onClick={() => navigate('/memes')}
+              className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-2 sm:py-3 hover:scale-105 transition-all duration-300"
+            >
+              <Image className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+              Meme Gallery
             </Button>
           </div>
 
