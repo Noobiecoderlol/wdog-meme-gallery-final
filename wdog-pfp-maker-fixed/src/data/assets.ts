@@ -111,6 +111,14 @@ import hat34 from '@/assets/hats/34.webp';
 import hat35 from '@/assets/hats/35.webp';
 import hat36 from '@/assets/hats/36.webp';
 import hat37 from '@/assets/hats/37.webp';
+import hat38 from '@/assets/hats/38.webp';
+import hat39 from '@/assets/hats/39.webp';
+import hat40 from '@/assets/hats/40.webp';
+import hat41 from '@/assets/hats/41.webp';
+import hat42 from '@/assets/hats/42.webp';
+import hat43 from '@/assets/hats/43.webp';
+import hat44 from '@/assets/hats/44.webp';
+import hat45 from '@/assets/hats/45.webp';
 
 
 import clothes0 from '@/assets/clothes/0.webp';
@@ -939,6 +947,70 @@ export const CATEGORIES: Category[] = [
         thumbnail: hat37,
         position: { x: 0, y: -130 },
         scale: 1.1
+      },
+      {
+        id: 'hat-37',
+        name: 'Hat 37',
+        src: hat38,
+        thumbnail: hat38,
+        position: { x: -10, y: -160 },
+        scale: 0.7
+      },
+      {
+        id: 'hat-38',
+        name: 'Hat 38',
+        src: hat39,
+        thumbnail: hat39,
+        position: { x: -10, y: -160 },
+        scale: 0.7
+      },
+      {
+        id: 'hat-39',
+        name: 'Hat 39',
+        src: hat40,
+        thumbnail: hat40,
+        position: { x: -10, y: -160 },
+        scale: 0.7  
+      },
+      {
+        id: 'hat-40',
+        name: 'Hat 40',
+        src: hat41,
+        thumbnail: hat41,
+        position: { x: -10, y: -160 },
+        scale: 0.7
+      },
+      {
+        id: 'hat-41',
+        name: 'Hat 41',
+        src: hat42,
+        thumbnail: hat42,
+        position: { x: -10, y: -160 },
+        scale: 0.7
+      },
+      {
+        id: 'hat-42',
+        name: 'Hat 42',
+        src: hat43,
+        thumbnail: hat43,
+        position: { x: -10, y: -160 },
+        scale: 0.7
+      },
+      {
+        id: 'hat-43',
+        name: 'Hat 43',
+        src: hat44,
+        thumbnail: hat44,
+        position: { x: -10, y: -160 },
+        scale: 0.7
+      },
+      {
+        id: 'hat-44',
+        name: 'Hat 44',
+        src: hat45,
+        thumbnail: hat45,
+        position: { x: -10, y: -160 },
+        scale: 0.7
       }
     ]
   },

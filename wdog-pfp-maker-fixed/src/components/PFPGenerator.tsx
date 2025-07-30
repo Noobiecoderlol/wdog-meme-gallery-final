@@ -69,45 +69,74 @@ interface PresetPosition {
   fontSize: number;
 }
 
-// Preset fonts - 30+ modern and stylish font options
+// Preset fonts - Guaranteed working system fonts and web-safe fonts
 const FONTS = [
-  // Classic & Professional
-  { name: 'Arial', value: 'Arial, sans-serif' },
+  // System & Web-Safe Fonts (Guaranteed to work)
+  { name: 'Arial', value: 'Arial, Helvetica, sans-serif' },
   { name: 'Helvetica', value: 'Helvetica, Arial, sans-serif' },
-  { name: 'Times New Roman', value: 'Times New Roman, serif' },
+  { name: 'Times New Roman', value: 'Times New Roman, Times, serif' },
   { name: 'Georgia', value: 'Georgia, serif' },
   { name: 'Verdana', value: 'Verdana, Geneva, sans-serif' },
   { name: 'Tahoma', value: 'Tahoma, Geneva, sans-serif' },
   { name: 'Trebuchet MS', value: 'Trebuchet MS, sans-serif' },
-  
-  // Modern & Clean
-  { name: 'Segoe UI', value: 'Segoe UI, Tahoma, Geneva, sans-serif' },
-  { name: 'Roboto', value: 'Roboto, sans-serif' },
-  { name: 'Open Sans', value: 'Open Sans, sans-serif' },
-  { name: 'Lato', value: 'Lato, sans-serif' },
-  { name: 'Source Sans Pro', value: 'Source Sans Pro, sans-serif' },
-  { name: 'Nunito', value: 'Nunito, sans-serif' },
-  { name: 'Poppins', value: 'Poppins, sans-serif' },
-  { name: 'Inter', value: 'Inter, sans-serif' },
-  { name: 'Montserrat', value: 'Montserrat, sans-serif' },
-  { name: 'Raleway', value: 'Raleway, sans-serif' },
-  
-  // Display & Impact
-  { name: 'Impact', value: 'Impact, Charcoal, sans-serif' },
+  { name: 'Courier New', value: 'Courier New, Courier, monospace' },
+  { name: 'Lucida Console', value: 'Lucida Console, Monaco, monospace' },
+  { name: 'Palatino', value: 'Palatino, Palatino Linotype, serif' },
+  { name: 'Garamond', value: 'Garamond, serif' },
+  { name: 'Bookman', value: 'Bookman, serif' },
   { name: 'Comic Sans MS', value: 'Comic Sans MS, cursive' },
+  { name: 'Impact', value: 'Impact, Charcoal, sans-serif' },
   { name: 'Arial Black', value: 'Arial Black, Gadget, sans-serif' },
-  { name: 'Bebas Neue', value: 'Bebas Neue, sans-serif' },
-  { name: 'Oswald', value: 'Oswald, sans-serif' },
-  { name: 'Anton', value: 'Anton, sans-serif' },
-  { name: 'Bangers', value: 'Bangers, cursive' },
-  { name: 'Fredoka One', value: 'Fredoka One, cursive' },
+  { name: 'Segoe UI', value: 'Segoe UI, Tahoma, Geneva, sans-serif' },
+  { name: 'Calibri', value: 'Calibri, sans-serif' },
+  { name: 'Candara', value: 'Candara, sans-serif' },
+  { name: 'Corbel', value: 'Corbel, sans-serif' },
+  { name: 'Consolas', value: 'Consolas, monospace' },
+  { name: 'Cambria', value: 'Cambria, serif' },
+  { name: 'Constantia', value: 'Constantia, serif' },
+  { name: 'Candara', value: 'Candara, sans-serif' },
+  { name: 'Century Gothic', value: 'Century Gothic, sans-serif' },
+  { name: 'Franklin Gothic', value: 'Franklin Gothic Medium, Arial, sans-serif' },
+  { name: 'Futura', value: 'Futura, Trebuchet MS, Arial, sans-serif' },
+  { name: 'Gill Sans', value: 'Gill Sans, Arial, sans-serif' },
+  { name: 'Optima', value: 'Optima, Segoe, sans-serif' },
+  { name: 'Baskerville', value: 'Baskerville, serif' },
+  { name: 'Didot', value: 'Didot, serif' },
+  { name: 'Brush Script MT', value: 'Brush Script MT, cursive' },
+  { name: 'Lucida Handwriting', value: 'Lucida Handwriting, cursive' },
+  { name: 'Bradley Hand', value: 'Bradley Hand, cursive' },
+  { name: 'Monotype Corsiva', value: 'Monotype Corsiva, cursive' },
+  { name: 'Papyrus', value: 'Papyrus, fantasy' },
+  { name: 'Chalkduster', value: 'Chalkduster, fantasy' },
+  { name: 'Marker Felt', value: 'Marker Felt, fantasy' },
+  { name: 'Trattatello', value: 'Trattatello, fantasy' },
+  { name: 'Zapfino', value: 'Zapfino, cursive' },
+  { name: 'Snell Roundhand', value: 'Snell Roundhand, cursive' },
+  { name: 'Copperplate', value: 'Copperplate, fantasy' },
+  { name: 'Copperplate Gothic', value: 'Copperplate Gothic Light, fantasy' },
+  { name: 'Perpetua', value: 'Perpetua, serif' },
+  { name: 'Rockwell', value: 'Rockwell, serif' },
+  { name: 'Hoefler Text', value: 'Hoefler Text, serif' },
+  { name: 'American Typewriter', value: 'American Typewriter, serif' },
+  { name: 'Menlo', value: 'Menlo, Monaco, monospace' },
+  { name: 'Monaco', value: 'Monaco, monospace' },
+  { name: 'Courier', value: 'Courier, monospace' },
+  { name: 'Times', value: 'Times, serif' },
+  { name: 'Geneva', value: 'Geneva, sans-serif' },
   
-  // Creative & Fun
-  { name: 'Pacifico', value: 'Pacifico, cursive' },
+  // Popular Google Fonts (with fallbacks)
+  { name: 'Roboto', value: 'Roboto, Arial, sans-serif' },
+  { name: 'Open Sans', value: 'Open Sans, Arial, sans-serif' },
+  { name: 'Lato', value: 'Lato, Arial, sans-serif' },
+  { name: 'Montserrat', value: 'Montserrat, Arial, sans-serif' },
+  { name: 'Poppins', value: 'Poppins, Arial, sans-serif' },
+  { name: 'Inter', value: 'Inter, Arial, sans-serif' },
+  { name: 'Raleway', value: 'Raleway, Arial, sans-serif' },
+  { name: 'Oswald', value: 'Oswald, Arial, sans-serif' },
+  { name: 'Anton', value: 'Anton, Arial Black, sans-serif' },
+  { name: 'Bebas Neue', value: 'Bebas Neue, Arial Black, sans-serif' },
   { name: 'Dancing Script', value: 'Dancing Script, cursive' },
-  { name: 'Satisfy', value: 'Satisfy, cursive' },
-  { name: 'Kaushan Script', value: 'Kaushan Script, cursive' },
-  { name: 'Great Vibes', value: 'Great Vibes, cursive' },
+  { name: 'Pacifico', value: 'Pacifico, cursive' },
   { name: 'Lobster', value: 'Lobster, cursive' },
   { name: 'Permanent Marker', value: 'Permanent Marker, cursive' },
   { name: 'Caveat', value: 'Caveat, cursive' },
@@ -117,7 +146,6 @@ const FONTS = [
   { name: 'Patrick Hand', value: 'Patrick Hand, cursive' },
   { name: 'Gloria Hallelujah', value: 'Gloria Hallelujah, cursive' },
   { name: 'Rock Salt', value: 'Rock Salt, cursive' },
-  { name: 'Homemade Apple', value: 'Homemade Apple, cursive' },
   { name: 'Kalam', value: 'Kalam, cursive' },
   { name: 'Architects Daughter', value: 'Architects Daughter, cursive' },
   { name: 'Just Another Hand', value: 'Just Another Hand, cursive' },
@@ -142,7 +170,13 @@ const FONTS = [
   { name: 'Mali', value: 'Mali, cursive' },
   { name: 'Sriracha', value: 'Sriracha, cursive' },
   { name: 'Charm', value: 'Charm, cursive' },
-  { name: 'Chonburi', value: 'Chonburi, cursive' }
+  { name: 'Chonburi', value: 'Chonburi, cursive' },
+  { name: 'Great Vibes', value: 'Great Vibes, cursive' },
+  { name: 'Kaushan Script', value: 'Kaushan Script, cursive' },
+  { name: 'Satisfy', value: 'Satisfy, cursive' },
+  { name: 'Fredoka One', value: 'Fredoka One, cursive' },
+  { name: 'Bangers', value: 'Bangers, cursive' },
+  { name: 'Homemade Apple', value: 'Homemade Apple, cursive' }
 ];
 
 
@@ -580,7 +614,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       // Check if selected hat should hide the wrapper
       // These specific hats are designed to work without the wrapper overlay
       const selectedHat = selectedAssets['hats'];
-      const hatsThatHideWrapper = ['hat-2', 'hat-3', 'hat-5', 'hat-16', 'hat-21', 'hat-22', 'hat-25', 'hat-26', 'hat-29', 'hat-31', 'hat-27', 'hat-30', 'hat-32', 'hat-36'];
+      const hatsThatHideWrapper = ['hat-2', 'hat-3', 'hat-5', 'hat-16', 'hat-21', 'hat-22', 'hat-25', 'hat-26', 'hat-29', 'hat-31', 'hat-27', 'hat-30', 'hat-32', 'hat-36', 'hat-37', 'hat-38', 'hat-39', 'hat-40', 'hat-41', 'hat-42', 'hat-43', 'hat-44'];
       const shouldHideWrapper = selectedHat && hatsThatHideWrapper.includes(selectedHat.id);
 
       // Only draw wrapper if it shouldn't be hidden
@@ -838,7 +872,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       x: preset?.x ?? 256,
       y: preset?.y ?? 256,
       fontSize: preset?.fontSize ?? 36,
-      fontFamily: 'Arial, sans-serif',
+      fontFamily: 'Arial, Helvetica, sans-serif',
       color: '#ffffff',
       isDragging: false,
       rotation: 0,
@@ -1527,7 +1561,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                               />
                             </div>
                           </div>
-                        </div>
+                      </div>
                     </div>
                   </Card>
                 ))}
