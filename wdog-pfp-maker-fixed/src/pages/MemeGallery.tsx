@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Image, Video, Play, Pause } from 'lucide-react';
+import { ArrowLeft, Image, Video, Play, Pause, ChartLine } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -290,10 +290,10 @@ const MemeGallery: React.FC = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="bg-[#FF8C00] hover:bg-[#FF8C00]/90 text-white rounded-full w-10 h-10"
+            className="bg-[#FF8C00] hover:bg-[#FF8C00]/90 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10"
             onClick={() => window.open('https://dexscreener.com/solana/25txtutlkjtcux3kqoervc7aubym7fckbwovqnqnydgq', '_blank')}
           >
-            <span className="text-white">📊</span>
+            <ChartLine className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
         </div>
 
