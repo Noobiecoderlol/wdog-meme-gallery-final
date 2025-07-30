@@ -1104,24 +1104,30 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
 
         {/* Header */}
         <div className="text-center mb-4 sm:mb-8 pt-8 sm:pt-16">
-          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-2 sm:mb-4">
-            {onBack && (
+          {/* Back button positioned absolutely for mobile */}
+          {onBack && (
+            <div className="absolute top-4 left-4 z-10">
               <Button
                 variant="outline"
                 onClick={onBack}
-                className="mb-2"
+                size="sm"
+                className="bg-background/80 backdrop-blur-sm border-border/50"
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back
+                <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Back</span>
               </Button>
-            )}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            </div>
+          )}
+          
+          {/* Main title with better mobile spacing */}
+          <div className="px-4 sm:px-0">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight">
               wDOG PFP Generator
             </h1>
+            <p className="text-muted-foreground text-sm sm:text-base lg:text-lg px-2 sm:px-4 mt-2 sm:mt-3">
+              Create the perfect profile picture with our legendary net-wearing dog! 🐕‍🦺
+            </p>
           </div>
-          <p className="text-muted-foreground text-base sm:text-lg px-4">
-            Create the perfect profile picture with our legendary net-wearing dog! 🐕‍🦺
-          </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-4 sm:gap-8">

@@ -75,22 +75,28 @@ const HallOfDogs: React.FC = () => {
         </div>
 
         {/* Page Header */}
-        <div className="text-center mb-8 pt-16">
+        <div className="text-center mb-8 pt-16 relative">
+          {/* Back button positioned absolutely for mobile */}
           <Button
             variant="ghost"
             onClick={() => navigate('/')}
-            className="absolute top-20 left-4 text-muted-foreground hover:text-foreground"
+            size="sm"
+            className="absolute top-4 left-4 z-10 bg-background/80 backdrop-blur-sm border border-border/50 text-muted-foreground hover:text-foreground"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Generator
+            <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">Back to Generator</span>
+            <span className="sm:hidden">Back</span>
           </Button>
           
-          <h1 className="text-6xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-            Hall of DOG's
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Explore a random selection of legendary wDOG profile pictures. Click any image to download!
-          </p>
+          {/* Main title with better mobile spacing */}
+          <div className="px-4 sm:px-0 pt-12 sm:pt-0">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent leading-tight">
+              Hall of DOG's
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto px-2">
+              Explore a random selection of legendary wDOG profile pictures. Click any image to download!
+            </p>
+          </div>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
             <Badge variant="secondary" className="text-lg px-6 py-3">
