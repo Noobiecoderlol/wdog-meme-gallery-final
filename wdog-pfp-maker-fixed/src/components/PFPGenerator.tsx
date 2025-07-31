@@ -25,7 +25,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { XIcon } from '@/components/ui/x-icon';
 import { toast } from 'sonner';
-import { BACKGROUNDS, CATEGORIES, BASE_DOG, WRAPPER, type Asset } from '@/data/assets';
+import { BACKGROUNDS, CATEGORIES, BASE_DOG, BASE_DOG_NO_EARS, WRAPPER, type Asset } from '@/data/assets';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -613,12 +613,18 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       ctx.imageSmoothingQuality = 'high';
 
   
-      const dogImg = await loadImage(BASE_DOG.src);
+      // Check if selected hat should use the no-ears base dog image
+      // These specific bucket hats work better with the no-ears version
+      const selectedHat = selectedAssets['hats'];
+      const hatsThatUseNoEars = ['hat-41', 'hat-42', 'hat-43', 'hat-44'];
+      const shouldUseNoEars = selectedHat && hatsThatUseNoEars.includes(selectedHat.id);
+      
+      // Load and draw the base dog image (with or without ears based on hat selection)
+      const dogImg = await loadImage(shouldUseNoEars ? BASE_DOG_NO_EARS.src : BASE_DOG.src);
       ctx.drawImage(dogImg, dogX, dogY, dogSize, dogSize);
 
       // Check if selected hat should hide the wrapper
       // These specific hats are designed to work without the wrapper overlay
-      const selectedHat = selectedAssets['hats'];
       const hatsThatHideWrapper = ['hat-2', 'hat-3', 'hat-5', 'hat-16', 'hat-21', 'hat-22', 'hat-25', 'hat-26', 'hat-29', 'hat-31', 'hat-27', 'hat-30', 'hat-32', 'hat-36', 'hat-37', 'hat-38', 'hat-39', 'hat-40', 'hat-41', 'hat-42', 'hat-43', 'hat-44'];
       const shouldHideWrapper = selectedHat && hatsThatHideWrapper.includes(selectedHat.id);
 

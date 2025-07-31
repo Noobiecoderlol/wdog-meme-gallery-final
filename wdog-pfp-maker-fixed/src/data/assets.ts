@@ -1,5 +1,6 @@
 
 import baseDog from '@/assets/body/base-dog.webp';
+import baseDogNoEars from '@/assets/body/base-dog-no-ears.webp';
 import wrapper from '@/assets/body/wrapper.webp';
 
 // Signs (Image-based)
@@ -203,6 +204,12 @@ export interface Category {
 
 export const BASE_DOG = {
   src: baseDog,
+  width: 512,
+  height: 512
+};
+
+export const BASE_DOG_NO_EARS = {
+  src: baseDogNoEars,
   width: 512,
   height: 512
 };
