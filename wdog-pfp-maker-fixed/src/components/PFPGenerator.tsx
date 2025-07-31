@@ -616,7 +616,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
       // Check if selected hat should use the no-ears base dog image
       // These specific bucket hats work better with the no-ears version
       const selectedHat = selectedAssets['hats'];
-      const hatsThatUseNoEars = ['hat-41', 'hat-42', 'hat-43', 'hat-44'];
+      const hatsThatUseNoEars = []; // Removed hat-41, hat-42, hat-43, hat-44 - they now use base-dog.webp
       const shouldUseNoEars = selectedHat && hatsThatUseNoEars.includes(selectedHat.id);
       
       // Load and draw the base dog image (with or without ears based on hat selection)

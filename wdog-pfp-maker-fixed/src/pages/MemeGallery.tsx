@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 // Configuration matching the original script
 const TOTAL_IMAGES = 1000; // Will gracefully handle missing images
 const BATCH_SIZE = 30; // Process content in batches to avoid blocking UI
-const IMAGE_FOLDER = '/wdog-meme-gallery-main/images/';
-const VIDEO_FOLDER = '/wdog-meme-gallery-main/videos/';
+const IMAGE_FOLDER = '/memes/images/';
+const VIDEO_FOLDER = '/memes/videos/';
 
 // Video files array from original script
 const VIDEO_FILES = [
