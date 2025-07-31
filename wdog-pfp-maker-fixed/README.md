@@ -1,67 +1,22 @@
 # wDOG PFP Generator & Meme Gallery
 
-A complete wDOG community platform featuring a customizable profile picture generator and an extensive meme collection. Create unique wDOG profile pictures and explore the legendary wDOG meme collection!
-
-## ✨ Features
-
-### 🎨 PFP Generator
-- **35+ Stunning Backgrounds** - Choose from vaporwave, space themes, and more
-- **Multiple Accessory Categories**:
-  - **Eyes** - 15 different eye styles
-  - **Hats** - 36 unique hat options with smart wrapper management
-  - **Clothes** - 35 outfit variations
-  - **Glasses** - 12 stylish glasses (including 6 moved from eyes category)
-  - **Accessories** - 13 cool items
-  - **Meme Signs** - 15 crypto-themed signs with custom positioning
-
-### 🖼️ Meme Gallery
-- **729+ Community Memes** - Browse and download the legendary wDOG meme collection
-- **62+ Videos** - Watch and download wDOG community videos
-- **Easy Navigation** - Switch between images and videos with simple tabs
-- **Download Any Meme** - Click any image or video to download instantly
-- **Fullscreen View** - View memes in fullscreen mode for better experience
-
-### 🎩 Smart Hat System
-- **36 Hats** with continuous numbering (1-36)
-- **Intelligent Wrapper Management** - Certain hats automatically hide the wrapper overlay for better visual compatibility
-- **Hats without wrapper**: Hat 2, 3, 5, 16, 21, 22, 25, 26, 27, 29, 30, 31, 32, 36
-- **Hats with wrapper**: All other hats maintain the original wrapper overlay
-
-### 📝 Advanced Text Editor
-- Add custom text to your PFP
-- **Font Selection** - Multiple font options (Arial, Comic Sans MS, Impact, Verdana, Times New Roman)
-- **Color Picker** - Choose from presets or custom colors
-- **Size & Position Control** - Drag text anywhere on canvas
-- **Rotation & Scaling** - Rotate and scale text with keyboard shortcuts
-- **Preset Positions** - Quick positioning options (Top Center, Bottom Center, Center, Top Left, Top Right, Bottom Left, Bottom Right)
-
-### 🎯 Real-time Preview
-- Instant preview of all changes
-- Drag-and-drop positioning
-- High-quality rendering
-- Responsive design for all devices
-- Smart asset positioning and scaling
-
-### 💾 Export Options
-- Download as high-quality PNG
-- Perfect for social media profiles
-- Optimized for various platforms
-
-## 🌐 Available Pages
-
-### 📱 Main Pages
-- **Home Page (`/`)** - Landing page with PFP Generator access
-- **PFP Generator** - Create custom wDOG profile pictures
-- **Hall of Dogs (`/examples`)** - Browse random examples of wDOG PFPs
-- **Meme Gallery (`/memes`)** - Explore the legendary wDOG meme collection
-
 ## 🔗 Quick Links
 - [Twitter/X](https://t.co/GurmgVXpiR)
 - [DexScreener](https://dexscreener.com/solana/25txtutlkjtcux3kqoervc7aubym7fckbwovqnqnydgq)
+- [📤 Upload Guide](./UPLOAD_GUIDE.md) - How to add new memes
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### Deploy a live version
+
+- Create a free account at https://github.com/
+- Copy the following link and paste it in a webbrowser:
+  https://vercel.com/new/clone?repository-url=https://github.com/Biirdmaan/wdog-pfp-maker-fun
+DONE!
+
+
+### Deploy a local version
+
 - Node.js (v16 or higher)
 - npm or yarn
 
@@ -134,121 +89,11 @@ wdog-pfp-maker-fixed/
 - **State Management**: React Hooks
 - **Notifications**: Sonner toast
 
-## 🎮 How to Use
-
-### Creating Your PFP
-
-1. **Choose a Background** - Select from 35+ stunning backgrounds
-2. **Add Accessories** - Mix and match from different categories:
-   - Eyes, Hats, Clothes, Glasses, Accessories
-3. **Add Custom Text** - Use the text editor to add personalized messages
-4. **Position Elements** - Drag text and use preset positions
-5. **Download** - Save your creation as a high-quality PNG
-
-### Exploring the Meme Gallery
-
-1. **Navigate to Memes** - Click "Meme Gallery" from the home page
-2. **Browse Content** - Switch between Images and Videos tabs
-3. **View Memes** - Click any image or video to view in fullscreen
-4. **Download** - Click the download button to save any meme
-5. **Share** - Use downloaded memes on social media platforms
-
-### Text Editor Tips
-
-- **Add Text**: Click "Add Text" button
-- **Move Text**: Drag text directly on canvas
-- **Rotate**: Hold Shift + R, then use arrow keys
-- **Scale**: Hold Shift + S, then use arrow keys
-- **Preset Positions**: Use quick position buttons
-- **Font & Color**: Use the text controls panel
-
-### Keyboard Shortcuts
-
-- **R + Shift + Arrow Keys**: Rotate text
-- **S + Shift + Arrow Keys**: Scale text
-- **Random**: Generate random combination
-- **Reset**: Clear all customizations
-
-## 🎨 Asset Categories
-
-### Backgrounds (35+ options)
-- Vaporwave themes
-- Space and cosmic designs
-- Abstract patterns
-- Gradient backgrounds
-
-### Eyes (15 options)
-- Various eye expressions
-- Different styles and colors
-
-### Hats (36 options)
-- **Smart wrapper management** - Some hats automatically hide the wrapper for better compatibility
-- Baseball caps, beanies, cowboy hats, and many more styles
-- Continuous numbering from 1-36
-- **Hats without wrapper**: 2, 3, 5, 16, 21, 22, 25, 26, 27, 29, 30, 31, 32, 36
-- **Hats with wrapper**: All other hats
-
-### Clothes (35 options)
-- T-shirts
-- Hoodies
-- Jackets
-- Various outfits
-
-### Glasses (12 options)
-- **Renamed from "Sunglasses" to "Glasses"** for better clarity
-- Includes 6 items moved from the eyes category for better categorization
-- Sunglasses and regular glasses
-- Various frame styles
-
-### Accessories (13 options)
-- Musical instruments
-- Props and items
-
-### Meme Signs (15 options)
-- Crypto-themed messages
-- "TO THE MOON", "HODL", "WAGMI", etc.
-- Custom positioning for each sign
-
-## 🔧 Recent Updates
-
-### Version 2.1 - Project Consolidation
-- **Meme Gallery Integration**: Added complete meme gallery with 729+ images and 62+ videos
-- **Unified Platform**: Combined PFP Generator and Meme Gallery into one application
-- **Improved Navigation**: Easy switching between PFP creation and meme browsing
-- **Enhanced User Experience**: Seamless integration of all wDOG community features
-
-### Version 2.0 Features
-- **Smart Hat System**: Automatic wrapper hiding for compatible hats
-- **Glasses Category**: Renamed and reorganized for better user experience
-- **Asset Reorganization**: Moved 6 eye items to glasses category
-- **Continuous Hat Numbering**: Fixed hat numbering from 1-36 without gaps
-- **Enhanced Text Editor**: Improved rotation and scaling controls
-- **Code Cleanup**: Translated all comments to English and removed unnecessary code
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## 🙏 Acknowledgments
 
-- Original wDOG concept and community
-- All contributors and community members
+- @deki_arts for the images
 - shadcn/ui for the beautiful components
 - Lucide for the icons
-- The entire wDOG community for support and feedback
-
 ---
 
 **Made with ❤️ for the wDOG community**
-
----
-
-**Updated: 07/31/2025 18:00:00**

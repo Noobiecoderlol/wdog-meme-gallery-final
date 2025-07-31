@@ -11,28 +11,15 @@ const BATCH_SIZE = 30; // Process content in batches to avoid blocking UI
 const IMAGE_FOLDER = '/memes/images/';
 const VIDEO_FOLDER = '/memes/videos/';
 
-// Video files array from original script
-const VIDEO_FILES = [
-  'bbqking.mp4', 'cantgetenoughofyourlovebabe.mp4', 'canttouchthis copy.mp4',
-  'canttouchthis (online-video-cutter.com).mp4', 'Chat with Cartoon Character.mp4',
-  'deathfight.mp4', 'everbody (online-video-cutter.com).mp4', 'EVERYBODY.mp4',
-  'fearless (online-video-cutter.com).mp4', 'gameon.mp4', 'getyourgameon (online-video-cutter.com).mp4',
-  'gm (online-video-cutter.com).mp4', 'gm.mp4', 'gotfam2 (online-video-cutter.com).mp4',
-  'hallowen.mp4', 'hallowen2 (online-video-cutter.com).mp4', 'hanginthere.mp4',
-  'Hedra (online-video-cutter.com).mp4', 'hotdog.mp4', 'howwedoit.mp4', 'ifeelgood.mp4',
-  'IMG_3510.mp4', 'indaclub (online-video-cutter.com) copy.mp4', 'indaclub (online-video-cutter.com).mp4',
-  'iwantyou.mp4', 'jim.mp4', 'john (online-video-cutter.com).mp4', 'likesugar copy.mp4',
-  'likesugar.mp4', 'listen to your hearth.mp4', 'loveshock.mp4', 'loveshockjenny.mp4',
-  'miniwdog.mp4', 'papas (online-video-cutter.com).mp4', 'pepas perfecto.mp4', 'pepas.mp4',
-  'pepewdog (online-video-cutter.com).mp4', 'pixverse2Fmedia2F7709982c-83b8-4159-b583-8fa69812e598_seed43290079.mp4',
-  'polka.mp4', 'ppepas (online-video-cutter.com).mp4', 'rockubody.mp4', 'rstillcool.mp4',
-  'samba.mp4', 'sato.mp4', 'shakeit.mp4', 'shutupanddance.mp4', 'skibid copy.mp4',
-  'skibid.mp4', 'stm (online-video-cutter.com).mp4', 'sunshine.mp4',
-  'takeonme (online-video-cutter.com) copy.mp4', 'takeonme (online-video-cutter.com).mp4',
-  'thisishowwedoit.mp4', 'truelove.mp4', 'umakemydreams (online-video-cutter.com).mp4',
-  'umakemydreams.mp4', 'wdog (1).mp4', 'wdog (3) (online-video-cutter.com).mp4',
-  'wdogjim copy copy.mp4', 'wdogjim.mp4', 'whatswdog.mp4', 'wrapyourbody.mp4'
-];
+// Supported image formats (in order of preference)
+// The system will try each format until it finds a matching file
+// Formats: .jpg, .JPG, .png, .PNG, .gif, .GIF, .webp, .WEBP, .jpeg, .JPEG
+
+// Import dynamically generated video list
+import videoManifest from '@/data/videos-manifest.json';
+
+// Use generated video list instead of hardcoded array
+const VIDEO_FILES = videoManifest.videos;
 
 interface ImageItem {
   id: number;
@@ -66,7 +53,7 @@ const MemeGallery: React.FC = () => {
   const imageGridRef = useRef<HTMLDivElement>(null);
   const videoGridRef = useRef<HTMLDivElement>(null);
 
-  // Create image item with error handling (matching original logic)
+  // Create image item with error handling (supports multiple formats)
   const createImageItem = useCallback((imageNumber: number): ImageItem => {
     return {
       id: imageNumber,
@@ -109,16 +96,23 @@ const MemeGallery: React.FC = () => {
     }
   }, [processedImages]);
 
-  // Handle image load error (try uppercase extension)
+  // Handle image load error (try multiple formats)
   const handleImageError = useCallback((imageNumber: number) => {
     setImageItems(prev => 
       prev.map(item => {
         if (item.id === imageNumber) {
-          if (item.src.endsWith('.jpg')) {
-            // Try uppercase extension
-            return { ...item, src: `${IMAGE_FOLDER}${imageNumber}.JPG` };
+          // Define the order of formats to try
+          const formats = ['.jpg', '.JPG', '.png', '.PNG', '.gif', '.GIF', '.webp', '.WEBP', '.jpeg', '.JPEG'];
+          
+          // Find current format index
+          const currentFormatIndex = formats.findIndex(format => item.src.endsWith(format));
+          
+          if (currentFormatIndex >= 0 && currentFormatIndex < formats.length - 1) {
+            // Try next format
+            const nextFormat = formats[currentFormatIndex + 1];
+            return { ...item, src: `${IMAGE_FOLDER}${imageNumber}${nextFormat}` };
           } else {
-            // Both extensions failed, mark as error
+            // All formats failed, mark as error
             if (!processedImages.has(imageNumber)) {
               setProcessedImages(prevSet => new Set(prevSet).add(imageNumber));
             }
@@ -219,11 +213,15 @@ const MemeGallery: React.FC = () => {
     }
   };
 
-  // Handle image download
+  // Handle image download (supports multiple formats)
   const handleImageDownload = (imageSrc: string, imageNumber: number) => {
     const link = document.createElement('a');
     link.href = imageSrc;
-    link.download = `wdog-meme-${imageNumber}.jpg`;
+    
+    // Extract file extension from the source
+    const fileExtension = imageSrc.split('.').pop() || 'jpg';
+    link.download = `wdog-meme-${imageNumber}.${fileExtension}`;
+    
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
