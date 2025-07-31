@@ -4,6 +4,8 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Expand, Minimize } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { 
@@ -238,6 +240,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
   // Text functionality state
   const [textElements, setTextElements] = useState<TextElement[]>([]);
   const [activeTextId, setActiveTextId] = useState<string | null>(null);
+  const [expandedTextId, setExpandedTextId] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [rotationStart, setRotationStart] = useState(0);
@@ -766,7 +769,17 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
         ctx.fillStyle = text.color;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(text.text, 0, 0);
+        
+        // Handle multi-line text
+        const lines = text.text.split('\n');
+        const lineHeight = text.fontSize * 1.2; // 1.2x font size for line spacing
+        const totalHeight = lines.length * lineHeight;
+        const startY = -(totalHeight / 2) + (lineHeight / 2);
+        
+        lines.forEach((line, index) => {
+          const y = startY + (index * lineHeight);
+          ctx.fillText(line, 0, y);
+        });
         
         ctx.restore();
       });
@@ -904,6 +917,7 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
     setActiveCategory(CATEGORIES[0].id);
     setTextElements([]); // Reset all texts
     setActiveTextId(null);
+    setExpandedTextId(null); // Reset expanded text state
     setUploadedBackgrounds([]); // Clear custom backgrounds
     setCustomBackgrounds([]); // Clear custom backgrounds
     setHasUploadedBackgroundSelected(false); // Reset uploaded background state
@@ -1359,24 +1373,45 @@ export const PFPGenerator: React.FC<PFPGeneratorProps> = ({ onBack }) => {
                       {/* Text Input Row */}
                       <div className="flex items-center gap-2">
                         <Move className="w-4 h-4 cursor-move text-muted-foreground" />
-                        <Input
+                        <Textarea
                           value={text.text}
                           onChange={(e) => updateText(text.id, { text: e.target.value })}
-                          placeholder="Type your text here..."
-                          className="flex-1 text-sm"
+                          placeholder="Type your text here... (Press Enter for new line)"
+                          className={`flex-1 text-sm resize-none transition-all duration-200 ${
+                            expandedTextId === text.id 
+                              ? 'min-h-[120px]' 
+                              : 'min-h-[40px]'
+                          }`}
+                          rows={expandedTextId === text.id ? 5 : 1}
                         />
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => {
-                            setTextElements(prev => prev.filter(t => t.id !== text.id));
-                            if (activeTextId === text.id) setActiveTextId(null);
-                          }}
-                          className="text-destructive hover:text-destructive/90 h-9 w-9 p-0"
-                          title="Remove text"
-                        >
-                          ×
-                        </Button>
+                        <div className="flex gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setExpandedTextId(expandedTextId === text.id ? null : text.id)}
+                            className="text-muted-foreground hover:text-foreground h-9 w-9 p-0"
+                            title={expandedTextId === text.id ? "Minimize text area" : "Expand text area"}
+                          >
+                            {expandedTextId === text.id ? (
+                              <Minimize className="w-4 h-4" />
+                            ) : (
+                              <Expand className="w-4 h-4" />
+                            )}
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              setTextElements(prev => prev.filter(t => t.id !== text.id));
+                              if (activeTextId === text.id) setActiveTextId(null);
+                              if (expandedTextId === text.id) setExpandedTextId(null);
+                            }}
+                            className="text-destructive hover:text-destructive/90 h-9 w-9 p-0"
+                            title="Remove text"
+                          >
+                            ×
+                          </Button>
+                        </div>
                       </div>
 
                       {/* Font and Style Controls Row */}

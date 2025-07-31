@@ -953,15 +953,15 @@ export const CATEGORIES: Category[] = [
         name: 'Hat 37',
         src: hat38,
         thumbnail: hat38,
-        position: { x: -10, y: -160 },
-        scale: 0.7
+        position: { x: -10, y: -140 },
+        scale: 0.675
       },
       {
         id: 'hat-38',
         name: 'Hat 38',
         src: hat39,
         thumbnail: hat39,
-        position: { x: -10, y: -160 },
+        position: { x: -10, y: -140 },
         scale: 0.675
       },
       {
@@ -969,24 +969,24 @@ export const CATEGORIES: Category[] = [
         name: 'Hat 39',
         src: hat40,
         thumbnail: hat40,
-        position: { x: -10, y: -160 },
-        scale: 0.635  
+        position: { x: -10, y: -140 },
+        scale: 0.675
       },
       {
         id: 'hat-40',
         name: 'Hat 40',
         src: hat41,
         thumbnail: hat41,
-        position: { x: -10, y: -160 },
-        scale: 0.60
+        position: { x: -10, y: -140 },
+        scale: 0.675
       },
       {
         id: 'hat-41',
         name: 'Hat 41',
         src: hat42,
         thumbnail: hat42,
-        position: { x: -10, y: -180 },
-        scale: 0.825
+        position: { x: -10, y: -160 },
+        scale: 0.775
       },
       {
         id: 'hat-42',
@@ -994,7 +994,7 @@ export const CATEGORIES: Category[] = [
         src: hat43,
         thumbnail: hat43,
         position: { x: -10, y: -160 },
-        scale: 0.80
+        scale: 0.775
       },
       {
         id: 'hat-43',
@@ -1002,7 +1002,7 @@ export const CATEGORIES: Category[] = [
         src: hat44,
         thumbnail: hat44,
         position: { x: -10, y: -160 },
-        scale: 0.75
+        scale: 0.775
       },
       {
         id: 'hat-44',
@@ -1010,7 +1010,7 @@ export const CATEGORIES: Category[] = [
         src: hat45,
         thumbnail: hat45,
         position: { x: -10, y: -160 },
-        scale: 0.7
+        scale: 0.775
       }
     ]
   },
