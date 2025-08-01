@@ -31,18 +31,19 @@
 - wdog-pfp(1).png  (not numbered)
 - meme.jpg        (not numbered)
 - 730            (no extension)
+```
 
 ---------------------------------------------------------------------------
-
 
 ## 🎥 Adding New Videos (Auto-Discovery!)
 
 1. **Navigate to:** `public/memes/videos/` folder
 2. **Upload MP4 files** with any descriptive name
 3. **Keep file sizes** under 50MB for best performance
-4. **Automatic Discovery:** Videos are automatically detected during build
+4. **Automatic Discovery:** Videos are automatically detected during build!
 
 ## **Supported Formats:** MP4
+
 
 ## 📁 Folder Structure
 
@@ -58,7 +59,8 @@ public/
         ├── xxxxyyyzzz.mp4
         └── xxxyyy.mp4
 
----
+```
+
 ## 🚀 After Upload
 
 ### **For Images:**
