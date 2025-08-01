@@ -61,24 +61,6 @@ public/
 
 ```
 
-## 🚀 After Upload
-
-### **For Images:**
-1. **Wait 2-3 minutes** for Vercel to deploy changes
-2. **Refresh your browser** to see the new image
-3. **Check the meme gallery** at `/memes` page
-4. **Test the download** functionality
-
-### **For Videos:**
-1. **Upload your MP4 file** to `public/memes/videos/`
-2. **Push to GitHub** (or commit via web interface)
-3. **Vercel automatically runs the build script** that discovers new videos
-4. **Wait 2-3 minutes** for deployment to complete
-5. **Your video appears automatically** in the gallery - no code changes needed!
-
----
-
-
 ## ❓ Troubleshooting
 
 ### **Image Not Showing Up?**
