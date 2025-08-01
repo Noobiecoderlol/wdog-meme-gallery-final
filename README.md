@@ -10,7 +10,8 @@
 
 - Create a free account at https://github.com/
 - Copy the following link and paste it in a webbrowser:
-  https://vercel.com/new/clone?repository-url=https://github.com/Biirdmaan/wdog-pfp-maker-fun
+  [https://vercel.com/new/clone?repository-url=https://github.com/Biirdmaan/wdog-pfp-maker-fun](https://vercel.com/new/clone?repository-url=https://github.com/Noobiecoderlol/wdog-meme-gallery-final.git)
+
 DONE!
 
 
