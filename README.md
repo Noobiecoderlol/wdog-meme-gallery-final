@@ -3,7 +3,6 @@
 ## 🔗 Quick Links
 - [Twitter/X](https://t.co/GurmgVXpiR)
 - [DexScreener](https://dexscreener.com/solana/25txtutlkjtcux3kqoervc7aubym7fckbwovqnqnydgq)
-- [📤 Upload Guide](./UPLOAD_GUIDE.md) - How to add new memes
 
 ## 🚀 Getting Started
 
