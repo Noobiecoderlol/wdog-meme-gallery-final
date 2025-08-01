@@ -6,7 +6,7 @@
 
 ## 🚀 Getting Started
 
-### Deploy a live version ###
+### Deploy a live version with vercel ###
 
 - Create a free account at https://github.com/
 - Copy the following link and paste it in a webbrowser:
@@ -14,35 +14,6 @@
 
 DONE!
 
-
-### Deploy a local version ###
-
-- Node.js (v16 or higher)
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository:**
-```bash
-git clone https://github.com/Biirdmaan/wdog-pfp-maker-fixed.git
-cd wdog-pfp-maker-fixed
-```
-
-2. **Install dependencies:**
-```bash
-npm install
-# or
-yarn install
-```
-
-3. **Start the development server:**
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-4. **Open your browser and navigate to the correct localhost adress provided.
 
 ## 📁 Project Structure
 
