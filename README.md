@@ -6,7 +6,7 @@
 
 ## 🚀 Getting Started
 
-### Deploy a live version
+### Deploy a live version ###
 
 - Create a free account at https://github.com/
 - Copy the following link and paste it in a webbrowser:
@@ -15,7 +15,7 @@
 DONE!
 
 
-### Deploy a local version
+### Deploy a local version ###
 
 - Node.js (v16 or higher)
 - npm or yarn
@@ -42,7 +42,7 @@ npm run dev
 yarn dev
 ```
 
-4. **Open your browser and navigate to `http://localhost:5173`**
+4. **Open your browser and navigate to the correct localhost adress provided.
 
 ## 📁 Project Structure
 
