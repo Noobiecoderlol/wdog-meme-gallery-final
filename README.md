@@ -9,7 +9,7 @@
 ### Deploy a live version with vercel ###
 
 - Create a free account at https://github.com/
-- Copy the following link and paste it in a webbrowser:
+- Click on the following link and follow the steps:
   [https://vercel.com/new/clone?repository-url=https://github.com/Biirdmaan/wdog-pfp-maker-fun](https://vercel.com/new/clone?repository-url=https://github.com/Noobiecoderlol/wdog-meme-gallery-final.git)
 
 DONE!
